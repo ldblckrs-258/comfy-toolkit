@@ -1,9 +1,12 @@
+import { useHydrateSidebarPrefs } from '@/lib/sidebar-prefs'
 import { Link } from '@tanstack/react-router'
 import { CommandPalette } from './command-palette'
 import { MobileSidebar } from './mobile-sidebar'
 import { Sidebar } from './sidebar'
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  useHydrateSidebarPrefs()
+
   return (
     <div className="grid h-screen grid-cols-1 bg-background text-foreground md:grid-cols-[15rem_1fr]">
       <Sidebar />

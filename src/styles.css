@@ -16,6 +16,7 @@
   --destructive: #fb7185;
   --success: #34d381;
   --warning: #fbbf24;
+  --star: #f5b301;
 
   --tool-formatters: #38bdf8;
   --tool-encoders: #a78bfa;
@@ -161,6 +162,29 @@ body {
   background-color: color-mix(in oklab, var(--tool) 16%, transparent);
   color: var(--foreground);
   box-shadow: inset 2px 0 0 0 var(--tool);
+}
+
+.tool-star {
+  color: var(--muted-foreground);
+  opacity: 0;
+  transition:
+    opacity 120ms ease,
+    color 120ms ease;
+}
+.tool-row:hover .tool-star {
+  opacity: 1;
+}
+.tool-star:hover {
+  color: var(--foreground);
+}
+.tool-star.is-starred {
+  opacity: 1;
+  color: var(--star);
+}
+@media (hover: none) {
+  .tool-star {
+    opacity: 1;
+  }
 }
 
 .tool-card {
