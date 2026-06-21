@@ -20,6 +20,7 @@ import { Route as ToolsJwtRouteImport } from './routes/tools/jwt'
 import { Route as ToolsJsonFormatterRouteImport } from './routes/tools/json-formatter'
 import { Route as ToolsHmacRouteImport } from './routes/tools/hmac'
 import { Route as ToolsGradientRouteImport } from './routes/tools/gradient'
+import { Route as ToolsCronRouteImport } from './routes/tools/cron'
 import { Route as ToolsColorsRouteImport } from './routes/tools/colors'
 import { Route as ToolsCodeFormatterRouteImport } from './routes/tools/code-formatter'
 import { Route as ToolsBase64RouteImport } from './routes/tools/base64'
@@ -79,6 +80,11 @@ const ToolsGradientRoute = ToolsGradientRouteImport.update({
   path: '/tools/gradient',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsCronRoute = ToolsCronRouteImport.update({
+  id: '/tools/cron',
+  path: '/tools/cron',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsColorsRoute = ToolsColorsRouteImport.update({
   id: '/tools/colors',
   path: '/tools/colors',
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/tools/base64': typeof ToolsBase64Route
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
+  '/tools/cron': typeof ToolsCronRoute
   '/tools/gradient': typeof ToolsGradientRoute
   '/tools/hmac': typeof ToolsHmacRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/tools/base64': typeof ToolsBase64Route
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
+  '/tools/cron': typeof ToolsCronRoute
   '/tools/gradient': typeof ToolsGradientRoute
   '/tools/hmac': typeof ToolsHmacRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/tools/base64': typeof ToolsBase64Route
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
+  '/tools/cron': typeof ToolsCronRoute
   '/tools/gradient': typeof ToolsGradientRoute
   '/tools/hmac': typeof ToolsHmacRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/tools/base64'
     | '/tools/code-formatter'
     | '/tools/colors'
+    | '/tools/cron'
     | '/tools/gradient'
     | '/tools/hmac'
     | '/tools/json-formatter'
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/tools/base64'
     | '/tools/code-formatter'
     | '/tools/colors'
+    | '/tools/cron'
     | '/tools/gradient'
     | '/tools/hmac'
     | '/tools/json-formatter'
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/tools/base64'
     | '/tools/code-formatter'
     | '/tools/colors'
+    | '/tools/cron'
     | '/tools/gradient'
     | '/tools/hmac'
     | '/tools/json-formatter'
@@ -201,6 +213,7 @@ export interface RootRouteChildren {
   ToolsBase64Route: typeof ToolsBase64Route
   ToolsCodeFormatterRoute: typeof ToolsCodeFormatterRoute
   ToolsColorsRoute: typeof ToolsColorsRoute
+  ToolsCronRoute: typeof ToolsCronRoute
   ToolsGradientRoute: typeof ToolsGradientRoute
   ToolsHmacRoute: typeof ToolsHmacRoute
   ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
@@ -291,6 +304,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsGradientRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/cron': {
+      id: '/tools/cron'
+      path: '/tools/cron'
+      fullPath: '/tools/cron'
+      preLoaderRoute: typeof ToolsCronRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/colors': {
       id: '/tools/colors'
       path: '/tools/colors'
@@ -321,6 +341,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsBase64Route: ToolsBase64Route,
   ToolsCodeFormatterRoute: ToolsCodeFormatterRoute,
   ToolsColorsRoute: ToolsColorsRoute,
+  ToolsCronRoute: ToolsCronRoute,
   ToolsGradientRoute: ToolsGradientRoute,
   ToolsHmacRoute: ToolsHmacRoute,
   ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
