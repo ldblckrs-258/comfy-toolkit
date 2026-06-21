@@ -32,6 +32,7 @@ export const PRETTIER_LANGS: Array<{ value: PrettierLang; label: string }> = [
 ]
 
 async function loadPlugins(lang: PrettierLang): Promise<Array<Plugin>> {
+  if (import.meta.env.SSR) return []
   switch (lang) {
     case 'babel':
     case 'json':
@@ -70,6 +71,7 @@ export async function formatCode(
   source: string,
   lang: PrettierLang,
 ): Promise<string> {
+  if (import.meta.env.SSR) return source
   const { format } = await import('prettier/standalone')
   const plugins = await loadPlugins(lang)
   return format(source, { parser: lang, plugins })

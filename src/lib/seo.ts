@@ -8,9 +8,7 @@ const RAW_SITE_URL = import.meta.env.VITE_SITE_URL ?? 'http://localhost:3000'
 export const SITE_URL = RAW_SITE_URL.replace(/\/$/, '')
 
 export function ogUrl(toolId?: string): string {
-  return toolId
-    ? `${SITE_URL}/api/og?tool=${encodeURIComponent(toolId)}`
-    : `${SITE_URL}/api/og`
+  return `${SITE_URL}/og/${toolId ?? 'default'}.png`
 }
 
 interface SeoInput {

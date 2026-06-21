@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
+    "generate-og": "node --experimental-strip-types scripts/generate-og.mts",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
@@ -42,10 +43,10 @@
     "react-dom": "^19.2.0",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.1.18",
-    "workers-og": "^0.0.27",
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "@rolldown/plugin-babel": "^0.2.3",
     "@tailwindcss/typography": "^0.5.16",
     "@tanstack/devtools-event-client": "latest",
@@ -62,6 +63,8 @@
     "eslint": "^9.20.0",
     "jsdom": "^28.1.0",
     "prettier": "^3.8.4",
+    "satori": "^0.26.0",
+    "satori-html": "^0.3.2",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
     "vitest": "^4.1.5",

@@ -1,0 +1,121 @@
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+import { Resvg } from '@resvg/resvg-js'
+import satori from 'satori'
+import { html as toReactNode } from 'satori-html'
+
+import { GROUP_LABELS, TOOLS } from '../src/lib/tools/registry.ts'
+import type { ToolGroup, ToolMeta } from '../src/lib/tools/registry.ts'
+
+const SITE_ACCENT = '#24b1b1'
+
+const SITE_DESCRIPTION =
+  'A fast, offline-friendly console of developer and designer utilities — formatters, encoders, generators, and color tools that run entirely in your browser.'
+
+const GROUP_HEX: Record<ToolGroup, string> = {
+  formatters: '#38bdf8',
+  encoders: '#a78bfa',
+  generators: '#34d399',
+  text: '#fb923c',
+  color: '#f472b6',
+}
+
+const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
+const outDir = join(rootDir, 'public', 'og')
+
+const logoDataUri = `data:image/svg+xml;base64,${Buffer.from(
+  readFileSync(join(rootDir, 'public', 'logo.svg')),
+).toString('base64')}`
+
+function cardHtml(opts: {
+  accent: string
+  eyebrow: string
+  title: string
+  description: string
+}): string {
+  const { accent, eyebrow, title, description } = opts
+  return `
+    <div style="width:1200px;height:630px;display:flex;flex-direction:column;justify-content:space-between;background:#090b11;padding:80px;font-family:Jakarta;">
+      <div style="display:flex;flex-direction:column;">
+        <div style="display:flex;color:${accent};font-size:28px;font-weight:700;letter-spacing:4px;">${eyebrow}</div>
+        <div style="display:flex;color:#e8edf7;font-size:88px;font-weight:700;margin-top:28px;">${title}</div>
+        <div style="display:flex;color:#828fa8;font-size:36px;font-weight:400;margin-top:24px;max-width:940px;line-height:1.4;">${description}</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;">
+          <img src="${logoDataUri}" style="width:64px;height:64px;margin-right:20px;" />
+          <div style="display:flex;font-size:38px;font-weight:700;">
+            <span style="color:#e8edf7;">Comfy</span>
+            <span style="color:${SITE_ACCENT};">Toolkit</span>
+          </div>
+        </div>
+        <div style="display:flex;height:8px;width:220px;background:${accent};border-radius:999px;"></div>
+      </div>
+    </div>`
+}
+
+async function loadFont(weight: number): Promise<ArrayBuffer> {
+  const api = `https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@${weight}`
+  const css = await (
+    await fetch(api, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)',
+      },
+    })
+  ).text()
+  const url = css.match(
+    /src:\s*url\((.+?)\)\s*format\('(?:woff|truetype|opentype)'\)/,
+  )?.[1]
+  if (!url) throw new Error(`Could not resolve font url for weight ${weight}`)
+  return await (await fetch(url)).arrayBuffer()
+}
+
+async function renderPng(html: string, fonts: Array<any>): Promise<Uint8Array> {
+  const markup = toReactNode(html) as any
+  const svg = await satori(markup, { width: 1200, height: 630, fonts })
+  return new Resvg(svg).render().asPng()
+}
+
+async function main(): Promise<void> {
+  mkdirSync(outDir, { recursive: true })
+
+  const [bold, regular] = await Promise.all([loadFont(700), loadFont(400)])
+  const fonts = [
+    { name: 'Jakarta', data: bold, weight: 700, style: 'normal' },
+    { name: 'Jakarta', data: regular, weight: 400, style: 'normal' },
+  ]
+
+  const cards: Array<{ file: string; html: string }> = [
+    {
+      file: 'default',
+      html: cardHtml({
+        accent: SITE_ACCENT,
+        eyebrow: 'DEVELOPER & DESIGNER TOOLS',
+        title: 'ComfyToolkit',
+        description: SITE_DESCRIPTION,
+      }),
+    },
+    ...TOOLS.map((tool: ToolMeta) => ({
+      file: tool.id,
+      html: cardHtml({
+        accent: GROUP_HEX[tool.group],
+        eyebrow: GROUP_LABELS[tool.group].toUpperCase(),
+        title: tool.name,
+        description: tool.description,
+      }),
+    })),
+  ]
+
+  for (const card of cards) {
+    const png = await renderPng(card.html, fonts)
+    writeFileSync(join(outDir, `${card.file}.png`), png)
+    console.log(`og: ${card.file}.png (${(png.length / 1024).toFixed(0)} KiB)`)
+  }
+
+  console.log(`Generated ${cards.length} OG images → public/og/`)
+}
+
+await main()
