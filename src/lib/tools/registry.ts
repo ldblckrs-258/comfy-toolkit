@@ -10,6 +10,7 @@ import {
   KeyRound,
   KeySquare,
   Palette,
+  Regex,
   SwatchBook,
 } from 'lucide-react'
 
@@ -126,7 +127,16 @@ export const TOOLS: Array<ToolMeta> = [
     name: 'Secret / Key Generator',
     description: 'Generate random secrets, keys and tokens.',
     group: 'generators',
-    tags: ['secret', 'key', 'password', 'token', 'random', 'generate', 'hex', 'base64'],
+    tags: [
+      'secret',
+      'key',
+      'password',
+      'token',
+      'random',
+      'generate',
+      'hex',
+      'base64',
+    ],
     keywords: ['api-key', 'nanoid', 'openssl', 'csprng', 'passphrase'],
     icon: KeySquare,
     to: '/tools/secret-generator',
@@ -139,6 +149,17 @@ export const TOOLS: Array<ToolMeta> = [
     tags: ['markdown', 'md', 'preview', 'gfm'],
     icon: FileText,
     to: '/tools/markdown',
+  },
+  {
+    id: 'regex',
+    name: 'Regex Tester',
+    description:
+      'Test regular expressions with live match highlight and replace.',
+    group: 'text',
+    tags: ['regex', 'regexp', 'pattern', 'match', 'replace', 'test'],
+    keywords: ['regex101', 'expression', 'capture', 'groups'],
+    icon: Regex,
+    to: '/tools/regex',
   },
   {
     id: 'colors',

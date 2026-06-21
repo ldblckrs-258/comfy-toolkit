@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ToolsUuidGeneratorRouteImport } from './routes/tools/uuid-generator'
 import { Route as ToolsSecretGeneratorRouteImport } from './routes/tools/secret-generator'
+import { Route as ToolsRegexRouteImport } from './routes/tools/regex'
 import { Route as ToolsPaletteRouteImport } from './routes/tools/palette'
 import { Route as ToolsMarkdownRouteImport } from './routes/tools/markdown'
 import { Route as ToolsJwtRouteImport } from './routes/tools/jwt'
@@ -41,6 +42,11 @@ const ToolsUuidGeneratorRoute = ToolsUuidGeneratorRouteImport.update({
 const ToolsSecretGeneratorRoute = ToolsSecretGeneratorRouteImport.update({
   id: '/tools/secret-generator',
   path: '/tools/secret-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRegexRoute = ToolsRegexRouteImport.update({
+  id: '/tools/regex',
+  path: '/tools/regex',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsPaletteRoute = ToolsPaletteRouteImport.update({
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/tools/jwt': typeof ToolsJwtRoute
   '/tools/markdown': typeof ToolsMarkdownRoute
   '/tools/palette': typeof ToolsPaletteRoute
+  '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
 }
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/tools/jwt': typeof ToolsJwtRoute
   '/tools/markdown': typeof ToolsMarkdownRoute
   '/tools/palette': typeof ToolsPaletteRoute
+  '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
 }
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/tools/jwt': typeof ToolsJwtRoute
   '/tools/markdown': typeof ToolsMarkdownRoute
   '/tools/palette': typeof ToolsPaletteRoute
+  '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
 }
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/tools/jwt'
     | '/tools/markdown'
     | '/tools/palette'
+    | '/tools/regex'
     | '/tools/secret-generator'
     | '/tools/uuid-generator'
   fileRoutesByTo: FileRoutesByTo
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/tools/jwt'
     | '/tools/markdown'
     | '/tools/palette'
+    | '/tools/regex'
     | '/tools/secret-generator'
     | '/tools/uuid-generator'
   id:
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/tools/jwt'
     | '/tools/markdown'
     | '/tools/palette'
+    | '/tools/regex'
     | '/tools/secret-generator'
     | '/tools/uuid-generator'
   fileRoutesById: FileRoutesById
@@ -195,6 +207,7 @@ export interface RootRouteChildren {
   ToolsJwtRoute: typeof ToolsJwtRoute
   ToolsMarkdownRoute: typeof ToolsMarkdownRoute
   ToolsPaletteRoute: typeof ToolsPaletteRoute
+  ToolsRegexRoute: typeof ToolsRegexRoute
   ToolsSecretGeneratorRoute: typeof ToolsSecretGeneratorRoute
   ToolsUuidGeneratorRoute: typeof ToolsUuidGeneratorRoute
 }
@@ -227,6 +240,13 @@ declare module '@tanstack/react-router' {
       path: '/tools/secret-generator'
       fullPath: '/tools/secret-generator'
       preLoaderRoute: typeof ToolsSecretGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/regex': {
+      id: '/tools/regex'
+      path: '/tools/regex'
+      fullPath: '/tools/regex'
+      preLoaderRoute: typeof ToolsRegexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/palette': {
@@ -307,6 +327,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsJwtRoute: ToolsJwtRoute,
   ToolsMarkdownRoute: ToolsMarkdownRoute,
   ToolsPaletteRoute: ToolsPaletteRoute,
+  ToolsRegexRoute: ToolsRegexRoute,
   ToolsSecretGeneratorRoute: ToolsSecretGeneratorRoute,
   ToolsUuidGeneratorRoute: ToolsUuidGeneratorRoute,
 }

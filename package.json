@@ -22,6 +22,7 @@
     "@radix-ui/react-collapsible": "^1.1.14",
     "@radix-ui/react-dialog": "^1.1.17",
     "@radix-ui/react-scroll-area": "^1.2.12",
+    "@radix-ui/react-tooltip": "^1.2.10",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-query": "latest",
