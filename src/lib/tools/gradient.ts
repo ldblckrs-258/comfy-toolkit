@@ -51,7 +51,12 @@ export const DEFAULT_STATE: GradientState = {
   radialShape: 'circle',
   center: { x: 50, y: 50 },
   stops: [
-    { id: makeStopId(), hsv: rgbToHsv({ r: 59, g: 130, b: 246 }), a: 1, pos: 0 },
+    {
+      id: makeStopId(),
+      hsv: rgbToHsv({ r: 59, g: 130, b: 246 }),
+      a: 1,
+      pos: 0,
+    },
     {
       id: makeStopId(),
       hsv: rgbToHsv({ r: 168, g: 85, b: 247 }),
@@ -66,11 +71,7 @@ function round(value: number): number {
   return Math.round(value)
 }
 
-export function formatStopColor(
-  format: OutputFormat,
-  hsv: Hsv,
-  a = 1,
-): string {
+export function formatStopColor(format: OutputFormat, hsv: Hsv, a = 1): string {
   const rgb = roundRgb(hsvToRgb(hsv))
   switch (format) {
     case 'hex':
@@ -227,7 +228,8 @@ function buildSvg(state: GradientState): ExportResult {
     `  <rect width="100" height="100" fill="url(#grad)" />\n` +
     `</svg>`
 
-  if (approximate) return { code: `<!-- ${note} -->\n${code}`, approximate, note }
+  if (approximate)
+    return { code: `<!-- ${note} -->\n${code}`, approximate, note }
   return { code, approximate }
 }
 

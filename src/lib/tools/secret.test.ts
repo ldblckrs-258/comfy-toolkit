@@ -154,9 +154,9 @@ describe('generateSecrets (charset)', () => {
   })
 
   it('throws when no character set is selected', () => {
-    expect(() => generateSecrets(charsetOptions({ classes: classes({}) }))).toThrow(
-      /at least one/i,
-    )
+    expect(() =>
+      generateSecrets(charsetOptions({ classes: classes({}) })),
+    ).toThrow(/at least one/i)
   })
 })
 

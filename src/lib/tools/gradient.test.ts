@@ -22,10 +22,7 @@ function state(over: Partial<GradientState> = {}): GradientState {
     angle: 90,
     radialShape: 'circle',
     center: { x: 50, y: 50 },
-    stops: [
-      stop({ r: 255, g: 0, b: 0 }, 0),
-      stop({ r: 0, g: 0, b: 255 }, 100),
-    ],
+    stops: [stop({ r: 255, g: 0, b: 0 }, 0), stop({ r: 0, g: 0, b: 255 }, 100)],
     format: 'hex',
     ...over,
   }
@@ -95,7 +92,10 @@ describe('formatStopColor', () => {
 
 describe('sortStops', () => {
   it('returns a new ascending array', () => {
-    const input = [stop({ r: 0, g: 0, b: 0 }, 80), stop({ r: 0, g: 0, b: 0 }, 20)]
+    const input = [
+      stop({ r: 0, g: 0, b: 0 }, 80),
+      stop({ r: 0, g: 0, b: 0 }, 20),
+    ]
     const out = sortStops(input)
     expect(out.map((s) => s.pos)).toEqual([20, 80])
     expect(input.map((s) => s.pos)).toEqual([80, 20])

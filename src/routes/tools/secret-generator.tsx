@@ -442,7 +442,11 @@ function CharsetView() {
             </Field>
           </div>
 
-          <Field icon={ListOrdered} label="Count" hint="Generate 1–100 at once.">
+          <Field
+            icon={ListOrdered}
+            label="Count"
+            hint="Generate 1–100 at once."
+          >
             <Input
               type="number"
               min={1}
@@ -591,7 +595,11 @@ function ByteView() {
             </Field>
           </div>
 
-          <Field icon={ListOrdered} label="Count" hint="Generate 1–100 at once.">
+          <Field
+            icon={ListOrdered}
+            label="Count"
+            hint="Generate 1–100 at once."
+          >
             <Input
               type="number"
               min={1}

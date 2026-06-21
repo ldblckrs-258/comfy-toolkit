@@ -206,7 +206,7 @@ export interface Hwb {
 }
 
 export function hsvToHwb({ h, s, v }: Hsv): Hwb {
-  return { h, w: ((1 - s / 100) * v), b: 100 - v }
+  return { h, w: (1 - s / 100) * v, b: 100 - v }
 }
 
 export function hwbToHsv({ h, w, b }: Hwb): Hsv {

@@ -81,7 +81,9 @@ describe('hsv/hsl conversion', () => {
 describe('hex parsing and formatting', () => {
   it('expands 3 and 4 digit shorthand', () => {
     expect(hexToRgba('#abc')).toEqual({ rgb: { r: 170, g: 187, b: 204 }, a: 1 })
-    expect(hexToRgba('#abcf')).toMatchObject({ rgb: { r: 170, g: 187, b: 204 } })
+    expect(hexToRgba('#abcf')).toMatchObject({
+      rgb: { r: 170, g: 187, b: 204 },
+    })
   })
 
   it('reads the alpha byte from 8-digit hex', () => {
@@ -188,7 +190,9 @@ describe('cie lab and lch conversion', () => {
 describe('generatePalette', () => {
   it('returns the 11 tailwind steps in order', () => {
     const steps = generatePalette({ r: 18, g: 177, b: 177 }).map((s) => s.step)
-    expect(steps).toEqual([50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950])
+    expect(steps).toEqual([
+      50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
+    ])
   })
 
   it('darkens monotonically as the step grows', () => {

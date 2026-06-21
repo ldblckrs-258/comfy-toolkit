@@ -4,19 +4,19 @@ A fast, offline-friendly console of developer utilities. Every tool runs entirel
 
 ## Tools
 
-| Tool                      | Group      | What it does                                          |
-| ------------------------- | ---------- | ----------------------------------------------------- |
-| JSON Formatter            | Formatters | Format, minify and validate JSON                      |
-| Code Formatter            | Formatters | Format JS/TS/CSS/HTML/YAML with Prettier              |
-| Base64 Encode / Decode    | Encoders   | Encode and decode Base64 text                         |
-| JWT Encoder / Decoder     | Encoders   | Encode, decode, inspect and verify JWTs               |
-| HMAC Generator / Verifier | Encoders   | Generate and verify HMAC (SHA-256/384/512) signatures |
-| UUID v7 Generator         | Generators | Generate UUID v7 and inspect embedded timestamps      |
+| Tool                      | Group      | What it does                                           |
+| ------------------------- | ---------- | ------------------------------------------------------ |
+| JSON Formatter            | Formatters | Format, minify and validate JSON                       |
+| Code Formatter            | Formatters | Format JS/TS/CSS/HTML/YAML with Prettier               |
+| Base64 Encode / Decode    | Encoders   | Encode and decode Base64 text                          |
+| JWT Encoder / Decoder     | Encoders   | Encode, decode, inspect and verify JWTs                |
+| HMAC Generator / Verifier | Encoders   | Generate and verify HMAC (SHA-256/384/512) signatures  |
+| UUID v7 Generator         | Generators | Generate UUID v7 and inspect embedded timestamps       |
 | Secret / Key Generator    | Generators | Generate random secrets/keys (charset or random bytes) |
-| Markdown Preview          | Text       | Edit Markdown with live GFM preview                   |
+| Markdown Preview          | Text       | Edit Markdown with live GFM preview                    |
 | Color Converter           | Color      | Convert between HEX, RGB, HSL, HSV, CMYK, OKLCH, LAB   |
-| Palette Generator         | Color      | Build a color shade scale from any color              |
-| Gradient Generator        | Color      | Build linear/radial/conic gradients and export them   |
+| Palette Generator         | Color      | Build a color shade scale from any color               |
+| Gradient Generator        | Color      | Build linear/radial/conic gradients and export them    |
 
 Tools live in `src/lib/tools/` (logic + unit tests) and `src/routes/tools/` (UI). The catalog is defined in `src/lib/tools/registry.ts` — add an entry there to surface a new tool in the home grid and command palette.
 
