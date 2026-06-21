@@ -6,7 +6,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { openCommandPalette } from '@/lib/command-palette'
 import type { ToolGroup } from '@/lib/tools/registry'
-import { GROUP_COLORS, toolsByGroup } from '@/lib/tools/registry'
+import { GROUP_COLORS, toolsByGroupSorted } from '@/lib/tools/registry'
 import { cn } from '@/lib/utils'
 import type { LinkProps } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
@@ -15,7 +15,7 @@ import * as React from 'react'
 import { ThemeToggle } from './theme-toggle'
 
 const OPEN_KEY = 'comfy-toolkit-open-groups'
-const groups = toolsByGroup()
+const groups = toolsByGroupSorted()
 
 export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const [open, setOpen] = React.useState<Record<string, boolean>>(() =>
@@ -81,6 +81,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         <nav className="px-2 pb-4">
           {groups.map((g) => {
             const color = GROUP_COLORS[g.group]
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             const isOpen = open[g.group] ?? true
             return (
               <Collapsible
@@ -112,9 +113,9 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                           to={tool.to as LinkProps['to']}
                           onClick={onNavigate}
                           style={{ '--tool': color } as React.CSSProperties}
-                          className="tool-link flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm transition-colors"
+                          className="tool-link flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-xs transition-colors"
                         >
-                          <Icon data-icon className="h-4 w-4 shrink-0" />
+                          <Icon data-icon className="h-3.5 w-3.5 shrink-0" />
                           {tool.name}
                         </Link>
                       )

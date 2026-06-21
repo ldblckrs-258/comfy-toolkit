@@ -3,10 +3,10 @@ import { Command } from 'cmdk'
 import { CornerDownLeft, Search } from 'lucide-react'
 import { useNavigate } from '@tanstack/react-router'
 import type { LinkProps } from '@tanstack/react-router'
-import { GROUP_COLORS, toolsByGroup } from '@/lib/tools/registry'
+import { GROUP_COLORS, toolsByGroupSorted } from '@/lib/tools/registry'
 import { COMMAND_PALETTE_EVENT } from '@/lib/command-palette'
 
-const groups = toolsByGroup()
+const groups = toolsByGroupSorted()
 
 export function CommandPalette() {
   const [open, setOpen] = React.useState(false)

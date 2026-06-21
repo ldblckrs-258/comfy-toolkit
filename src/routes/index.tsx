@@ -1,4 +1,4 @@
-import { GROUP_COLORS, TOOLS, toolsByGroup } from '@/lib/tools/registry'
+import { GROUP_COLORS, TOOLS, toolsByGroupSorted } from '@/lib/tools/registry'
 import { SITE_DESCRIPTION, SITE_NAME, buildSeo } from '@/lib/seo'
 import type { LinkProps } from '@tanstack/react-router'
 import { Link, createFileRoute } from '@tanstack/react-router'
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/')({
   component: Home,
 })
 
-const groups = toolsByGroup()
+const groups = toolsByGroupSorted()
 
 function Home() {
   let index = 0

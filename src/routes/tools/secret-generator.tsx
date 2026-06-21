@@ -7,7 +7,13 @@ import { Input } from '@/components/ui/input'
 import { Tabs } from '@/components/ui/tabs'
 import { buildSeo, ogUrl } from '@/lib/seo'
 import { requireTool } from '@/lib/tools/registry'
-import type { CharClass, EncodeFormat, StrengthInfo } from '@/lib/tools/secret'
+import type {
+  ByteOptions,
+  CharClass,
+  CharsetOptions,
+  EncodeFormat,
+  StrengthInfo,
+} from '@/lib/tools/secret'
 import {
   buildCharPool,
   byteEntropyBits,
@@ -29,12 +35,15 @@ import {
   ChevronFirst,
   ChevronLast,
   Code,
+  Eye,
   EyeOff,
   Gauge,
   Hash,
   Key,
+  KeyRound,
   Link,
   ListOrdered,
+  Lock,
   Minus,
   RefreshCw,
   Ruler,
@@ -42,6 +51,7 @@ import {
   ShieldAlert,
   ShieldCheck,
   SlidersHorizontal,
+  Sparkles,
   Type,
 } from 'lucide-react'
 import * as React from 'react'
@@ -81,6 +91,128 @@ const STRENGTH_META: Record<
   Strong: { color: 'var(--accent)', icon: ShieldCheck },
   Excellent: { color: 'var(--success)', icon: BadgeCheck },
 }
+
+const DEFAULT_SPECIAL = '!@#$%^&*_=+?'
+
+function pickClasses(active: Array<CharClass>): Record<CharClass, boolean> {
+  return {
+    lowercase: active.includes('lowercase'),
+    uppercase: active.includes('uppercase'),
+    digits: active.includes('digits'),
+    dash: active.includes('dash'),
+    special: active.includes('special'),
+  }
+}
+
+type CharsetPreset = {
+  id: string
+  label: string
+  icon: LucideIcon
+  options: CharsetOptions
+}
+
+type BytePreset = {
+  id: string
+  label: string
+  icon: LucideIcon
+  options: ByteOptions
+}
+
+const CHARSET_PRESETS: Array<CharsetPreset> = [
+  {
+    id: 'strong',
+    label: 'Strong password',
+    icon: ShieldCheck,
+    options: {
+      length: 20,
+      classes: pickClasses(['lowercase', 'uppercase', 'digits', 'special']),
+      special: DEFAULT_SPECIAL,
+      excludeAmbiguous: false,
+      guaranteeEachClass: true,
+      prefix: '',
+      suffix: '',
+      count: 1,
+    },
+  },
+  {
+    id: 'readable',
+    label: 'Easy to read',
+    icon: Eye,
+    options: {
+      length: 16,
+      classes: pickClasses(['lowercase', 'uppercase', 'digits']),
+      special: DEFAULT_SPECIAL,
+      excludeAmbiguous: true,
+      guaranteeEachClass: true,
+      prefix: '',
+      suffix: '',
+      count: 1,
+    },
+  },
+  {
+    id: 'pin',
+    label: 'Numeric PIN',
+    icon: Lock,
+    options: {
+      length: 6,
+      classes: pickClasses(['digits']),
+      special: DEFAULT_SPECIAL,
+      excludeAmbiguous: false,
+      guaranteeEachClass: false,
+      prefix: '',
+      suffix: '',
+      count: 1,
+    },
+  },
+  {
+    id: 'apikey',
+    label: 'API key (sk_)',
+    icon: KeyRound,
+    options: {
+      length: 36,
+      classes: pickClasses(['lowercase', 'uppercase', 'digits']),
+      special: DEFAULT_SPECIAL,
+      excludeAmbiguous: true,
+      guaranteeEachClass: true,
+      prefix: 'sk_',
+      suffix: '',
+      count: 1,
+    },
+  },
+]
+
+const BYTE_PRESETS: Array<BytePreset> = [
+  {
+    id: 'hex32',
+    label: 'Hex (32 B)',
+    icon: Hash,
+    options: { bytes: 32, format: 'hex', prefix: '', suffix: '', count: 1 },
+  },
+  {
+    id: 'jwt',
+    label: 'JWT secret (HS256)',
+    icon: KeyRound,
+    options: {
+      bytes: 32,
+      format: 'base64url',
+      prefix: '',
+      suffix: '',
+      count: 1,
+    },
+  },
+  {
+    id: 'token64',
+    label: 'Long token (64 B)',
+    icon: Binary,
+    options: {
+      bytes: 64,
+      format: 'base64url',
+      prefix: '',
+      suffix: '',
+      count: 1,
+    },
+  },
+]
 
 export const Route = createFileRoute('/tools/secret-generator')({
   head: () => {
@@ -145,7 +277,7 @@ function CharsetView() {
     dash: false,
     special: false,
   })
-  const [special, setSpecial] = React.useState('!@#$%^&*_=+?')
+  const [special, setSpecial] = React.useState(DEFAULT_SPECIAL)
   const [excludeAmbiguous, setExcludeAmbiguous] = React.useState(false)
   const [guaranteeEachClass, setGuaranteeEachClass] = React.useState(true)
   const [prefix, setPrefix] = React.useState('')
@@ -165,14 +297,29 @@ function CharsetView() {
     count,
   }
 
-  const generate = () => {
+  const run = (opts: CharsetOptions) => {
     try {
-      setList(generateSecrets(options))
+      setList(generateSecrets(opts))
       setError('')
     } catch (err) {
       setError((err as Error).message)
       setList([])
     }
+  }
+
+  const generate = () => run(options)
+
+  const applyPreset = (preset: CharsetPreset) => {
+    const o = preset.options
+    setLength(o.length)
+    setClassMap(o.classes)
+    setSpecial(o.special)
+    setExcludeAmbiguous(o.excludeAmbiguous)
+    setGuaranteeEachClass(o.guaranteeEachClass)
+    setPrefix(o.prefix)
+    setSuffix(o.suffix)
+    setCount(o.count)
+    run(o)
   }
 
   React.useEffect(() => {
@@ -187,7 +334,7 @@ function CharsetView() {
             dash: false,
             special: false,
           },
-          special: '!@#$%^&*_=+?',
+          special: DEFAULT_SPECIAL,
           excludeAmbiguous: false,
           guaranteeEachClass: true,
           prefix: '',
@@ -212,119 +359,123 @@ function CharsetView() {
     setClassMap((prev) => ({ ...prev, [key]: !prev[key] }))
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <div className="flex flex-col gap-5 rounded-lg border border-border bg-card p-5">
-        <Field
-          icon={Ruler}
-          label="Length"
-          hint="Total length incl. prefix & suffix (1–256)."
-        >
-          <Input
-            type="number"
-            min={1}
-            max={256}
-            value={Number.isNaN(length) ? '' : length}
-            onChange={(event) => setLength(Number(event.target.value))}
-          />
-        </Field>
+    <div className="flex flex-col gap-6">
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="flex flex-col gap-5 rounded-lg border border-border bg-card p-5">
+          <Field
+            icon={Ruler}
+            label="Length"
+            hint="Total length incl. prefix & suffix (1–256)."
+          >
+            <Input
+              type="number"
+              min={1}
+              max={256}
+              value={Number.isNaN(length) ? '' : length}
+              onChange={(event) => setLength(Number(event.target.value))}
+            />
+          </Field>
 
-        <Field icon={Type} label="Character sets">
-          <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
-            {CLASS_ORDER.map((key) => (
-              <ClassPill
-                key={key}
-                meta={CLASS_META[key]}
-                active={classMap[key]}
-                onClick={() => toggleClass(key)}
+          <Field icon={Type} label="Character sets">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+              {CLASS_ORDER.map((key) => (
+                <ClassPill
+                  key={key}
+                  meta={CLASS_META[key]}
+                  active={classMap[key]}
+                  onClick={() => toggleClass(key)}
+                />
+              ))}
+            </div>
+          </Field>
+
+          {classMap.special ? (
+            <Field icon={Asterisk} label="Special characters">
+              <Input
+                value={special}
+                onChange={(event) => setSpecial(event.target.value)}
+                spellCheck={false}
+                className="font-mono"
+                placeholder={DEFAULT_SPECIAL}
               />
-            ))}
+            </Field>
+          ) : null}
+
+          <Field icon={SlidersHorizontal} label="Options">
+            <div className="grid grid-cols-2 gap-2">
+              <TogglePill
+                active={excludeAmbiguous}
+                onClick={() => setExcludeAmbiguous((value) => !value)}
+                icon={EyeOff}
+                color={ACCENT}
+              >
+                Exclude look-alikes
+              </TogglePill>
+              <TogglePill
+                active={guaranteeEachClass}
+                onClick={() => setGuaranteeEachClass((value) => !value)}
+                icon={CheckCheck}
+                color="var(--success)"
+              >
+                One of each set
+              </TogglePill>
+            </div>
+          </Field>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Field icon={ChevronFirst} label="Prefix">
+              <Input
+                value={prefix}
+                onChange={(event) => setPrefix(event.target.value)}
+                spellCheck={false}
+                className="font-mono"
+                placeholder="sk_"
+              />
+            </Field>
+            <Field icon={ChevronLast} label="Suffix">
+              <Input
+                value={suffix}
+                onChange={(event) => setSuffix(event.target.value)}
+                spellCheck={false}
+                className="font-mono"
+              />
+            </Field>
           </div>
-        </Field>
 
-        {classMap.special ? (
-          <Field icon={Asterisk} label="Special characters">
+          <Field icon={ListOrdered} label="Count" hint="Generate 1–100 at once.">
             <Input
-              value={special}
-              onChange={(event) => setSpecial(event.target.value)}
-              spellCheck={false}
-              className="font-mono"
-              placeholder="!@#$%^&*_=+?"
+              type="number"
+              min={1}
+              max={100}
+              value={Number.isNaN(count) ? '' : count}
+              onChange={(event) => setCount(Number(event.target.value))}
             />
           </Field>
-        ) : null}
 
-        <Field icon={SlidersHorizontal} label="Options">
-          <div className="grid grid-cols-2 gap-2">
-            <TogglePill
-              active={excludeAmbiguous}
-              onClick={() => setExcludeAmbiguous((value) => !value)}
-              icon={EyeOff}
-              color={ACCENT}
-            >
-              Exclude look-alikes
-            </TogglePill>
-            <TogglePill
-              active={guaranteeEachClass}
-              onClick={() => setGuaranteeEachClass((value) => !value)}
-              icon={CheckCheck}
-              color="var(--success)"
-            >
-              One of each set
-            </TogglePill>
-          </div>
-        </Field>
+          <Button onClick={generate}>
+            <RefreshCw className="h-4 w-4" />
+            Generate
+          </Button>
 
-        <div className="grid grid-cols-2 gap-3">
-          <Field icon={ChevronFirst} label="Prefix">
-            <Input
-              value={prefix}
-              onChange={(event) => setPrefix(event.target.value)}
-              spellCheck={false}
-              className="font-mono"
-              placeholder="sk_"
-            />
-          </Field>
-          <Field icon={ChevronLast} label="Suffix">
-            <Input
-              value={suffix}
-              onChange={(event) => setSuffix(event.target.value)}
-              spellCheck={false}
-              className="font-mono"
-            />
-          </Field>
+          {error ? <ErrorText>{error}</ErrorText> : null}
         </div>
 
-        <Field icon={ListOrdered} label="Count" hint="Generate 1–100 at once.">
-          <Input
-            type="number"
-            min={1}
-            max={100}
-            value={Number.isNaN(count) ? '' : count}
-            onChange={(event) => setCount(Number(event.target.value))}
+        <div className="space-y-4">
+          <EntropyPanel
+            bits={bits}
+            strength={strength}
+            detail={`${coreLength} random chars from a pool of ${pool.length}`}
+            note={
+              guaranteeEachClass
+                ? 'Approximate — the “one of each set” rule slightly lowers true entropy.'
+                : undefined
+            }
           />
-        </Field>
-
-        <Button onClick={generate}>
-          <RefreshCw className="h-4 w-4" />
-          Generate
-        </Button>
-
-        {error ? <ErrorText>{error}</ErrorText> : null}
+          <ResultList list={list} prefix={prefix} suffix={suffix} />
+        </div>
       </div>
 
-      <div className="space-y-4">
-        <EntropyPanel
-          bits={bits}
-          strength={strength}
-          detail={`${coreLength} random chars from a pool of ${pool.length}`}
-          note={
-            guaranteeEachClass
-              ? 'Approximate — the “one of each set” rule slightly lowers true entropy.'
-              : undefined
-          }
-        />
-        <ResultList list={list} prefix={prefix} suffix={suffix} />
-      </div>
+      <PresetRow presets={CHARSET_PRESETS} onApply={applyPreset} />
     </div>
   )
 }
@@ -339,6 +490,16 @@ function ByteView() {
 
   const generate = () => {
     setList(generateBytesSecrets({ bytes, format, prefix, suffix, count }))
+  }
+
+  const applyPreset = (preset: BytePreset) => {
+    const o = preset.options
+    setBytes(o.bytes)
+    setFormat(o.format)
+    setPrefix(o.prefix)
+    setSuffix(o.suffix)
+    setCount(o.count)
+    setList(generateBytesSecrets(o))
   }
 
   React.useEffect(() => {
@@ -357,102 +518,106 @@ function ByteView() {
   const strength = entropyStrength(bits)
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <div className="flex flex-col gap-5 rounded-lg border border-border bg-card p-5">
-        <Field
-          icon={Binary}
-          label="Bytes"
-          hint="Random bytes before encoding (1–256)."
-        >
-          <Input
-            type="number"
-            min={1}
-            max={256}
-            value={Number.isNaN(bytes) ? '' : bytes}
-            onChange={(event) => setBytes(Number(event.target.value))}
-          />
-        </Field>
-
-        <Field icon={Code} label="Encoding">
-          <Tabs
-            value={format}
-            onChange={setFormat}
-            size="sm"
-            options={[
-              {
-                value: 'hex',
-                label: (
-                  <span className="flex items-center gap-1.5">
-                    <Hash className="h-3 w-3" />
-                    hex
-                  </span>
-                ),
-              },
-              {
-                value: 'base64',
-                label: (
-                  <span className="flex items-center gap-1.5">
-                    <Binary className="h-3 w-3" />
-                    base64
-                  </span>
-                ),
-              },
-              {
-                value: 'base64url',
-                label: (
-                  <span className="flex items-center gap-1.5">
-                    <Link className="h-3 w-3" />
-                    base64url
-                  </span>
-                ),
-              },
-            ]}
-          />
-        </Field>
-
-        <div className="grid grid-cols-2 gap-3">
-          <Field icon={ChevronFirst} label="Prefix">
+    <div className="flex flex-col gap-6">
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="flex flex-col gap-5 rounded-lg border border-border bg-card p-5">
+          <Field
+            icon={Binary}
+            label="Bytes"
+            hint="Random bytes before encoding (1–256)."
+          >
             <Input
-              value={prefix}
-              onChange={(event) => setPrefix(event.target.value)}
-              spellCheck={false}
-              className="font-mono"
+              type="number"
+              min={1}
+              max={256}
+              value={Number.isNaN(bytes) ? '' : bytes}
+              onChange={(event) => setBytes(Number(event.target.value))}
             />
           </Field>
-          <Field icon={ChevronLast} label="Suffix">
-            <Input
-              value={suffix}
-              onChange={(event) => setSuffix(event.target.value)}
-              spellCheck={false}
-              className="font-mono"
+
+          <Field icon={Code} label="Encoding">
+            <Tabs
+              value={format}
+              onChange={setFormat}
+              size="sm"
+              options={[
+                {
+                  value: 'hex',
+                  label: (
+                    <span className="flex items-center gap-1.5">
+                      <Hash className="h-3 w-3" />
+                      hex
+                    </span>
+                  ),
+                },
+                {
+                  value: 'base64',
+                  label: (
+                    <span className="flex items-center gap-1.5">
+                      <Binary className="h-3 w-3" />
+                      base64
+                    </span>
+                  ),
+                },
+                {
+                  value: 'base64url',
+                  label: (
+                    <span className="flex items-center gap-1.5">
+                      <Link className="h-3 w-3" />
+                      base64url
+                    </span>
+                  ),
+                },
+              ]}
             />
           </Field>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Field icon={ChevronFirst} label="Prefix">
+              <Input
+                value={prefix}
+                onChange={(event) => setPrefix(event.target.value)}
+                spellCheck={false}
+                className="font-mono"
+              />
+            </Field>
+            <Field icon={ChevronLast} label="Suffix">
+              <Input
+                value={suffix}
+                onChange={(event) => setSuffix(event.target.value)}
+                spellCheck={false}
+                className="font-mono"
+              />
+            </Field>
+          </div>
+
+          <Field icon={ListOrdered} label="Count" hint="Generate 1–100 at once.">
+            <Input
+              type="number"
+              min={1}
+              max={100}
+              value={Number.isNaN(count) ? '' : count}
+              onChange={(event) => setCount(Number(event.target.value))}
+            />
+          </Field>
+
+          <Button onClick={generate}>
+            <RefreshCw className="h-4 w-4" />
+            Generate
+          </Button>
         </div>
 
-        <Field icon={ListOrdered} label="Count" hint="Generate 1–100 at once.">
-          <Input
-            type="number"
-            min={1}
-            max={100}
-            value={Number.isNaN(count) ? '' : count}
-            onChange={(event) => setCount(Number(event.target.value))}
+        <div className="space-y-4">
+          <EntropyPanel
+            bits={bits}
+            strength={strength}
+            detail={`${Number.isNaN(bytes) ? 0 : bytes} random bytes × 8 bits`}
           />
-        </Field>
-
-        <Button onClick={generate}>
-          <RefreshCw className="h-4 w-4" />
-          Generate
-        </Button>
+          <ResultList list={list} prefix={prefix} suffix={suffix} />
+        </div>
       </div>
 
-      <div className="space-y-4">
-        <EntropyPanel
-          bits={bits}
-          strength={strength}
-          detail={`${Number.isNaN(bytes) ? 0 : bytes} random bytes × 8 bits`}
-        />
-        <ResultList list={list} prefix={prefix} suffix={suffix} />
-      </div>
+      <PresetRow presets={BYTE_PRESETS} onApply={applyPreset} />
     </div>
   )
 }
@@ -551,6 +716,39 @@ function TogglePill({
   )
 }
 
+function PresetRow<T extends { id: string; label: string; icon: LucideIcon }>({
+  presets,
+  onApply,
+}: {
+  presets: Array<T>
+  onApply: (preset: T) => void
+}) {
+  return (
+    <div className="rounded-lg border border-border bg-card p-5">
+      <span className="flex items-center gap-1.5 text-sm font-semibold tracking-tight">
+        <Sparkles className="h-3.5 w-3.5 text-muted-foreground" />
+        Common presets
+      </span>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {presets.map((preset) => {
+          const Icon = preset.icon
+          return (
+            <button
+              key={preset.id}
+              type="button"
+              onClick={() => onApply(preset)}
+              className="flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-2 text-sm text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground"
+            >
+              <Icon className="h-4 w-4" style={{ color: GEN }} />
+              {preset.label}
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 function ResultList({
   list,
   prefix,
@@ -564,7 +762,7 @@ function ResultList({
     <Card
       label={`Generated (${list.length})`}
       copyValue={list.join('\n')}
-      bodyClassName="max-h-[calc(100svh-26rem)] min-h-32 gap-1.5 overflow-auto overscroll-contain p-2"
+      bodyClassName="max-h-[calc(100svh-30rem)] min-h-32 gap-1.5 overflow-auto overscroll-contain p-2"
     >
       {list.length === 0 ? (
         <div className="flex min-h-32 items-center justify-center px-4 text-center text-sm text-muted-foreground">
@@ -612,7 +810,7 @@ function EntropyPanel({
 }) {
   const meta = STRENGTH_META[strength.label]
   const Icon = meta.icon
-  const pct = Math.min(100, (bits / 256) * 100)
+  const pct = Math.min(100, (bits / 128) * 100)
   return (
     <div
       className="flex h-fit flex-col gap-4 rounded-lg border bg-card p-5"

@@ -196,3 +196,12 @@ export function toolsByGroup(): Array<ToolGroupView> {
     tools: TOOLS.filter((tool) => tool.group === group),
   })).filter((view) => view.tools.length > 0)
 }
+
+export function toolsByGroupSorted(): Array<ToolGroupView> {
+  return toolsByGroup()
+    .map((view) => ({
+      ...view,
+      tools: [...view.tools].sort((a, b) => a.name.localeCompare(b.name)),
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label))
+}

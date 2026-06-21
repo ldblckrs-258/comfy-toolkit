@@ -1,6 +1,8 @@
 import { ToolHeader } from '@/components/layout/tool-header'
 import { Card } from '@/components/tools/card'
 import { ErrorText } from '@/components/tools/tool-panel'
+import { Button } from '@/components/ui/button'
+import { formatCode } from '@/lib/tools/prettier'
 import { requireTool } from '@/lib/tools/registry'
 import { buildSeo, ogUrl } from '@/lib/seo'
 import { usePersistedState } from '@/lib/use-persisted-state'
@@ -42,6 +44,23 @@ function Page() {
   const [input, setInput] = usePersistedState('markdown:input', SAMPLE)
   const [html, setHtml] = React.useState('')
   const [error, setError] = React.useState<string>()
+  const [formatError, setFormatError] = React.useState<string>()
+  const [formatting, setFormatting] = React.useState(false)
+
+  const format = async () => {
+    if (!input.trim()) return
+    setFormatting(true)
+    setFormatError(undefined)
+    try {
+      setInput(await formatCode(input, 'markdown'))
+    } catch (caught) {
+      setFormatError(
+        caught instanceof Error ? caught.message : 'Failed to format.',
+      )
+    } finally {
+      setFormatting(false)
+    }
+  }
 
   React.useEffect(() => {
     let active = true
@@ -68,13 +87,27 @@ function Page() {
     <div className="flex h-full flex-col">
       <ToolHeader tool={tool} />
       <div className="grid min-h-0 flex-1 gap-4 p-6 lg:grid-cols-2">
-        <Card
-          label="Markdown"
-          className="flex-1"
-          copyValue={input}
-          value={input}
-          onChange={setInput}
-        />
+        <div className="flex min-h-0 flex-1 flex-col gap-2">
+          <Card
+            label="Markdown"
+            className="flex-1"
+            copyValue={input}
+            value={input}
+            onChange={setInput}
+            language="markdown"
+            headerRight={
+              <Button
+                size="xs"
+                variant="subtle"
+                onClick={format}
+                disabled={formatting || !input.trim()}
+              >
+                {formatting ? 'Formatting…' : 'Format'}
+              </Button>
+            }
+          />
+          {formatError ? <ErrorText>{formatError}</ErrorText> : null}
+        </div>
         <div className="flex min-h-0 flex-1 flex-col gap-2">
           <Card label="Preview" className="flex-1">
             <div
