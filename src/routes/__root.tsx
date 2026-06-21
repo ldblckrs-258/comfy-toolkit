@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import {
   HeadContent,
@@ -84,6 +85,12 @@ function NotFound() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {})
+    }
+  }, [])
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
