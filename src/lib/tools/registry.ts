@@ -8,6 +8,7 @@ import {
   FileText,
   Fingerprint,
   KeyRound,
+  KeySquare,
   Palette,
   SwatchBook,
 } from 'lucide-react'
@@ -119,6 +120,16 @@ export const TOOLS: Array<ToolMeta> = [
     keywords: ['random', 'id', 'ulid'],
     icon: Fingerprint,
     to: '/tools/uuid-generator',
+  },
+  {
+    id: 'secret-generator',
+    name: 'Secret / Key Generator',
+    description: 'Generate random secrets, keys and tokens.',
+    group: 'generators',
+    tags: ['secret', 'key', 'password', 'token', 'random', 'generate', 'hex', 'base64'],
+    keywords: ['api-key', 'nanoid', 'openssl', 'csprng', 'passphrase'],
+    icon: KeySquare,
+    to: '/tools/secret-generator',
   },
   {
     id: 'markdown',

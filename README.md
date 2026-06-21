@@ -12,6 +12,7 @@ A fast, offline-friendly console of developer utilities. Every tool runs entirel
 | JWT Encoder / Decoder     | Encoders   | Encode, decode, inspect and verify JWTs               |
 | HMAC Generator / Verifier | Encoders   | Generate and verify HMAC (SHA-256/384/512) signatures |
 | UUID v7 Generator         | Generators | Generate UUID v7 and inspect embedded timestamps      |
+| Secret / Key Generator    | Generators | Generate random secrets/keys (charset or random bytes) |
 | Markdown Preview          | Text       | Edit Markdown with live GFM preview                   |
 | Color Converter           | Color      | Convert between HEX, RGB, HSL, HSV, CMYK, OKLCH, LAB   |
 | Palette Generator         | Color      | Build a color shade scale from any color              |
