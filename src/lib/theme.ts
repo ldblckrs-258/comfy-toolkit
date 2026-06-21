@@ -3,7 +3,7 @@ export type Theme = 'light' | 'dark'
 export const THEME_KEY = 'comfy-toolkit-theme'
 
 export function getCurrentTheme(): Theme {
-  if (typeof document === 'undefined') return 'dark'
+  if (typeof document === 'undefined') return 'light'
   return document.documentElement.classList.contains('light') ? 'light' : 'dark'
 }
 
@@ -23,4 +23,4 @@ export function toggleTheme(): Theme {
   return next
 }
 
-export const THEME_INIT_SCRIPT = `(function(){try{if(localStorage.getItem('${THEME_KEY}')==='light'){document.documentElement.classList.add('light')}}catch(e){}})();`
+export const THEME_INIT_SCRIPT = `(function(){try{if(localStorage.getItem('${THEME_KEY}')!=='dark'){document.documentElement.classList.add('light')}}catch(e){document.documentElement.classList.add('light')}})();`

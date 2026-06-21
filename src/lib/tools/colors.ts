@@ -20,6 +20,10 @@ export function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
 }
 
+export function parseNumbers(raw: string): Array<number> {
+  return (raw.match(/-?\d*\.?\d+/g) ?? []).map(Number)
+}
+
 export function hsvToRgb({ h, s, v }: Hsv): Rgb {
   const S = s / 100
   const V = v / 100

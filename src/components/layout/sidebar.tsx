@@ -45,7 +45,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-17.25 items-center gap-1.5 border-b border-border pl-4 pr-3">
-        <img src="/logo.svg" alt="ComfyToolkit Logo" className="h-10 w-10" />
+        <img src="/logo.svg" alt="ComfyToolkit Logo" className="h-8 w-8" />
         <div className="-mt-1">
           <Link
             to="/"

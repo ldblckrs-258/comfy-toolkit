@@ -17,6 +17,7 @@ import { Route as ToolsMarkdownRouteImport } from './routes/tools/markdown'
 import { Route as ToolsJwtRouteImport } from './routes/tools/jwt'
 import { Route as ToolsJsonFormatterRouteImport } from './routes/tools/json-formatter'
 import { Route as ToolsHmacRouteImport } from './routes/tools/hmac'
+import { Route as ToolsGradientRouteImport } from './routes/tools/gradient'
 import { Route as ToolsColorsRouteImport } from './routes/tools/colors'
 import { Route as ToolsCodeFormatterRouteImport } from './routes/tools/code-formatter'
 import { Route as ToolsBase64RouteImport } from './routes/tools/base64'
@@ -61,6 +62,11 @@ const ToolsHmacRoute = ToolsHmacRouteImport.update({
   path: '/tools/hmac',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsGradientRoute = ToolsGradientRouteImport.update({
+  id: '/tools/gradient',
+  path: '/tools/gradient',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsColorsRoute = ToolsColorsRouteImport.update({
   id: '/tools/colors',
   path: '/tools/colors',
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/tools/base64': typeof ToolsBase64Route
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
+  '/tools/gradient': typeof ToolsGradientRoute
   '/tools/hmac': typeof ToolsHmacRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/jwt': typeof ToolsJwtRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/tools/base64': typeof ToolsBase64Route
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
+  '/tools/gradient': typeof ToolsGradientRoute
   '/tools/hmac': typeof ToolsHmacRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/jwt': typeof ToolsJwtRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/tools/base64': typeof ToolsBase64Route
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
+  '/tools/gradient': typeof ToolsGradientRoute
   '/tools/hmac': typeof ToolsHmacRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/jwt': typeof ToolsJwtRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/tools/base64'
     | '/tools/code-formatter'
     | '/tools/colors'
+    | '/tools/gradient'
     | '/tools/hmac'
     | '/tools/json-formatter'
     | '/tools/jwt'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/tools/base64'
     | '/tools/code-formatter'
     | '/tools/colors'
+    | '/tools/gradient'
     | '/tools/hmac'
     | '/tools/json-formatter'
     | '/tools/jwt'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/tools/base64'
     | '/tools/code-formatter'
     | '/tools/colors'
+    | '/tools/gradient'
     | '/tools/hmac'
     | '/tools/json-formatter'
     | '/tools/jwt'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   ToolsBase64Route: typeof ToolsBase64Route
   ToolsCodeFormatterRoute: typeof ToolsCodeFormatterRoute
   ToolsColorsRoute: typeof ToolsColorsRoute
+  ToolsGradientRoute: typeof ToolsGradientRoute
   ToolsHmacRoute: typeof ToolsHmacRoute
   ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
   ToolsJwtRoute: typeof ToolsJwtRoute
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsHmacRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/gradient': {
+      id: '/tools/gradient'
+      path: '/tools/gradient'
+      fullPath: '/tools/gradient'
+      preLoaderRoute: typeof ToolsGradientRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/colors': {
       id: '/tools/colors'
       path: '/tools/colors'
@@ -261,6 +281,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsBase64Route: ToolsBase64Route,
   ToolsCodeFormatterRoute: ToolsCodeFormatterRoute,
   ToolsColorsRoute: ToolsColorsRoute,
+  ToolsGradientRoute: ToolsGradientRoute,
   ToolsHmacRoute: ToolsHmacRoute,
   ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
   ToolsJwtRoute: ToolsJwtRoute,

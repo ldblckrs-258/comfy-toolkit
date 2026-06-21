@@ -9,17 +9,17 @@ import { html as toReactNode } from 'satori-html'
 import { GROUP_LABELS, TOOLS } from '../src/lib/tools/registry.ts'
 import type { ToolGroup, ToolMeta } from '../src/lib/tools/registry.ts'
 
-const SITE_ACCENT = '#24b1b1'
+const SITE_ACCENT = '#0d9488'
 
 const SITE_DESCRIPTION =
   'A fast, offline-friendly console of developer and designer utilities — formatters, encoders, generators, and color tools that run entirely in your browser.'
 
 const GROUP_HEX: Record<ToolGroup, string> = {
-  formatters: '#38bdf8',
-  encoders: '#a78bfa',
-  generators: '#34d399',
-  text: '#fb923c',
-  color: '#f472b6',
+  formatters: '#0284c7',
+  encoders: '#7c3aed',
+  generators: '#059669',
+  text: '#ea580c',
+  color: '#db2777',
 }
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -37,17 +37,17 @@ function cardHtml(opts: {
 }): string {
   const { accent, eyebrow, title, description } = opts
   return `
-    <div style="width:1200px;height:630px;display:flex;flex-direction:column;justify-content:space-between;background:#090b11;padding:80px;font-family:Jakarta;">
+    <div style="width:1200px;height:630px;display:flex;flex-direction:column;justify-content:space-between;background:#ffffff;padding:80px;font-family:Jakarta;">
       <div style="display:flex;flex-direction:column;">
         <div style="display:flex;color:${accent};font-size:28px;font-weight:700;letter-spacing:4px;">${eyebrow}</div>
-        <div style="display:flex;color:#e8edf7;font-size:88px;font-weight:700;margin-top:28px;">${title}</div>
-        <div style="display:flex;color:#828fa8;font-size:36px;font-weight:400;margin-top:24px;max-width:940px;line-height:1.4;">${description}</div>
+        <div style="display:flex;color:#0b0e14;font-size:88px;font-weight:700;margin-top:28px;">${title}</div>
+        <div style="display:flex;color:#5b647a;font-size:36px;font-weight:400;margin-top:24px;max-width:940px;line-height:1.4;">${description}</div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <div style="display:flex;align-items:center;">
           <img src="${logoDataUri}" style="width:64px;height:64px;margin-right:20px;" />
           <div style="display:flex;font-size:38px;font-weight:700;">
-            <span style="color:#e8edf7;">Comfy</span>
+            <span style="color:#0b0e14;">Comfy</span>
             <span style="color:${SITE_ACCENT};">Toolkit</span>
           </div>
         </div>

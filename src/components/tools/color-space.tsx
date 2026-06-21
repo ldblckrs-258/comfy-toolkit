@@ -7,6 +7,7 @@ import {
   cmykToRgb,
   formatCmyk,
   formatHsl,
+  parseNumbers,
   formatHsv,
   formatHwb,
   formatLab,
@@ -94,9 +95,7 @@ export function rampGradient(toRgb: (t: number) => Rgb, steps = 8): string {
   return `linear-gradient(to right, ${stops.join(', ')})`
 }
 
-export function parseNumbers(raw: string): Array<number> {
-  return (raw.match(/-?\d*\.?\d+/g) ?? []).map(Number)
-}
+export { parseNumbers } from '@/lib/tools/colors'
 
 export function formatSpace(space: SpaceId, rgb: Rgb, alpha = 1): string {
   switch (space) {

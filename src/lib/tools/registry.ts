@@ -1,6 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
 import {
   Binary,
+  Blend,
   Braces,
   Code2,
   FileSignature,
@@ -148,6 +149,16 @@ export const TOOLS: Array<ToolMeta> = [
     keywords: ['swatch', 'theme', 'tokens', 'palette'],
     icon: SwatchBook,
     to: '/tools/palette',
+  },
+  {
+    id: 'gradient',
+    name: 'Gradient Generator',
+    description: 'Build linear, radial and conic gradients and export them.',
+    group: 'color',
+    tags: ['gradient', 'linear', 'radial', 'conic', 'css', 'tailwind', 'svg'],
+    keywords: ['stops', 'background', 'oklch', 'export', 'color'],
+    icon: Blend,
+    to: '/tools/gradient',
   },
 ]
 
