@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import type { PrettierLang } from '@/lib/tools/prettier'
 import { PRETTIER_LANGS, formatCode } from '@/lib/tools/prettier'
 import { requireTool } from '@/lib/tools/registry'
+import { buildSeo, ogUrl } from '@/lib/seo'
 import { useDebouncedValue } from '@/lib/use-debounced-value'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { cn } from '@/lib/utils'
@@ -31,7 +32,18 @@ const PRISM_LANG: Record<PrettierLang, string> = {
 }
 
 export const Route = createFileRoute('/tools/code-formatter')({
-  head: () => ({ meta: [{ title: `${tool.name} — ComfyToolkit` }] }),
+  head: () => {
+    const seo = buildSeo({
+      title: `${tool.name} — ComfyToolkit`,
+      description: tool.description,
+      path: tool.to,
+      image: ogUrl(tool.id),
+    })
+    return {
+      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
+      links: seo.links,
+    }
+  },
   component: Page,
 })
 

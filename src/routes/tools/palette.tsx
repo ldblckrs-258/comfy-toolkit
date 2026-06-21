@@ -21,6 +21,7 @@ import {
   roundRgb,
 } from '@/lib/tools/colors'
 import { requireTool } from '@/lib/tools/registry'
+import { buildSeo, ogUrl } from '@/lib/seo'
 import { cn } from '@/lib/utils'
 import { createFileRoute } from '@tanstack/react-router'
 import type { LucideIcon } from 'lucide-react'
@@ -127,7 +128,18 @@ function buildExport(
 }
 
 export const Route = createFileRoute('/tools/palette')({
-  head: () => ({ meta: [{ title: `${tool.name} — ComfyToolkit` }] }),
+  head: () => {
+    const seo = buildSeo({
+      title: `${tool.name} — ComfyToolkit`,
+      description: tool.description,
+      path: tool.to,
+      image: ogUrl(tool.id),
+    })
+    return {
+      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
+      links: seo.links,
+    }
+  },
   component: Page,
 })
 

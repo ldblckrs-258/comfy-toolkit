@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import type { JsonIndent } from '@/lib/tools/json'
 import { formatJson, minifyJson } from '@/lib/tools/json'
 import { requireTool } from '@/lib/tools/registry'
+import { buildSeo, ogUrl } from '@/lib/seo'
 import { useDebouncedValue } from '@/lib/use-debounced-value'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { cn } from '@/lib/utils'
@@ -16,7 +17,18 @@ const tool = requireTool('json-formatter')
 const INDENTS: Array<JsonIndent> = [2, 4, 'tab']
 
 export const Route = createFileRoute('/tools/json-formatter')({
-  head: () => ({ meta: [{ title: `${tool.name} — ComfyToolkit` }] }),
+  head: () => {
+    const seo = buildSeo({
+      title: `${tool.name} — ComfyToolkit`,
+      description: tool.description,
+      path: tool.to,
+      image: ogUrl(tool.id),
+    })
+    return {
+      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
+      links: seo.links,
+    }
+  },
   component: Page,
 })
 

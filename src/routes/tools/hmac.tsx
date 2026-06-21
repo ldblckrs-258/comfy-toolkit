@@ -5,6 +5,7 @@ import { Tabs } from '@/components/ui/tabs'
 import type { HmacAlgorithm, HmacEncoding } from '@/lib/tools/hmac'
 import { HMAC_ALGORITHMS, generateHmac, verifyHmac } from '@/lib/tools/hmac'
 import { requireTool } from '@/lib/tools/registry'
+import { buildSeo, ogUrl } from '@/lib/seo'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { cn } from '@/lib/utils'
 import { createFileRoute } from '@tanstack/react-router'
@@ -16,7 +17,18 @@ const tool = requireTool('hmac')
 type Mode = 'generate' | 'verify'
 
 export const Route = createFileRoute('/tools/hmac')({
-  head: () => ({ meta: [{ title: `${tool.name} — ComfyToolkit` }] }),
+  head: () => {
+    const seo = buildSeo({
+      title: `${tool.name} — ComfyToolkit`,
+      description: tool.description,
+      path: tool.to,
+      image: ogUrl(tool.id),
+    })
+    return {
+      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
+      links: seo.links,
+    }
+  },
   component: Page,
 })
 

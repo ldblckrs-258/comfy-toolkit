@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs } from '@/components/ui/tabs'
 import { requireTool } from '@/lib/tools/registry'
+import { buildSeo, ogUrl } from '@/lib/seo'
 import type { UuidField, UuidFieldKey } from '@/lib/tools/uuid'
 import {
   decomposeUuidV7,
@@ -32,7 +33,18 @@ const FIELD_COLORS: Record<UuidFieldKey, string> = {
 }
 
 export const Route = createFileRoute('/tools/uuid-generator')({
-  head: () => ({ meta: [{ title: `${tool.name} — ComfyToolkit` }] }),
+  head: () => {
+    const seo = buildSeo({
+      title: `${tool.name} — ComfyToolkit`,
+      description: tool.description,
+      path: tool.to,
+      image: ogUrl(tool.id),
+    })
+    return {
+      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
+      links: seo.links,
+    }
+  },
   component: Page,
 })
 

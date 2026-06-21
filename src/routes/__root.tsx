@@ -11,6 +11,7 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import { AppShell } from '@/components/layout/app-shell'
 import { THEME_INIT_SCRIPT } from '@/lib/theme'
+import { SITE_DESCRIPTION, SITE_NAME, ogUrl } from '@/lib/seo'
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
@@ -30,10 +31,21 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'ComfyToolkit',
+        title: SITE_NAME,
       },
+      { name: 'theme-color', content: '#24b1b1' },
+      { name: 'description', content: SITE_DESCRIPTION },
+      { property: 'og:site_name', content: SITE_NAME },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:image', content: ogUrl() },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:image', content: ogUrl() },
     ],
     links: [
+      { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+      { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' },
+      { rel: 'apple-touch-icon', href: '/logo192.png' },
+      { rel: 'manifest', href: '/manifest.json' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       {
         rel: 'preconnect',

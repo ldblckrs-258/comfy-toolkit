@@ -24,6 +24,7 @@ import {
   roundRgb,
 } from '@/lib/tools/colors'
 import { requireTool } from '@/lib/tools/registry'
+import { buildSeo, ogUrl } from '@/lib/seo'
 import { createFileRoute } from '@tanstack/react-router'
 import { Droplets } from 'lucide-react'
 import * as React from 'react'
@@ -39,7 +40,18 @@ interface State {
 }
 
 export const Route = createFileRoute('/tools/colors')({
-  head: () => ({ meta: [{ title: `${tool.name} — ComfyToolkit` }] }),
+  head: () => {
+    const seo = buildSeo({
+      title: `${tool.name} — ComfyToolkit`,
+      description: tool.description,
+      path: tool.to,
+      image: ogUrl(tool.id),
+    })
+    return {
+      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
+      links: seo.links,
+    }
+  },
   component: Page,
 })
 

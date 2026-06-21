@@ -4,6 +4,7 @@ import { ErrorText } from '@/components/tools/tool-panel'
 import { Tabs } from '@/components/ui/tabs'
 import { decodeBase64, encodeBase64 } from '@/lib/tools/base64'
 import { requireTool } from '@/lib/tools/registry'
+import { buildSeo, ogUrl } from '@/lib/seo'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { createFileRoute } from '@tanstack/react-router'
 import * as React from 'react'
@@ -12,7 +13,18 @@ const tool = requireTool('base64')
 type Mode = 'encode' | 'decode'
 
 export const Route = createFileRoute('/tools/base64')({
-  head: () => ({ meta: [{ title: `${tool.name} — ComfyToolkit` }] }),
+  head: () => {
+    const seo = buildSeo({
+      title: `${tool.name} — ComfyToolkit`,
+      description: tool.description,
+      path: tool.to,
+      image: ogUrl(tool.id),
+    })
+    return {
+      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
+      links: seo.links,
+    }
+  },
   component: Page,
 })
 

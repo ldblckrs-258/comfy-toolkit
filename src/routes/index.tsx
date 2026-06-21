@@ -1,8 +1,19 @@
 import { GROUP_COLORS, TOOLS, toolsByGroup } from '@/lib/tools/registry'
+import { SITE_DESCRIPTION, SITE_NAME, buildSeo } from '@/lib/seo'
 import type { LinkProps } from '@tanstack/react-router'
 import { Link, createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/')({ component: Home })
+export const Route = createFileRoute('/')({
+  head: () => {
+    const seo = buildSeo({
+      title: SITE_NAME,
+      description: SITE_DESCRIPTION,
+      path: '/',
+    })
+    return { meta: [{ title: SITE_NAME }, ...seo.meta], links: seo.links }
+  },
+  component: Home,
+})
 
 const groups = toolsByGroup()
 

@@ -13,6 +13,7 @@ import {
   verifyJwtSignature,
 } from '@/lib/tools/jwt'
 import { requireTool } from '@/lib/tools/registry'
+import { buildSeo, ogUrl } from '@/lib/seo'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { cn } from '@/lib/utils'
 import { createFileRoute } from '@tanstack/react-router'
@@ -22,7 +23,18 @@ import * as React from 'react'
 const tool = requireTool('jwt-decoder')
 
 export const Route = createFileRoute('/tools/jwt')({
-  head: () => ({ meta: [{ title: `${tool.name} — ComfyToolkit` }] }),
+  head: () => {
+    const seo = buildSeo({
+      title: `${tool.name} — ComfyToolkit`,
+      description: tool.description,
+      path: tool.to,
+      image: ogUrl(tool.id),
+    })
+    return {
+      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
+      links: seo.links,
+    }
+  },
   component: Page,
 })
 
