@@ -24,6 +24,7 @@ import { Route as ToolsGradientRouteImport } from './routes/tools/gradient'
 import { Route as ToolsCronRouteImport } from './routes/tools/cron'
 import { Route as ToolsColorsRouteImport } from './routes/tools/colors'
 import { Route as ToolsCodeFormatterRouteImport } from './routes/tools/code-formatter'
+import { Route as ToolsClockRouteImport } from './routes/tools/clock'
 import { Route as ToolsBase64RouteImport } from './routes/tools/base64'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -101,6 +102,11 @@ const ToolsCodeFormatterRoute = ToolsCodeFormatterRouteImport.update({
   path: '/tools/code-formatter',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsClockRoute = ToolsClockRouteImport.update({
+  id: '/tools/clock',
+  path: '/tools/clock',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsBase64Route = ToolsBase64RouteImport.update({
   id: '/tools/base64',
   path: '/tools/base64',
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tools/base64': typeof ToolsBase64Route
+  '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
   '/tools/cron': typeof ToolsCronRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tools/base64': typeof ToolsBase64Route
+  '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
   '/tools/cron': typeof ToolsCronRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tools/base64': typeof ToolsBase64Route
+  '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
   '/tools/cron': typeof ToolsCronRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/'
     | '/sitemap.xml'
     | '/tools/base64'
+    | '/tools/clock'
     | '/tools/code-formatter'
     | '/tools/colors'
     | '/tools/cron'
@@ -186,6 +196,7 @@ export interface FileRouteTypes {
     | '/'
     | '/sitemap.xml'
     | '/tools/base64'
+    | '/tools/clock'
     | '/tools/code-formatter'
     | '/tools/colors'
     | '/tools/cron'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/'
     | '/sitemap.xml'
     | '/tools/base64'
+    | '/tools/clock'
     | '/tools/code-formatter'
     | '/tools/colors'
     | '/tools/cron'
@@ -223,6 +235,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ToolsBase64Route: typeof ToolsBase64Route
+  ToolsClockRoute: typeof ToolsClockRoute
   ToolsCodeFormatterRoute: typeof ToolsCodeFormatterRoute
   ToolsColorsRoute: typeof ToolsColorsRoute
   ToolsCronRoute: typeof ToolsCronRoute
@@ -345,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsCodeFormatterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/clock': {
+      id: '/tools/clock'
+      path: '/tools/clock'
+      fullPath: '/tools/clock'
+      preLoaderRoute: typeof ToolsClockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/base64': {
       id: '/tools/base64'
       path: '/tools/base64'
@@ -359,6 +379,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ToolsBase64Route: ToolsBase64Route,
+  ToolsClockRoute: ToolsClockRoute,
   ToolsCodeFormatterRoute: ToolsCodeFormatterRoute,
   ToolsColorsRoute: ToolsColorsRoute,
   ToolsCronRoute: ToolsCronRoute,

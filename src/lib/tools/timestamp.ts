@@ -41,7 +41,7 @@ export function parseEpoch(
   return { ms: toMs(n, resolved, trimmed), unit: resolved }
 }
 
-interface Wall {
+export interface Wall {
   year: number
   month: number
   day: number
@@ -70,7 +70,7 @@ function getPartsFormatter(timeZone: string): Intl.DateTimeFormat {
   return fmt
 }
 
-function utcToWall(ms: number, timeZone: string): Wall {
+export function utcToWall(ms: number, timeZone: string): Wall {
   const parts = getPartsFormatter(timeZone).formatToParts(new Date(ms))
   const get = (type: string) =>
     Number(parts.find((p) => p.type === type)?.value)
@@ -88,7 +88,7 @@ function wallToSerial(w: Wall): number {
   return Date.UTC(w.year, w.month - 1, w.day, w.hour, w.minute, w.second)
 }
 
-function offsetAt(ms: number, timeZone: string): number {
+export function offsetAt(ms: number, timeZone: string): number {
   return wallToSerial(utcToWall(ms, timeZone)) - ms
 }
 
@@ -115,8 +115,7 @@ function resolveWallToUtc(w: Wall, timeZone: string): number {
   return target - offBefore
 }
 
-const DATE_RE =
-  /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/
+const DATE_RE = /^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/
 const EXPLICIT_OFFSET_RE = /(?:[zZ]|[+-]\d{2}:?\d{2})$/
 
 export function parseDate(raw: string, timeZone: string): number | null {
@@ -168,9 +167,10 @@ function pad(n: number): string {
   return String(n).padStart(2, '0')
 }
 
-function formatOffset(offsetMs: number): string {
-  const sign = offsetMs < 0 ? '-' : '+'
-  const abs = Math.abs(offsetMs)
+export function formatOffset(offsetMs: number): string {
+  const rounded = Math.round(offsetMs / 60_000) * 60_000
+  const sign = rounded < 0 ? '-' : '+'
+  const abs = Math.abs(rounded)
   const hours = Math.floor(abs / 3_600_000)
   const minutes = Math.floor((abs % 3_600_000) / 60_000)
   return `${sign}${pad(hours)}:${pad(minutes)}`
@@ -333,11 +333,15 @@ export function extractFromId(raw: string): Array<ExtractedTimestamp> {
 
   if (UUIDV7_RE.test(input)) {
     const ms = extractTimestampMs(input)
-    return ms === null ? [] : [{ format: 'uuidv7', label: 'UUIDv7', timestampMs: ms }]
+    return ms === null
+      ? []
+      : [{ format: 'uuidv7', label: 'UUIDv7', timestampMs: ms }]
   }
 
   if (ULID_RE.test(input)) {
-    return [{ format: 'ulid', label: 'ULID', timestampMs: ulidTimestampMs(input) }]
+    return [
+      { format: 'ulid', label: 'ULID', timestampMs: ulidTimestampMs(input) },
+    ]
   }
 
   if (OBJECTID_RE.test(input)) {

@@ -48,3 +48,28 @@ registerRoute(
     ],
   }),
 )
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+  const url = '/tools/clock?tab=timer'
+  event.waitUntil(
+    (async () => {
+      try {
+        const windows = await self.clients.matchAll({
+          type: 'window',
+          includeUncontrolled: true,
+        })
+        const existing = windows.find((client) =>
+          client.url.includes('/tools/clock'),
+        )
+        if (existing) {
+          await existing.focus()
+          return
+        }
+        await self.clients.openWindow(url)
+      } catch {
+        /* ignore */
+      }
+    })(),
+  )
+})

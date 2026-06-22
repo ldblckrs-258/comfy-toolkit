@@ -1,4 +1,5 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -25,6 +26,16 @@ const GROUP_HEX: Record<ToolGroup, string> = {
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
 const outDir = join(rootDir, 'public', 'og')
+const manifestPath = join(outDir, '.manifest.json')
+
+function readManifest(): Record<string, string> {
+  if (!existsSync(manifestPath)) return {}
+  try {
+    return JSON.parse(readFileSync(manifestPath, 'utf8'))
+  } catch {
+    return {}
+  }
+}
 
 const logoDataUri = `data:image/svg+xml;base64,${Buffer.from(
   readFileSync(join(rootDir, 'public', 'logo.svg')),
@@ -110,13 +121,28 @@ async function main(): Promise<void> {
     })),
   ]
 
+  const manifest = readManifest()
+  const next: Record<string, string> = {}
+  let written = 0
+
   for (const card of cards) {
+    const hash = createHash('sha256').update(card.html).digest('hex')
+    next[card.file] = hash
+    const pngPath = join(outDir, `${card.file}.png`)
+    if (manifest[card.file] === hash && existsSync(pngPath)) {
+      console.log(`og: ${card.file}.png (unchanged, skipped)`)
+      continue
+    }
     const png = await renderPng(card.html, fonts)
-    writeFileSync(join(outDir, `${card.file}.png`), png)
+    writeFileSync(pngPath, png)
+    written += 1
     console.log(`og: ${card.file}.png (${(png.length / 1024).toFixed(0)} KiB)`)
   }
 
-  console.log(`Generated ${cards.length} OG images → public/og/`)
+  writeFileSync(manifestPath, `${JSON.stringify(next, null, 2)}\n`)
+  console.log(
+    `Generated ${written}/${cards.length} OG images → public/og/ (${cards.length - written} unchanged)`,
+  )
 }
 
 await main()

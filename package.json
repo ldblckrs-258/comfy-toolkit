@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.26.0",
+    "@formkit/drag-and-drop": "^0.6.1",
     "@radix-ui/react-collapsible": "^1.1.14",
     "@radix-ui/react-dialog": "^1.1.17",
     "@radix-ui/react-scroll-area": "^1.2.12",

@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react'
 import {
+  AlarmClock,
   Binary,
   Blend,
   Braces,
@@ -175,6 +176,23 @@ export const TOOLS: Array<ToolMeta> = [
     ],
     icon: Clock,
     to: '/tools/unix-timestamp',
+  },
+  {
+    id: 'clock',
+    name: 'Clock',
+    description: 'World clock with timezones, stopwatch and countdown timer.',
+    group: 'date',
+    tags: [
+      'clock',
+      'world clock',
+      'timezone',
+      'stopwatch',
+      'timer',
+      'countdown',
+    ],
+    keywords: ['time', 'utc', 'laps', 'lap', 'schedule'],
+    icon: AlarmClock,
+    to: '/tools/clock',
   },
   {
     id: 'markdown',

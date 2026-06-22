@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 export interface ComboboxOption {
   value: string
   label: string
+  hint?: string
 }
 
 export function Combobox({
@@ -81,6 +82,7 @@ export function Combobox({
                 <Command.Item
                   key={option.value}
                   value={option.value}
+                  keywords={option.hint ? [option.hint] : undefined}
                   onSelect={() => {
                     onChange(option.value)
                     setOpen(false)
@@ -88,6 +90,11 @@ export function Combobox({
                   className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm text-muted-foreground data-[selected=true]:bg-muted data-[selected=true]:text-foreground"
                 >
                   <span className="flex-1 truncate">{option.label}</span>
+                  {option.hint ? (
+                    <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                      {option.hint}
+                    </span>
+                  ) : null}
                   {option.value === value ? (
                     <Check className="h-3.5 w-3.5 shrink-0 text-accent" />
                   ) : null}
