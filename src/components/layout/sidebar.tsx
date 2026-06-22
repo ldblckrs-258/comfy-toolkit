@@ -174,7 +174,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         </button>
       </div>
 
-      <ScrollArea className="flex-1">
+      <ScrollArea className="min-h-0 flex-1">
         <nav className="px-2 pb-4">
           <StarredSection onNavigate={onNavigate} />
           {groups.map((g) => (
@@ -195,7 +195,7 @@ export function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
 export function Sidebar() {
   return (
-    <aside className="hidden h-full border-r border-border bg-card md:block">
+    <aside className="hidden h-full min-h-0 overflow-hidden border-r border-border bg-card md:block">
       <SidebarContent />
     </aside>
   )
