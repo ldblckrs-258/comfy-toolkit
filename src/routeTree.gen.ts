@@ -20,6 +20,7 @@ import { Route as ToolsMarkdownRouteImport } from './routes/tools/markdown'
 import { Route as ToolsJwtRouteImport } from './routes/tools/jwt'
 import { Route as ToolsJsonFormatterRouteImport } from './routes/tools/json-formatter'
 import { Route as ToolsHmacRouteImport } from './routes/tools/hmac'
+import { Route as ToolsHashRouteImport } from './routes/tools/hash'
 import { Route as ToolsGradientRouteImport } from './routes/tools/gradient'
 import { Route as ToolsCronRouteImport } from './routes/tools/cron'
 import { Route as ToolsColorsRouteImport } from './routes/tools/colors'
@@ -82,6 +83,11 @@ const ToolsHmacRoute = ToolsHmacRouteImport.update({
   path: '/tools/hmac',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsHashRoute = ToolsHashRouteImport.update({
+  id: '/tools/hash',
+  path: '/tools/hash',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsGradientRoute = ToolsGradientRouteImport.update({
   id: '/tools/gradient',
   path: '/tools/gradient',
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/tools/colors': typeof ToolsColorsRoute
   '/tools/cron': typeof ToolsCronRoute
   '/tools/gradient': typeof ToolsGradientRoute
+  '/tools/hash': typeof ToolsHashRoute
   '/tools/hmac': typeof ToolsHmacRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/jwt': typeof ToolsJwtRoute
@@ -141,6 +148,7 @@ export interface FileRoutesByTo {
   '/tools/colors': typeof ToolsColorsRoute
   '/tools/cron': typeof ToolsCronRoute
   '/tools/gradient': typeof ToolsGradientRoute
+  '/tools/hash': typeof ToolsHashRoute
   '/tools/hmac': typeof ToolsHmacRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/jwt': typeof ToolsJwtRoute
@@ -161,6 +169,7 @@ export interface FileRoutesById {
   '/tools/colors': typeof ToolsColorsRoute
   '/tools/cron': typeof ToolsCronRoute
   '/tools/gradient': typeof ToolsGradientRoute
+  '/tools/hash': typeof ToolsHashRoute
   '/tools/hmac': typeof ToolsHmacRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/jwt': typeof ToolsJwtRoute
@@ -182,6 +191,7 @@ export interface FileRouteTypes {
     | '/tools/colors'
     | '/tools/cron'
     | '/tools/gradient'
+    | '/tools/hash'
     | '/tools/hmac'
     | '/tools/json-formatter'
     | '/tools/jwt'
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
     | '/tools/colors'
     | '/tools/cron'
     | '/tools/gradient'
+    | '/tools/hash'
     | '/tools/hmac'
     | '/tools/json-formatter'
     | '/tools/jwt'
@@ -220,6 +231,7 @@ export interface FileRouteTypes {
     | '/tools/colors'
     | '/tools/cron'
     | '/tools/gradient'
+    | '/tools/hash'
     | '/tools/hmac'
     | '/tools/json-formatter'
     | '/tools/jwt'
@@ -240,6 +252,7 @@ export interface RootRouteChildren {
   ToolsColorsRoute: typeof ToolsColorsRoute
   ToolsCronRoute: typeof ToolsCronRoute
   ToolsGradientRoute: typeof ToolsGradientRoute
+  ToolsHashRoute: typeof ToolsHashRoute
   ToolsHmacRoute: typeof ToolsHmacRoute
   ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
   ToolsJwtRoute: typeof ToolsJwtRoute
@@ -330,6 +343,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsHmacRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/hash': {
+      id: '/tools/hash'
+      path: '/tools/hash'
+      fullPath: '/tools/hash'
+      preLoaderRoute: typeof ToolsHashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/gradient': {
       id: '/tools/gradient'
       path: '/tools/gradient'
@@ -384,6 +404,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsColorsRoute: ToolsColorsRoute,
   ToolsCronRoute: ToolsCronRoute,
   ToolsGradientRoute: ToolsGradientRoute,
+  ToolsHashRoute: ToolsHashRoute,
   ToolsHmacRoute: ToolsHmacRoute,
   ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
   ToolsJwtRoute: ToolsJwtRoute,
