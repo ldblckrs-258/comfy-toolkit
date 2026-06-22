@@ -4,6 +4,7 @@ import {
   Blend,
   Braces,
   CalendarClock,
+  Clock,
   Code2,
   FileSignature,
   FileText,
@@ -21,6 +22,7 @@ export type ToolGroup =
   | 'generators'
   | 'text'
   | 'color'
+  | 'date'
 
 export interface ToolMeta {
   id: string
@@ -39,6 +41,7 @@ export const GROUP_COLORS: Record<ToolGroup, string> = {
   generators: 'var(--tool-generators)',
   text: 'var(--tool-text)',
   color: 'var(--tool-color)',
+  date: 'var(--tool-date)',
 }
 
 export const GROUP_LABELS: Record<ToolGroup, string> = {
@@ -47,12 +50,14 @@ export const GROUP_LABELS: Record<ToolGroup, string> = {
   generators: 'Generators',
   text: 'Text',
   color: 'Color',
+  date: 'Date & Time',
 }
 
 export const GROUP_ORDER: Array<ToolGroup> = [
   'formatters',
   'encoders',
   'generators',
+  'date',
   'text',
   'color',
 ]
@@ -151,6 +156,25 @@ export const TOOLS: Array<ToolMeta> = [
     keywords: ['crontab.guru', 'next run', 'timezone', '*/5'],
     icon: CalendarClock,
     to: '/tools/cron',
+  },
+  {
+    id: 'unix-timestamp',
+    name: 'Unix Timestamp',
+    description: 'Convert epoch ↔ date and extract timestamps from IDs.',
+    group: 'date',
+    tags: ['timestamp', 'epoch', 'unix', 'date', 'time', 'convert', 'iso8601'],
+    keywords: [
+      'milliseconds',
+      'utc',
+      'timezone',
+      'relative',
+      'snowflake',
+      'ulid',
+      'objectid',
+      'now',
+    ],
+    icon: Clock,
+    to: '/tools/unix-timestamp',
   },
   {
     id: 'markdown',

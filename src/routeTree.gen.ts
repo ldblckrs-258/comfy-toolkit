@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ToolsUuidGeneratorRouteImport } from './routes/tools/uuid-generator'
+import { Route as ToolsUnixTimestampRouteImport } from './routes/tools/unix-timestamp'
 import { Route as ToolsSecretGeneratorRouteImport } from './routes/tools/secret-generator'
 import { Route as ToolsRegexRouteImport } from './routes/tools/regex'
 import { Route as ToolsPaletteRouteImport } from './routes/tools/palette'
@@ -38,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
 const ToolsUuidGeneratorRoute = ToolsUuidGeneratorRouteImport.update({
   id: '/tools/uuid-generator',
   path: '/tools/uuid-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsUnixTimestampRoute = ToolsUnixTimestampRouteImport.update({
+  id: '/tools/unix-timestamp',
+  path: '/tools/unix-timestamp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsSecretGeneratorRoute = ToolsSecretGeneratorRouteImport.update({
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/tools/palette': typeof ToolsPaletteRoute
   '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
+  '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
 }
 export interface FileRoutesByTo {
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/tools/palette': typeof ToolsPaletteRoute
   '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
+  '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
 }
 export interface FileRoutesById {
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/tools/palette': typeof ToolsPaletteRoute
   '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
+  '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
 }
 export interface FileRouteTypes {
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/tools/palette'
     | '/tools/regex'
     | '/tools/secret-generator'
+    | '/tools/unix-timestamp'
     | '/tools/uuid-generator'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/tools/palette'
     | '/tools/regex'
     | '/tools/secret-generator'
+    | '/tools/unix-timestamp'
     | '/tools/uuid-generator'
   id:
     | '__root__'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/tools/palette'
     | '/tools/regex'
     | '/tools/secret-generator'
+    | '/tools/unix-timestamp'
     | '/tools/uuid-generator'
   fileRoutesById: FileRoutesById
 }
@@ -222,6 +234,7 @@ export interface RootRouteChildren {
   ToolsPaletteRoute: typeof ToolsPaletteRoute
   ToolsRegexRoute: typeof ToolsRegexRoute
   ToolsSecretGeneratorRoute: typeof ToolsSecretGeneratorRoute
+  ToolsUnixTimestampRoute: typeof ToolsUnixTimestampRoute
   ToolsUuidGeneratorRoute: typeof ToolsUuidGeneratorRoute
 }
 
@@ -246,6 +259,13 @@ declare module '@tanstack/react-router' {
       path: '/tools/uuid-generator'
       fullPath: '/tools/uuid-generator'
       preLoaderRoute: typeof ToolsUuidGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/unix-timestamp': {
+      id: '/tools/unix-timestamp'
+      path: '/tools/unix-timestamp'
+      fullPath: '/tools/unix-timestamp'
+      preLoaderRoute: typeof ToolsUnixTimestampRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/secret-generator': {
@@ -350,6 +370,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsPaletteRoute: ToolsPaletteRoute,
   ToolsRegexRoute: ToolsRegexRoute,
   ToolsSecretGeneratorRoute: ToolsSecretGeneratorRoute,
+  ToolsUnixTimestampRoute: ToolsUnixTimestampRoute,
   ToolsUuidGeneratorRoute: ToolsUuidGeneratorRoute,
 }
 export const routeTree = rootRouteImport

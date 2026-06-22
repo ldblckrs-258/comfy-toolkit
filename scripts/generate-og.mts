@@ -20,6 +20,7 @@ const GROUP_HEX: Record<ToolGroup, string> = {
   generators: '#059669',
   text: '#ea580c',
   color: '#db2777',
+  date: '#d97706',
 }
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
