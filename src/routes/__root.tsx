@@ -86,8 +86,14 @@ function NotFound() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
+    if (!('serviceWorker' in navigator)) return
+    if (import.meta.env.PROD) {
       navigator.serviceWorker.register('/sw.js').catch(() => {})
+    } else {
+      void navigator.serviceWorker
+        .getRegistrations()
+        .then((regs) => regs.forEach((reg) => void reg.unregister()))
+        .catch(() => {})
     }
   }, [])
 
