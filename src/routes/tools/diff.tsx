@@ -138,6 +138,123 @@ function CopyUnifiedButton({ value }: { value: string }) {
   )
 }
 
+function OverviewRuler({
+  lines,
+  scrollRef,
+}: {
+  lines: Array<DiffLine>
+  scrollRef: React.RefObject<HTMLDivElement | null>
+}) {
+  const rulerRef = React.useRef<HTMLDivElement>(null)
+  const dragging = React.useRef(false)
+  const [thumb, setThumb] = React.useState({ top: 0, height: 1 })
+
+  const sync = React.useCallback(() => {
+    const el = scrollRef.current
+    if (!el || el.scrollHeight <= 0) return
+    setThumb({
+      top: el.scrollTop / el.scrollHeight,
+      height: el.clientHeight / el.scrollHeight,
+    })
+  }, [scrollRef])
+
+  React.useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    sync()
+    el.addEventListener('scroll', sync, { passive: true })
+    const observer = new ResizeObserver(sync)
+    observer.observe(el)
+    return () => {
+      el.removeEventListener('scroll', sync)
+      observer.disconnect()
+    }
+  }, [scrollRef, sync, lines])
+
+  const scrollToClientY = (clientY: number) => {
+    const el = scrollRef.current
+    const ruler = rulerRef.current
+    if (!el || !ruler) return
+    const rect = ruler.getBoundingClientRect()
+    const fraction = Math.min(1, Math.max(0, (clientY - rect.top) / rect.height))
+    el.scrollTop = fraction * el.scrollHeight - el.clientHeight / 2
+  }
+
+  const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    dragging.current = true
+    event.currentTarget.setPointerCapture(event.pointerId)
+    scrollToClientY(event.clientY)
+  }
+  const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (dragging.current) scrollToClientY(event.clientY)
+  }
+  const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    dragging.current = false
+    event.currentTarget.releasePointerCapture(event.pointerId)
+  }
+
+  const total = lines.length || 1
+
+  return (
+    <div
+      ref={rulerRef}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      className="relative w-3 shrink-0 cursor-pointer border-l border-border bg-muted/20"
+      aria-hidden
+    >
+      {lines.map((line, i) =>
+        line.kind === 'context' ? null : (
+          <span
+            key={i}
+            className={cn(
+              'pointer-events-none absolute left-0.5 right-0.5 rounded-[1px]',
+              line.kind === 'added' ? 'bg-success' : 'bg-destructive',
+            )}
+            style={{
+              top: `${(i / total) * 100}%`,
+              height: `${100 / total}%`,
+              minHeight: '2px',
+            }}
+          />
+        ),
+      )}
+      <span
+        className="pointer-events-none absolute inset-x-0 rounded-full bg-foreground/15 ring-1 ring-inset ring-border"
+        style={{
+          top: `${thumb.top * 100}%`,
+          height: `${Math.max(thumb.height * 100, 5)}%`,
+        }}
+      />
+    </div>
+  )
+}
+
+function DiffViewport({ lines, view }: { lines: Array<DiffLine>; view: View }) {
+  const scrollRef = React.useRef<HTMLDivElement>(null)
+  return (
+    <div className="relative flex min-h-0 flex-1">
+      <div
+        ref={scrollRef}
+        tabIndex={0}
+        className="min-h-0 flex-1 overflow-auto outline-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        <div className="font-mono text-[13px] leading-relaxed">
+          {lines.map((line, i) =>
+            view === 'split' ? (
+              <SplitRow key={i} line={line} />
+            ) : (
+              <UnifiedRow key={i} line={line} />
+            ),
+          )}
+        </div>
+      </div>
+      <OverviewRuler lines={lines} scrollRef={scrollRef} />
+    </div>
+  )
+}
+
 function Page() {
   const [oldText, setOldText] = usePersistedState('diff:old', '')
   const [newText, setNewText] = usePersistedState('diff:new', '')
@@ -222,7 +339,6 @@ function Page() {
           label={counts}
           headerRight={<CopyUnifiedButton value={unified} />}
           className="min-h-0 flex-1"
-          bodyClassName="overflow-auto"
         >
           {!hasInput ? (
             <p className="p-4 text-sm text-muted-foreground">
@@ -235,15 +351,7 @@ function Page() {
               {RENDER_CAP.toLocaleString()} lines.
             </p>
           ) : (
-            <div className="font-mono text-[13px] leading-relaxed">
-              {result.lines.map((line, i) =>
-                view === 'split' ? (
-                  <SplitRow key={i} line={line} />
-                ) : (
-                  <UnifiedRow key={i} line={line} />
-                ),
-              )}
-            </div>
+            <DiffViewport lines={result.lines} view={view} />
           )}
         </Card>
       </div>
