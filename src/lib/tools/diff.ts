@@ -32,7 +32,10 @@ function normalize(text: string): string {
     .join('')
 }
 
-function ensureSpans(spans: Array<InlineSpan>, changed: boolean): Array<InlineSpan> {
+function ensureSpans(
+  spans: Array<InlineSpan>,
+  changed: boolean,
+): Array<InlineSpan> {
   return spans.length > 0 ? spans : [{ text: '', changed }]
 }
 
@@ -45,10 +48,15 @@ function inlineSpans(
   const removed: Array<InlineSpan> = []
   const added: Array<InlineSpan> = []
   for (const part of parts) {
-    if (!part.added) removed.push({ text: part.value, changed: Boolean(part.removed) })
-    if (!part.removed) added.push({ text: part.value, changed: Boolean(part.added) })
+    if (!part.added)
+      removed.push({ text: part.value, changed: Boolean(part.removed) })
+    if (!part.removed)
+      added.push({ text: part.value, changed: Boolean(part.added) })
   }
-  return { removed: ensureSpans(removed, false), added: ensureSpans(added, false) }
+  return {
+    removed: ensureSpans(removed, false),
+    added: ensureSpans(added, false),
+  }
 }
 
 export function computeDiff(
@@ -58,11 +66,16 @@ export function computeDiff(
 ): DiffResult {
   const oldLines = oldText.split('\n')
   const newLines = newText.split('\n')
-  const fold = (text: string) => (options.ignoreCase ? text.toLowerCase() : text)
+  const fold = (text: string) =>
+    options.ignoreCase ? text.toLowerCase() : text
 
-  const changes = diffLines(normalize(fold(oldText)), normalize(fold(newText)), {
-    ignoreWhitespace: options.ignoreWhitespace,
-  })
+  const changes = diffLines(
+    normalize(fold(oldText)),
+    normalize(fold(newText)),
+    {
+      ignoreWhitespace: options.ignoreWhitespace,
+    },
+  )
 
   const lines: Array<DiffLine> = []
   let oldLine = 1
@@ -80,7 +93,11 @@ export function computeDiff(
         for (let k = 0; k < count; k++) {
           const before = oldLines[oldLine - 1] ?? ''
           const after = newLines[newLine - 1] ?? ''
-          const { removed, added } = inlineSpans(before, after, options.ignoreCase)
+          const { removed, added } = inlineSpans(
+            before,
+            after,
+            options.ignoreCase,
+          )
           lines.push({ kind: 'removed', oldLine, spans: removed })
           lines.push({ kind: 'added', newLine, spans: added })
           oldLine++

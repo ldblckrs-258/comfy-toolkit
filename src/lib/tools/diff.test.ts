@@ -19,7 +19,11 @@ describe('computeDiff', () => {
     expect(result.addedCount).toBe(1)
     expect(result.removedCount).toBe(0)
     expect(result.lines).toHaveLength(2)
-    expect(result.lines[0]).toMatchObject({ kind: 'context', oldLine: 1, newLine: 1 })
+    expect(result.lines[0]).toMatchObject({
+      kind: 'context',
+      oldLine: 1,
+      newLine: 1,
+    })
     const added = result.lines[1]
     expect(added.kind).toBe('added')
     expect(added.newLine).toBe(2)

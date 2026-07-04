@@ -218,9 +218,7 @@ describe('extractFromId', () => {
     const token = makeJwt({ iat: 1700000000, nbf: 1700000000, exp: 1700003600 })
     const out = extractFromId(token)
     expect(out.every((e) => e.format === 'jwt')).toBe(true)
-    const byClaim = Object.fromEntries(
-      out.map((e) => [e.label, e.timestampMs]),
-    )
+    const byClaim = Object.fromEntries(out.map((e) => [e.label, e.timestampMs]))
     expect(byClaim['JWT (iat)']).toBe(1700000000000)
     expect(byClaim['JWT (nbf)']).toBe(1700000000000)
     expect(byClaim['JWT (exp)']).toBe(1700003600000)

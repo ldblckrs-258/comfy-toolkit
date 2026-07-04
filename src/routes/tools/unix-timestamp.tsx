@@ -168,8 +168,7 @@ function ConvertTab({
 
       {result?.detected ? (
         <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-          Detected unit:{' '}
-          <span className="text-accent">{result.detected}</span>
+          Detected unit: <span className="text-accent">{result.detected}</span>
         </p>
       ) : null}
 
@@ -199,13 +198,7 @@ function ConvertTab({
   )
 }
 
-function ExtractTab({
-  timeZone,
-  nowMs,
-}: {
-  timeZone: string
-  nowMs: number
-}) {
+function ExtractTab({ timeZone, nowMs }: { timeZone: string; nowMs: number }) {
   const [input, setInput] = usePersistedState('unix-timestamp:extract', '')
   const results = React.useMemo(() => extractFromId(input.trim()), [input])
 
@@ -240,7 +233,9 @@ function ExtractTab({
                     </span>
                   ) : null}
                   {expired ? (
-                    <span className="text-[11px] text-destructive">expired</span>
+                    <span className="text-[11px] text-destructive">
+                      expired
+                    </span>
                   ) : null}
                   <span className="ml-auto" />
                   <CopyIcon value={f.iso} />
@@ -266,13 +261,7 @@ function ExtractTab({
   )
 }
 
-function BatchTab({
-  timeZone,
-  nowMs,
-}: {
-  timeZone: string
-  nowMs: number
-}) {
+function BatchTab({ timeZone, nowMs }: { timeZone: string; nowMs: number }) {
   const [input, setInput] = usePersistedState('unix-timestamp:batch', '')
   // Heavy parse/format is memoized on input+timeZone; relative is derived live against the ticker.
   const rows = React.useMemo(
@@ -288,7 +277,13 @@ function BatchTab({
     const body = rows
       .map(withRelative)
       .map((row) =>
-        [row.input, row.ms ?? '', row.iso ?? '', row.relative ?? '', row.error ?? '']
+        [
+          row.input,
+          row.ms ?? '',
+          row.iso ?? '',
+          row.relative ?? '',
+          row.error ?? '',
+        ]
           .map((cell) => `"${String(cell).replace(/"/g, '""')}"`)
           .join(','),
       )
@@ -318,9 +313,13 @@ function BatchTab({
               <thead className="sticky top-0 bg-muted/60 text-muted-foreground">
                 <tr>
                   <th className="px-2 py-1.5 text-left font-medium">Input</th>
-                  <th className="px-2 py-1.5 text-left font-medium">Epoch ms</th>
+                  <th className="px-2 py-1.5 text-left font-medium">
+                    Epoch ms
+                  </th>
                   <th className="px-2 py-1.5 text-left font-medium">ISO</th>
-                  <th className="px-2 py-1.5 text-left font-medium">Relative</th>
+                  <th className="px-2 py-1.5 text-left font-medium">
+                    Relative
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -328,10 +327,7 @@ function BatchTab({
                   <tr key={index} className="border-t border-border">
                     <td className="px-2 py-1.5 text-foreground">{row.input}</td>
                     {row.error ? (
-                      <td
-                        colSpan={3}
-                        className="px-2 py-1.5 text-destructive"
-                      >
+                      <td colSpan={3} className="px-2 py-1.5 text-destructive">
                         {row.error}
                       </td>
                     ) : (
@@ -362,7 +358,13 @@ function BatchTab({
   )
 }
 
-function DurationTab({ timeZone, now }: { timeZone: string; now: number | null }) {
+function DurationTab({
+  timeZone,
+  now,
+}: {
+  timeZone: string
+  now: number | null
+}) {
   const [from, setFrom] = usePersistedState('unix-timestamp:dur-a', '')
   const [to, setTo] = usePersistedState('unix-timestamp:dur-b', '')
 
@@ -452,7 +454,13 @@ const FORMAT_TOKENS: Array<{ token: string; meaning: string }> = [
   { token: '[text]', meaning: 'Literal text (escaped)' },
 ]
 
-function FormatTab({ timeZone, now }: { timeZone: string; now: number | null }) {
+function FormatTab({
+  timeZone,
+  now,
+}: {
+  timeZone: string
+  now: number | null
+}) {
   const [input, setInput] = usePersistedState('unix-timestamp:fmt-input', '')
   const [pattern, setPattern] = usePersistedState(
     'unix-timestamp:fmt-pattern',
@@ -503,7 +511,10 @@ function FormatTab({ timeZone, now }: { timeZone: string; now: number | null }) 
         <table className="w-full border-collapse text-[12px]">
           <tbody>
             {FORMAT_TOKENS.map((row) => (
-              <tr key={row.token} className="border-t border-border first:border-t-0">
+              <tr
+                key={row.token}
+                className="border-t border-border first:border-t-0"
+              >
                 <td className="w-32 px-3 py-1.5 font-mono text-accent">
                   {row.token}
                 </td>

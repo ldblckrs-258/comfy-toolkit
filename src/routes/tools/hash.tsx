@@ -64,9 +64,8 @@ function Page() {
   const [expected, setExpected] = usePersistedState('hash:expected', '')
   const [encoding, setEncoding] = React.useState<HashEncoding>('hex')
   const [file, setFile] = React.useState<LoadedFile | null>(null)
-  const [digests, setDigests] = React.useState<Record<HashAlgorithm, string>>(
-    EMPTY,
-  )
+  const [digests, setDigests] =
+    React.useState<Record<HashAlgorithm, string>>(EMPTY)
   const [computing, setComputing] = React.useState(false)
   const [dragging, setDragging] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
@@ -274,13 +273,9 @@ function HashRow({
         {algorithm}
       </span>
       <span className="min-w-0 flex-1 break-all font-mono text-[13px] text-foreground">
-        {value || (
-          <span className="text-muted-foreground">—</span>
-        )}
+        {value || <span className="text-muted-foreground">—</span>}
       </span>
-      {matched ? (
-        <Check className="h-4 w-4 shrink-0 text-success" />
-      ) : null}
+      {matched ? <Check className="h-4 w-4 shrink-0 text-success" /> : null}
       <CopyIcon value={value} />
     </div>
   )
