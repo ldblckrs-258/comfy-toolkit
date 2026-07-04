@@ -38,6 +38,7 @@
     "@tanstack/store": "latest",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "diff": "^9.0.0",
     "dompurify": "^3.4.11",
     "lucide-react": "^0.545.0",
     "marked": "^18.0.5",

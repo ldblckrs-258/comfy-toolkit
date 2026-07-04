@@ -22,6 +22,7 @@ import { Route as ToolsJsonFormatterRouteImport } from './routes/tools/json-form
 import { Route as ToolsHmacRouteImport } from './routes/tools/hmac'
 import { Route as ToolsHashRouteImport } from './routes/tools/hash'
 import { Route as ToolsGradientRouteImport } from './routes/tools/gradient'
+import { Route as ToolsDiffRouteImport } from './routes/tools/diff'
 import { Route as ToolsCronRouteImport } from './routes/tools/cron'
 import { Route as ToolsColorsRouteImport } from './routes/tools/colors'
 import { Route as ToolsCodeFormatterRouteImport } from './routes/tools/code-formatter'
@@ -93,6 +94,11 @@ const ToolsGradientRoute = ToolsGradientRouteImport.update({
   path: '/tools/gradient',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsDiffRoute = ToolsDiffRouteImport.update({
+  id: '/tools/diff',
+  path: '/tools/diff',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsCronRoute = ToolsCronRouteImport.update({
   id: '/tools/cron',
   path: '/tools/cron',
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
   '/tools/cron': typeof ToolsCronRoute
+  '/tools/diff': typeof ToolsDiffRoute
   '/tools/gradient': typeof ToolsGradientRoute
   '/tools/hash': typeof ToolsHashRoute
   '/tools/hmac': typeof ToolsHmacRoute
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
   '/tools/cron': typeof ToolsCronRoute
+  '/tools/diff': typeof ToolsDiffRoute
   '/tools/gradient': typeof ToolsGradientRoute
   '/tools/hash': typeof ToolsHashRoute
   '/tools/hmac': typeof ToolsHmacRoute
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
   '/tools/cron': typeof ToolsCronRoute
+  '/tools/diff': typeof ToolsDiffRoute
   '/tools/gradient': typeof ToolsGradientRoute
   '/tools/hash': typeof ToolsHashRoute
   '/tools/hmac': typeof ToolsHmacRoute
@@ -190,6 +199,7 @@ export interface FileRouteTypes {
     | '/tools/code-formatter'
     | '/tools/colors'
     | '/tools/cron'
+    | '/tools/diff'
     | '/tools/gradient'
     | '/tools/hash'
     | '/tools/hmac'
@@ -210,6 +220,7 @@ export interface FileRouteTypes {
     | '/tools/code-formatter'
     | '/tools/colors'
     | '/tools/cron'
+    | '/tools/diff'
     | '/tools/gradient'
     | '/tools/hash'
     | '/tools/hmac'
@@ -230,6 +241,7 @@ export interface FileRouteTypes {
     | '/tools/code-formatter'
     | '/tools/colors'
     | '/tools/cron'
+    | '/tools/diff'
     | '/tools/gradient'
     | '/tools/hash'
     | '/tools/hmac'
@@ -251,6 +263,7 @@ export interface RootRouteChildren {
   ToolsCodeFormatterRoute: typeof ToolsCodeFormatterRoute
   ToolsColorsRoute: typeof ToolsColorsRoute
   ToolsCronRoute: typeof ToolsCronRoute
+  ToolsDiffRoute: typeof ToolsDiffRoute
   ToolsGradientRoute: typeof ToolsGradientRoute
   ToolsHashRoute: typeof ToolsHashRoute
   ToolsHmacRoute: typeof ToolsHmacRoute
@@ -357,6 +370,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsGradientRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/diff': {
+      id: '/tools/diff'
+      path: '/tools/diff'
+      fullPath: '/tools/diff'
+      preLoaderRoute: typeof ToolsDiffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/cron': {
       id: '/tools/cron'
       path: '/tools/cron'
@@ -403,6 +423,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsCodeFormatterRoute: ToolsCodeFormatterRoute,
   ToolsColorsRoute: ToolsColorsRoute,
   ToolsCronRoute: ToolsCronRoute,
+  ToolsDiffRoute: ToolsDiffRoute,
   ToolsGradientRoute: ToolsGradientRoute,
   ToolsHashRoute: ToolsHashRoute,
   ToolsHmacRoute: ToolsHmacRoute,
@@ -418,12 +439,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
