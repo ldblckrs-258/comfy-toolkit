@@ -9,6 +9,7 @@ import { buildSeo, ogUrl } from '@/lib/seo'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { createFileRoute } from '@tanstack/react-router'
 import { ArrowLeftRight } from 'lucide-react'
+import { Prism } from 'prism-react-renderer'
 import * as React from 'react'
 
 const tool = requireTool('data-converter')
@@ -19,6 +20,36 @@ const FORMATS: Array<{ value: DataFormat; label: string }> = [
   { value: 'toml', label: 'TOML' },
   { value: 'csv', label: 'CSV' },
 ]
+
+const PRISM_LANG: Record<DataFormat, string> = {
+  json: 'json',
+  yaml: 'yaml',
+  toml: 'toml',
+  csv: 'text',
+}
+
+Prism.languages.toml = {
+  comment: /#.*/,
+  table: {
+    pattern: /(^[ \t]*)\[\[?[^\]]*\]\]?/m,
+    lookbehind: true,
+    alias: 'class-name',
+  },
+  key: {
+    pattern: /(^[ \t]*)[^\s=#[]+(?=[ \t]*=)/m,
+    lookbehind: true,
+    alias: 'property',
+  },
+  string: {
+    pattern: /"""[\s\S]*?"""|'''[\s\S]*?'''|"(?:\\.|[^"\\])*"|'[^']*'/,
+    greedy: true,
+  },
+  date: /\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?)?/i,
+  number:
+    /[+-]?\b(?:\d[\d_]*(?:\.\d+)?(?:[eE][+-]?\d+)?|0x[\da-fA-F]+|0o[0-7]+|0b[01]+)\b|\b(?:inf|nan)\b/,
+  boolean: /\b(?:true|false)\b/,
+  punctuation: /[{}[\],=.]/,
+}
 
 export const Route = createFileRoute('/tools/data-converter')({
   head: () => {
@@ -110,6 +141,7 @@ function Page() {
             className="flex-1"
             value={input}
             onChange={setInput}
+            language={PRISM_LANG[from as DataFormat]}
             placeholder='{"hello": "world"}'
           />
           <div className="flex min-h-0 flex-1 flex-col gap-2">
@@ -119,6 +151,7 @@ function Page() {
               copyValue={output}
               value={output}
               readOnly
+              language={PRISM_LANG[to as DataFormat]}
             />
             {error ? <ErrorText>{error}</ErrorText> : null}
           </div>
