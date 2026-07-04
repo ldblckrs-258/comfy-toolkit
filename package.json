@@ -45,9 +45,11 @@
     "prism-react-renderer": "^2.4.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "smol-toml": "^1.7.0",
     "spark-md5": "^3.0.2",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.1.18",
+    "yaml": "^2.9.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

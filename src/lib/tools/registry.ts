@@ -1,6 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
 import {
   AlarmClock,
+  ArrowLeftRight,
   Binary,
   Blend,
   Braces,
@@ -91,6 +92,16 @@ export const TOOLS: Array<ToolMeta> = [
     ],
     icon: Code2,
     to: '/tools/code-formatter',
+  },
+  {
+    id: 'data-converter',
+    name: 'Data Converter',
+    description: 'Convert between JSON, YAML, TOML and CSV.',
+    group: 'formatters',
+    tags: ['json', 'yaml', 'toml', 'csv', 'convert'],
+    keywords: ['yml', 'transform', 'serialize', 'config'],
+    icon: ArrowLeftRight,
+    to: '/tools/data-converter',
   },
   {
     id: 'base64',
