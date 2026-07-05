@@ -11,6 +11,7 @@ import {
   parseSpaceInput,
 } from '@/components/tools/color-space'
 import { ErrorText } from '@/components/tools/tool-panel'
+import { ColorPicker } from '@/components/ui/color-picker'
 import { Input } from '@/components/ui/input'
 import { buildSeo, ogUrl } from '@/lib/seo'
 import type { Hsv } from '@/lib/tools/colors'
@@ -488,22 +489,16 @@ function Page() {
                 }}
               >
                 {isHex ? (
-                  <label
-                    className="relative block h-11 w-full cursor-pointer overflow-hidden rounded-md border border-border"
-                    style={{ backgroundColor: rgbToHex(rgb) }}
-                  >
-                    <input
-                      type="color"
-                      value={rgbToHex(rgb)}
-                      onChange={(event) => {
-                        const parsed = hexToRgba(event.target.value)
-                        if (parsed)
-                          apply(rgbToHsvKeepHue(parsed.rgb, selected.hsv))
-                      }}
-                      className="absolute inset-0 cursor-pointer opacity-0"
-                      aria-label="Stop color picker"
-                    />
-                  </label>
+                  <ColorPicker
+                    value={rgbToHex(rgb)}
+                    onChange={(hex) => {
+                      const parsed = hexToRgba(hex)
+                      if (parsed)
+                        apply(rgbToHsvKeepHue(parsed.rgb, selected.hsv))
+                    }}
+                    aria-label="Stop color picker"
+                    className="h-11 w-full"
+                  />
                 ) : (
                   buildSpaceChannels(
                     state.format as SpaceId,

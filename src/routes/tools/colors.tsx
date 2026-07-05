@@ -12,6 +12,7 @@ import {
 import type { ApplyColor } from '@/components/tools/color-space'
 import { Card } from '@/components/tools/card'
 import { ErrorText } from '@/components/tools/tool-panel'
+import { ColorPicker } from '@/components/ui/color-picker'
 import { Input } from '@/components/ui/input'
 import type { Hsv, Rgb } from '@/lib/tools/colors'
 import {
@@ -96,7 +97,6 @@ function Page() {
               <HexPicker
                 hex={hex}
                 rgb={rgb}
-                alpha={a}
                 onHex={(value) => {
                   const parsed = hexToRgba(value)
                   if (parsed)
@@ -173,13 +173,11 @@ function Preview({ rgb, alpha }: { rgb: Rgb; alpha: number }) {
 function HexPicker({
   hex,
   rgb,
-  alpha,
   onHex,
   onPick,
 }: {
   hex: string
   rgb: Rgb
-  alpha: number
   onHex: (value: string) => void
   onPick: (value: string) => void
 }) {
@@ -192,22 +190,12 @@ function HexPicker({
     <div className="flex flex-col gap-2">
       <Card label="Hex" copyValue={hex} bodyClassName="p-3">
         <div className="flex items-center gap-2">
-          <label
-            className="relative h-9 w-9 shrink-0 cursor-pointer overflow-hidden rounded-md border border-border"
-            style={CHECKERBOARD}
-          >
-            <span
-              className="absolute inset-0"
-              style={{ backgroundColor: formatRgb(rgb, alpha) }}
-            />
-            <input
-              type="color"
-              value={rgbToHex(rgb)}
-              onChange={(event) => onPick(event.target.value)}
-              className="absolute inset-0 cursor-pointer opacity-0"
-              aria-label="Color picker"
-            />
-          </label>
+          <ColorPicker
+            value={rgbToHex(rgb)}
+            onChange={onPick}
+            aria-label="Color picker"
+            className="h-9 w-9 shrink-0"
+          />
           <Input
             value={draft}
             onChange={(event) => {

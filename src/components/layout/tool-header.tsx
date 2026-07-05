@@ -1,7 +1,14 @@
 import type { ToolMeta } from '@/lib/tools/registry'
 import { GROUP_COLORS } from '@/lib/tools/registry'
+import type { ReactNode } from 'react'
 
-export function ToolHeader({ tool }: { tool: ToolMeta }) {
+export function ToolHeader({
+  tool,
+  actions,
+}: {
+  tool: ToolMeta
+  actions?: ReactNode
+}) {
   const Icon = tool.icon
   const color = GROUP_COLORS[tool.group]
 
@@ -22,6 +29,11 @@ export function ToolHeader({ tool }: { tool: ToolMeta }) {
           <h1 className="text-lg font-semibold tracking-tight">{tool.name}</h1>
           <p className="text-xs text-muted-foreground">{tool.description}</p>
         </div>
+        {actions ? (
+          <div className="ml-auto flex shrink-0 items-center gap-2">
+            {actions}
+          </div>
+        ) : null}
       </div>
     </header>
   )

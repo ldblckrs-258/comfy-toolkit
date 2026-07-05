@@ -16,6 +16,7 @@ import {
   KeyRound,
   KeySquare,
   Palette,
+  QrCode,
   Regex,
   SwatchBook,
 } from 'lucide-react'
@@ -180,6 +181,16 @@ export const TOOLS: Array<ToolMeta> = [
     keywords: ['crontab.guru', 'next run', 'timezone', '*/5'],
     icon: CalendarClock,
     to: '/tools/cron',
+  },
+  {
+    id: 'qr-code',
+    name: 'QR Code Generator',
+    description: 'Generate QR codes for text, URLs and Wi-Fi.',
+    group: 'generators',
+    tags: ['qr', 'qrcode', 'wifi', 'url', 'generate', 'svg', 'png'],
+    keywords: ['barcode', 'scan', 'share'],
+    icon: QrCode,
+    to: '/tools/qr-code',
   },
   {
     id: 'unix-timestamp',

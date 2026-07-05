@@ -9,6 +9,7 @@ import {
 } from '@/components/tools/color-space'
 import type { ApplyColor, SpaceId } from '@/components/tools/color-space'
 import { Card } from '@/components/tools/card'
+import { ColorPicker } from '@/components/ui/color-picker'
 import type { Hsv, Rgb, Shade } from '@/lib/tools/colors'
 import {
   generatePalette,
@@ -211,21 +212,15 @@ function Page() {
                 }}
               >
                 {isHex ? (
-                  <label
-                    className="relative block h-11 w-full cursor-pointer overflow-hidden rounded-md border border-border"
-                    style={{ backgroundColor: rgbToHex(rgb) }}
-                  >
-                    <input
-                      type="color"
-                      value={rgbToHex(rgb)}
-                      onChange={(event) => {
-                        const parsed = hexToRgba(event.target.value)
-                        if (parsed) apply(rgbToHsvKeepHue(parsed.rgb, hsv))
-                      }}
-                      className="absolute inset-0 cursor-pointer opacity-0"
-                      aria-label="Color picker"
-                    />
-                  </label>
+                  <ColorPicker
+                    value={rgbToHex(rgb)}
+                    onChange={(hex) => {
+                      const parsed = hexToRgba(hex)
+                      if (parsed) apply(rgbToHsvKeepHue(parsed.rgb, hsv))
+                    }}
+                    aria-label="Color picker"
+                    className="h-11 w-full"
+                  />
                 ) : (
                   buildSpaceChannels(format, hsv, apply).map((channel) => (
                     <ChannelSlider key={channel.label} {...channel} />

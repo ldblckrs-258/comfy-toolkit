@@ -15,6 +15,7 @@ import { Route as ToolsUuidGeneratorRouteImport } from './routes/tools/uuid-gene
 import { Route as ToolsUnixTimestampRouteImport } from './routes/tools/unix-timestamp'
 import { Route as ToolsSecretGeneratorRouteImport } from './routes/tools/secret-generator'
 import { Route as ToolsRegexRouteImport } from './routes/tools/regex'
+import { Route as ToolsQrCodeRouteImport } from './routes/tools/qr-code'
 import { Route as ToolsPaletteRouteImport } from './routes/tools/palette'
 import { Route as ToolsMarkdownRouteImport } from './routes/tools/markdown'
 import { Route as ToolsJwtRouteImport } from './routes/tools/jwt'
@@ -58,6 +59,11 @@ const ToolsSecretGeneratorRoute = ToolsSecretGeneratorRouteImport.update({
 const ToolsRegexRoute = ToolsRegexRouteImport.update({
   id: '/tools/regex',
   path: '/tools/regex',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsQrCodeRoute = ToolsQrCodeRouteImport.update({
+  id: '/tools/qr-code',
+  path: '/tools/qr-code',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsPaletteRoute = ToolsPaletteRouteImport.update({
@@ -148,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/tools/jwt': typeof ToolsJwtRoute
   '/tools/markdown': typeof ToolsMarkdownRoute
   '/tools/palette': typeof ToolsPaletteRoute
+  '/tools/qr-code': typeof ToolsQrCodeRoute
   '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
   '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
@@ -170,6 +177,7 @@ export interface FileRoutesByTo {
   '/tools/jwt': typeof ToolsJwtRoute
   '/tools/markdown': typeof ToolsMarkdownRoute
   '/tools/palette': typeof ToolsPaletteRoute
+  '/tools/qr-code': typeof ToolsQrCodeRoute
   '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
   '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
@@ -193,6 +201,7 @@ export interface FileRoutesById {
   '/tools/jwt': typeof ToolsJwtRoute
   '/tools/markdown': typeof ToolsMarkdownRoute
   '/tools/palette': typeof ToolsPaletteRoute
+  '/tools/qr-code': typeof ToolsQrCodeRoute
   '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
   '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
@@ -217,6 +226,7 @@ export interface FileRouteTypes {
     | '/tools/jwt'
     | '/tools/markdown'
     | '/tools/palette'
+    | '/tools/qr-code'
     | '/tools/regex'
     | '/tools/secret-generator'
     | '/tools/unix-timestamp'
@@ -239,6 +249,7 @@ export interface FileRouteTypes {
     | '/tools/jwt'
     | '/tools/markdown'
     | '/tools/palette'
+    | '/tools/qr-code'
     | '/tools/regex'
     | '/tools/secret-generator'
     | '/tools/unix-timestamp'
@@ -261,6 +272,7 @@ export interface FileRouteTypes {
     | '/tools/jwt'
     | '/tools/markdown'
     | '/tools/palette'
+    | '/tools/qr-code'
     | '/tools/regex'
     | '/tools/secret-generator'
     | '/tools/unix-timestamp'
@@ -284,6 +296,7 @@ export interface RootRouteChildren {
   ToolsJwtRoute: typeof ToolsJwtRoute
   ToolsMarkdownRoute: typeof ToolsMarkdownRoute
   ToolsPaletteRoute: typeof ToolsPaletteRoute
+  ToolsQrCodeRoute: typeof ToolsQrCodeRoute
   ToolsRegexRoute: typeof ToolsRegexRoute
   ToolsSecretGeneratorRoute: typeof ToolsSecretGeneratorRoute
   ToolsUnixTimestampRoute: typeof ToolsUnixTimestampRoute
@@ -332,6 +345,13 @@ declare module '@tanstack/react-router' {
       path: '/tools/regex'
       fullPath: '/tools/regex'
       preLoaderRoute: typeof ToolsRegexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/qr-code': {
+      id: '/tools/qr-code'
+      path: '/tools/qr-code'
+      fullPath: '/tools/qr-code'
+      preLoaderRoute: typeof ToolsQrCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/palette': {
@@ -452,6 +472,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsJwtRoute: ToolsJwtRoute,
   ToolsMarkdownRoute: ToolsMarkdownRoute,
   ToolsPaletteRoute: ToolsPaletteRoute,
+  ToolsQrCodeRoute: ToolsQrCodeRoute,
   ToolsRegexRoute: ToolsRegexRoute,
   ToolsSecretGeneratorRoute: ToolsSecretGeneratorRoute,
   ToolsUnixTimestampRoute: ToolsUnixTimestampRoute,
