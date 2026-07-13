@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ToolsUuidGeneratorRouteImport } from './routes/tools/uuid-generator'
 import { Route as ToolsUrlParserRouteImport } from './routes/tools/url-parser'
 import { Route as ToolsUnixTimestampRouteImport } from './routes/tools/unix-timestamp'
+import { Route as ToolsStringInspectorRouteImport } from './routes/tools/string-inspector'
 import { Route as ToolsSecretGeneratorRouteImport } from './routes/tools/secret-generator'
 import { Route as ToolsRegexRouteImport } from './routes/tools/regex'
 import { Route as ToolsQrCodeRouteImport } from './routes/tools/qr-code'
@@ -55,6 +56,11 @@ const ToolsUrlParserRoute = ToolsUrlParserRouteImport.update({
 const ToolsUnixTimestampRoute = ToolsUnixTimestampRouteImport.update({
   id: '/tools/unix-timestamp',
   path: '/tools/unix-timestamp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsStringInspectorRoute = ToolsStringInspectorRouteImport.update({
+  id: '/tools/string-inspector',
+  path: '/tools/string-inspector',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsSecretGeneratorRoute = ToolsSecretGeneratorRouteImport.update({
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/tools/qr-code': typeof ToolsQrCodeRoute
   '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
+  '/tools/string-inspector': typeof ToolsStringInspectorRoute
   '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
   '/tools/url-parser': typeof ToolsUrlParserRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
@@ -187,6 +194,7 @@ export interface FileRoutesByTo {
   '/tools/qr-code': typeof ToolsQrCodeRoute
   '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
+  '/tools/string-inspector': typeof ToolsStringInspectorRoute
   '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
   '/tools/url-parser': typeof ToolsUrlParserRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
@@ -212,6 +220,7 @@ export interface FileRoutesById {
   '/tools/qr-code': typeof ToolsQrCodeRoute
   '/tools/regex': typeof ToolsRegexRoute
   '/tools/secret-generator': typeof ToolsSecretGeneratorRoute
+  '/tools/string-inspector': typeof ToolsStringInspectorRoute
   '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
   '/tools/url-parser': typeof ToolsUrlParserRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
@@ -238,6 +247,7 @@ export interface FileRouteTypes {
     | '/tools/qr-code'
     | '/tools/regex'
     | '/tools/secret-generator'
+    | '/tools/string-inspector'
     | '/tools/unix-timestamp'
     | '/tools/url-parser'
     | '/tools/uuid-generator'
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/tools/qr-code'
     | '/tools/regex'
     | '/tools/secret-generator'
+    | '/tools/string-inspector'
     | '/tools/unix-timestamp'
     | '/tools/url-parser'
     | '/tools/uuid-generator'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/tools/qr-code'
     | '/tools/regex'
     | '/tools/secret-generator'
+    | '/tools/string-inspector'
     | '/tools/unix-timestamp'
     | '/tools/url-parser'
     | '/tools/uuid-generator'
@@ -311,6 +323,7 @@ export interface RootRouteChildren {
   ToolsQrCodeRoute: typeof ToolsQrCodeRoute
   ToolsRegexRoute: typeof ToolsRegexRoute
   ToolsSecretGeneratorRoute: typeof ToolsSecretGeneratorRoute
+  ToolsStringInspectorRoute: typeof ToolsStringInspectorRoute
   ToolsUnixTimestampRoute: typeof ToolsUnixTimestampRoute
   ToolsUrlParserRoute: typeof ToolsUrlParserRoute
   ToolsUuidGeneratorRoute: typeof ToolsUuidGeneratorRoute
@@ -351,6 +364,13 @@ declare module '@tanstack/react-router' {
       path: '/tools/unix-timestamp'
       fullPath: '/tools/unix-timestamp'
       preLoaderRoute: typeof ToolsUnixTimestampRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/string-inspector': {
+      id: '/tools/string-inspector'
+      path: '/tools/string-inspector'
+      fullPath: '/tools/string-inspector'
+      preLoaderRoute: typeof ToolsStringInspectorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/secret-generator': {
@@ -495,6 +515,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsQrCodeRoute: ToolsQrCodeRoute,
   ToolsRegexRoute: ToolsRegexRoute,
   ToolsSecretGeneratorRoute: ToolsSecretGeneratorRoute,
+  ToolsStringInspectorRoute: ToolsStringInspectorRoute,
   ToolsUnixTimestampRoute: ToolsUnixTimestampRoute,
   ToolsUrlParserRoute: ToolsUrlParserRoute,
   ToolsUuidGeneratorRoute: ToolsUuidGeneratorRoute,

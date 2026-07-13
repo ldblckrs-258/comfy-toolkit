@@ -19,6 +19,7 @@ import {
   Palette,
   QrCode,
   Regex,
+  ScanSearch,
   SwatchBook,
 } from 'lucide-react'
 
@@ -273,6 +274,23 @@ export const TOOLS: Array<ToolMeta> = [
     keywords: ['difference', 'changes', 'side by side', 'unified'],
     icon: GitCompareArrows,
     to: '/tools/diff',
+  },
+  {
+    id: 'string-inspector',
+    name: 'String Inspector',
+    description: 'Count characters and detect hidden or suspicious Unicode.',
+    group: 'text',
+    tags: ['string', 'unicode', 'count', 'characters', 'zero-width', 'inspect'],
+    keywords: [
+      'grapheme',
+      'codepoint',
+      'utf8',
+      'homoglyph',
+      'invisible',
+      'word count',
+    ],
+    icon: ScanSearch,
+    to: '/tools/string-inspector',
   },
   {
     id: 'colors',
