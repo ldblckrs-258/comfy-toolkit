@@ -28,6 +28,7 @@ import { Route as ToolsGradientRouteImport } from './routes/tools/gradient'
 import { Route as ToolsDiffRouteImport } from './routes/tools/diff'
 import { Route as ToolsDataConverterRouteImport } from './routes/tools/data-converter'
 import { Route as ToolsCronRouteImport } from './routes/tools/cron'
+import { Route as ToolsContrastRouteImport } from './routes/tools/contrast'
 import { Route as ToolsColorsRouteImport } from './routes/tools/colors'
 import { Route as ToolsCodeFormatterRouteImport } from './routes/tools/code-formatter'
 import { Route as ToolsClockRouteImport } from './routes/tools/clock'
@@ -128,6 +129,11 @@ const ToolsCronRoute = ToolsCronRouteImport.update({
   path: '/tools/cron',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsContrastRoute = ToolsContrastRouteImport.update({
+  id: '/tools/contrast',
+  path: '/tools/contrast',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsColorsRoute = ToolsColorsRouteImport.update({
   id: '/tools/colors',
   path: '/tools/colors',
@@ -156,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
+  '/tools/contrast': typeof ToolsContrastRoute
   '/tools/cron': typeof ToolsCronRoute
   '/tools/data-converter': typeof ToolsDataConverterRoute
   '/tools/diff': typeof ToolsDiffRoute
@@ -181,6 +188,7 @@ export interface FileRoutesByTo {
   '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
+  '/tools/contrast': typeof ToolsContrastRoute
   '/tools/cron': typeof ToolsCronRoute
   '/tools/data-converter': typeof ToolsDataConverterRoute
   '/tools/diff': typeof ToolsDiffRoute
@@ -207,6 +215,7 @@ export interface FileRoutesById {
   '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
   '/tools/colors': typeof ToolsColorsRoute
+  '/tools/contrast': typeof ToolsContrastRoute
   '/tools/cron': typeof ToolsCronRoute
   '/tools/data-converter': typeof ToolsDataConverterRoute
   '/tools/diff': typeof ToolsDiffRoute
@@ -234,6 +243,7 @@ export interface FileRouteTypes {
     | '/tools/clock'
     | '/tools/code-formatter'
     | '/tools/colors'
+    | '/tools/contrast'
     | '/tools/cron'
     | '/tools/data-converter'
     | '/tools/diff'
@@ -259,6 +269,7 @@ export interface FileRouteTypes {
     | '/tools/clock'
     | '/tools/code-formatter'
     | '/tools/colors'
+    | '/tools/contrast'
     | '/tools/cron'
     | '/tools/data-converter'
     | '/tools/diff'
@@ -284,6 +295,7 @@ export interface FileRouteTypes {
     | '/tools/clock'
     | '/tools/code-formatter'
     | '/tools/colors'
+    | '/tools/contrast'
     | '/tools/cron'
     | '/tools/data-converter'
     | '/tools/diff'
@@ -310,6 +322,7 @@ export interface RootRouteChildren {
   ToolsClockRoute: typeof ToolsClockRoute
   ToolsCodeFormatterRoute: typeof ToolsCodeFormatterRoute
   ToolsColorsRoute: typeof ToolsColorsRoute
+  ToolsContrastRoute: typeof ToolsContrastRoute
   ToolsCronRoute: typeof ToolsCronRoute
   ToolsDataConverterRoute: typeof ToolsDataConverterRoute
   ToolsDiffRoute: typeof ToolsDiffRoute
@@ -464,6 +477,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsCronRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/contrast': {
+      id: '/tools/contrast'
+      path: '/tools/contrast'
+      fullPath: '/tools/contrast'
+      preLoaderRoute: typeof ToolsContrastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/colors': {
       id: '/tools/colors'
       path: '/tools/colors'
@@ -502,6 +522,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsClockRoute: ToolsClockRoute,
   ToolsCodeFormatterRoute: ToolsCodeFormatterRoute,
   ToolsColorsRoute: ToolsColorsRoute,
+  ToolsContrastRoute: ToolsContrastRoute,
   ToolsCronRoute: ToolsCronRoute,
   ToolsDataConverterRoute: ToolsDataConverterRoute,
   ToolsDiffRoute: ToolsDiffRoute,

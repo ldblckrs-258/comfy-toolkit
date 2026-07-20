@@ -8,6 +8,7 @@ import {
   CalendarClock,
   Clock,
   Code2,
+  Contrast,
   FileSignature,
   FileText,
   Fingerprint,
@@ -322,6 +323,16 @@ export const TOOLS: Array<ToolMeta> = [
     keywords: ['stops', 'background', 'oklch', 'export', 'color'],
     icon: Blend,
     to: '/tools/gradient',
+  },
+  {
+    id: 'contrast',
+    name: 'Contrast Checker',
+    description: 'Check WCAG color contrast ratios and pass/fail levels.',
+    group: 'color',
+    tags: ['contrast', 'wcag', 'accessibility', 'a11y', 'ratio', 'color'],
+    keywords: ['aa', 'aaa', 'luminance', 'legibility', 'wcag 2.1'],
+    icon: Contrast,
+    to: '/tools/contrast',
   },
 ]
 

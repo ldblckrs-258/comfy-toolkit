@@ -1,7 +1,8 @@
 import { CodeEditor } from '@/components/ui/code-editor'
+import { usePersistedState } from '@/lib/use-persisted-state'
 import { cn } from '@/lib/utils'
 import type { LucideIcon } from 'lucide-react'
-import { Check, Copy, Eraser } from 'lucide-react'
+import { Check, ChevronDown, ChevronRight, Copy, Eraser } from 'lucide-react'
 import * as React from 'react'
 
 export function CopyIcon({
@@ -64,6 +65,9 @@ export interface CardProps {
   minRows?: number
   spellCheck?: boolean
   fieldClassName?: string
+  collapsible?: boolean
+  collapseKey?: string
+  defaultCollapsed?: boolean
 }
 
 export function Card({
@@ -87,8 +91,18 @@ export function Card({
   minRows = 4,
   spellCheck = false,
   fieldClassName,
+  collapsible = false,
+  collapseKey,
+  defaultCollapsed = false,
 }: CardProps) {
+  const [collapsed, setCollapsed] = usePersistedState<boolean>(
+    `collapse:${collapseKey ?? 'card'}`,
+    defaultCollapsed,
+  )
+  const isCollapsed = collapsible && collapsed
+
   const hasHeader =
+    collapsible ||
     Boolean(Icon) ||
     label != null ||
     headerLeft != null ||
@@ -140,10 +154,26 @@ export function Card({
       {hasHeader ? (
         <div
           className={cn(
-            'flex items-center gap-2 border-b border-border bg-muted/40 px-2.5 py-1.5 min-h-10',
+            'flex items-center gap-2 bg-muted/40 px-2.5 py-1.5 min-h-10',
+            isCollapsed ? '' : 'border-b border-border',
             headerClassName,
           )}
         >
+          {collapsible ? (
+            <button
+              type="button"
+              onClick={() => setCollapsed(!collapsed)}
+              aria-expanded={!collapsed}
+              aria-label={collapsed ? 'Expand section' : 'Collapse section'}
+              className="flex size-5 shrink-0 items-center justify-center rounded text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {collapsed ? (
+                <ChevronRight className="size-3.5" />
+              ) : (
+                <ChevronDown className="size-3.5" />
+              )}
+            </button>
+          ) : null}
           {Icon ? (
             <Icon className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
           ) : null}
@@ -170,9 +200,11 @@ export function Card({
           </div>
         </div>
       ) : null}
-      <div className={cn('flex min-h-0 flex-1 flex-col', bodyClassName)}>
-        {field}
-      </div>
+      {isCollapsed ? null : (
+        <div className={cn('flex min-h-0 flex-1 flex-col', bodyClassName)}>
+          {field}
+        </div>
+      )}
     </section>
   )
 }
