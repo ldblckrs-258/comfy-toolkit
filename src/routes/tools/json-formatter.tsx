@@ -1,11 +1,12 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { jsonFormatterContent } from '@/content/tools/json-formatter'
 import { Card } from '@/components/tools/card'
 import { ErrorText } from '@/components/tools/tool-panel'
 import { Button } from '@/components/ui/button'
 import type { JsonIndent } from '@/lib/tools/json'
 import { formatJson, minifyJson } from '@/lib/tools/json'
 import { requireTool } from '@/lib/tools/registry'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import { useDebouncedValue } from '@/lib/use-debounced-value'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { cn } from '@/lib/utils'
@@ -17,18 +18,7 @@ const tool = requireTool('json-formatter')
 const INDENTS: Array<JsonIndent> = [2, 4, 'tab']
 
 export const Route = createFileRoute('/tools/json-formatter')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, jsonFormatterContent),
   component: Page,
 })
 
@@ -56,9 +46,8 @@ function Page() {
   }
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="flex min-h-0 flex-1 flex-col gap-4 p-6">
+    <ToolPageLayout tool={tool} content={jsonFormatterContent}>
+      <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-2">
           <Button
             variant="subtle"
@@ -113,6 +102,6 @@ function Page() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }

@@ -1,4 +1,4 @@
-import { describeClaim, decodeJwt, TIMESTAMP_CLAIMS } from './jwt'
+import { decodeJwt, describeClaim, TIMESTAMP_CLAIMS } from './jwt'
 import { extractTimestampMs } from './uuid'
 
 export type EpochUnit = 's' | 'ms' | 'us' | 'ns'
@@ -392,7 +392,7 @@ export function convertBatch(
         ms: null,
         iso: null,
         relative: null,
-        error: `Truncated — only the first ${MAX_BATCH_ROWS} entries are shown.`,
+        error: `Truncated - only the first ${MAX_BATCH_ROWS} entries are shown.`,
       })
       break
     }

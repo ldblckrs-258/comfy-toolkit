@@ -1,16 +1,24 @@
 import { GROUP_COLORS, TOOLS, toolsByGroupSorted } from '@/lib/tools/registry'
-import { SITE_DESCRIPTION, SITE_NAME, buildSeo } from '@/lib/seo'
+import { HOME_TITLE, SITE_DESCRIPTION, buildSeo } from '@/lib/seo'
+import { schemaGraph, toolListNode, websiteNode } from '@/lib/structured-data'
 import type { LinkProps } from '@tanstack/react-router'
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
   head: () => {
     const seo = buildSeo({
-      title: SITE_NAME,
+      title: HOME_TITLE,
       description: SITE_DESCRIPTION,
       path: '/',
     })
-    return { meta: [{ title: SITE_NAME }, ...seo.meta], links: seo.links }
+    return {
+      meta: [
+        { title: HOME_TITLE },
+        ...seo.meta,
+        { 'script:ld+json': schemaGraph(websiteNode(), toolListNode()) },
+      ],
+      links: seo.links,
+    }
   },
   component: Home,
 })

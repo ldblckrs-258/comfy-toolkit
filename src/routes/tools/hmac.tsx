@@ -1,11 +1,12 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { hmacContent } from '@/content/tools/hmac'
 import { Card } from '@/components/tools/card'
 import { Input } from '@/components/ui/input'
 import { Tabs } from '@/components/ui/tabs'
 import type { HmacAlgorithm, HmacEncoding } from '@/lib/tools/hmac'
 import { HMAC_ALGORITHMS, generateHmac, verifyHmac } from '@/lib/tools/hmac'
 import { requireTool } from '@/lib/tools/registry'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { cn } from '@/lib/utils'
 import { createFileRoute } from '@tanstack/react-router'
@@ -17,18 +18,7 @@ const tool = requireTool('hmac')
 type Mode = 'generate' | 'verify'
 
 export const Route = createFileRoute('/tools/hmac')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, hmacContent),
   component: Page,
 })
 
@@ -72,9 +62,8 @@ function Page() {
   }, [mode, message, secret, algorithm, encoding, expected])
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="flex min-h-0 flex-1 flex-col gap-4 p-6">
+    <ToolPageLayout tool={tool} content={hmacContent}>
+      <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-3">
           <Tabs
             value={mode}
@@ -157,7 +146,7 @@ function Page() {
           )}
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 

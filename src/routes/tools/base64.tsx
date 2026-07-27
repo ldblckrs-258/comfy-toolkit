@@ -1,10 +1,11 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { base64Content } from '@/content/tools/base64'
 import { Card } from '@/components/tools/card'
 import { ErrorText } from '@/components/tools/tool-panel'
 import { Tabs } from '@/components/ui/tabs'
 import { decodeBase64, encodeBase64 } from '@/lib/tools/base64'
 import { requireTool } from '@/lib/tools/registry'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { createFileRoute } from '@tanstack/react-router'
 import * as React from 'react'
@@ -13,18 +14,7 @@ const tool = requireTool('base64')
 type Mode = 'encode' | 'decode'
 
 export const Route = createFileRoute('/tools/base64')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, base64Content),
   component: Page,
 })
 
@@ -45,9 +35,8 @@ function Page() {
   }, [input, mode])
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="flex min-h-0 flex-1 flex-col gap-4 p-6">
+    <ToolPageLayout tool={tool} content={base64Content}>
+      <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <Tabs
           value={mode}
           onChange={setMode}
@@ -77,6 +66,6 @@ function Page() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }

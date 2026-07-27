@@ -1,4 +1,5 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { colorsContent } from '@/content/tools/colors'
 import {
   CHECKERBOARD,
   ChannelSlider,
@@ -25,7 +26,7 @@ import {
   roundRgb,
 } from '@/lib/tools/colors'
 import { requireTool } from '@/lib/tools/registry'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import { createFileRoute } from '@tanstack/react-router'
 import { Droplets } from 'lucide-react'
 import * as React from 'react'
@@ -41,18 +42,7 @@ interface State {
 }
 
 export const Route = createFileRoute('/tools/colors')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, colorsContent),
   component: Page,
 })
 
@@ -87,9 +77,8 @@ function Page() {
     setState({ hsv, a: clamp(next, 0, 100) / 100 })
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="min-h-0 flex-1 overflow-auto p-6">
+    <ToolPageLayout tool={tool} content={colorsContent}>
+      <div className="min-h-[calc(100svh-var(--shell-top))] p-6">
         <div className="flex flex-col gap-6">
           <div className="grid gap-6 lg:grid-cols-2">
             <Preview rgb={rgb} alpha={a} />
@@ -152,7 +141,7 @@ function Page() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 

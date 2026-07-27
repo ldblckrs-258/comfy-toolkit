@@ -1,11 +1,12 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { dataConverterContent } from '@/content/tools/data-converter'
 import { Card } from '@/components/tools/card'
 import { ErrorText } from '@/components/tools/tool-panel'
 import { Button } from '@/components/ui/button'
 import type { DataFormat } from '@/lib/tools/data-converter'
 import { convertData } from '@/lib/tools/data-converter'
 import { requireTool } from '@/lib/tools/registry'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { createFileRoute } from '@tanstack/react-router'
 import { ArrowLeftRight } from 'lucide-react'
@@ -75,18 +76,7 @@ yaml.datetime = {
 yaml.punctuation = /---|[:[\]{},|>?]|\.\.\./
 
 export const Route = createFileRoute('/tools/data-converter')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, dataConverterContent),
   component: Page,
 })
 
@@ -143,9 +133,8 @@ function Page() {
   }
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="flex min-h-0 flex-1 flex-col gap-4 p-6">
+    <ToolPageLayout tool={tool} content={dataConverterContent}>
+      <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-2">
           <FormatSelect value={from} onChange={setFrom} />
           <Button
@@ -180,6 +169,6 @@ function Page() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }

@@ -1,10 +1,11 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { markdownContent } from '@/content/tools/markdown'
 import { Card } from '@/components/tools/card'
 import { ErrorText } from '@/components/tools/tool-panel'
 import { Button } from '@/components/ui/button'
 import { formatCode } from '@/lib/tools/prettier'
 import { requireTool } from '@/lib/tools/registry'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { createFileRoute } from '@tanstack/react-router'
 import * as React from 'react'
@@ -25,18 +26,7 @@ const greet = () => 'hi'
 `
 
 export const Route = createFileRoute('/tools/markdown')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, markdownContent),
   component: Page,
 })
 
@@ -84,9 +74,8 @@ function Page() {
   }, [input])
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="grid min-h-0 flex-1 gap-4 p-6 lg:grid-cols-2">
+    <ToolPageLayout tool={tool} content={markdownContent}>
+      <div className="grid min-h-0 h-[calc(100svh-var(--shell-top))] gap-4 p-6 lg:grid-cols-2">
         <div className="flex min-h-0 flex-1 flex-col gap-2">
           <Card
             label="Markdown"
@@ -118,6 +107,6 @@ function Page() {
           {error ? <ErrorText>{error}</ErrorText> : null}
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }

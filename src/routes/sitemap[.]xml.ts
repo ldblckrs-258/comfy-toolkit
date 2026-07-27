@@ -1,20 +1,61 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { SITE_URL } from '@/lib/seo'
+import { TOOL_CONTENT } from '@/content/tools'
+import { SITE_UPDATED, SITE_URL } from '@/lib/seo'
 import { TOOLS } from '@/lib/tools/registry'
+
+interface SitemapEntry {
+  path: string
+  lastmod: string
+  changefreq?: 'daily' | 'weekly' | 'monthly'
+  priority?: number
+}
+
+const ESCAPES: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&apos;',
+}
+
+function esc(value: string): string {
+  return value.replace(/[&<>"']/g, (char) => ESCAPES[char])
+}
+
+function sitemapEntries(): Array<SitemapEntry> {
+  return [
+    { path: '/', lastmod: SITE_UPDATED, changefreq: 'weekly', priority: 1 },
+    ...TOOLS.map((tool) => ({
+      path: tool.to,
+      lastmod: TOOL_CONTENT[tool.id]?.updated ?? SITE_UPDATED,
+      changefreq: 'monthly' as const,
+      priority: 0.8,
+    })),
+  ]
+}
+
+function renderEntry(entry: SitemapEntry): string {
+  const parts = [
+    `<loc>${esc(SITE_URL + entry.path)}</loc>`,
+    `<lastmod>${entry.lastmod}</lastmod>`,
+  ]
+  if (entry.changefreq)
+    parts.push(`<changefreq>${entry.changefreq}</changefreq>`)
+  if (entry.priority !== undefined) {
+    parts.push(`<priority>${entry.priority.toFixed(1)}</priority>`)
+  }
+  return `<url>${parts.join('')}</url>`
+}
 
 export const Route = createFileRoute('/sitemap.xml')({
   server: {
     handlers: {
       GET: () => {
-        const esc = (value: string) => value.replace(/&/g, '&amp;')
-        const paths = ['/', ...TOOLS.map((t) => t.to)]
         const body =
           `<?xml version="1.0" encoding="UTF-8"?>\n` +
           `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">` +
-          paths
-            .map((p) => `<url><loc>${esc(SITE_URL + p)}</loc></url>`)
-            .join('') +
+          sitemapEntries().map(renderEntry).join('') +
           `</urlset>`
 
         return new Response(body, {

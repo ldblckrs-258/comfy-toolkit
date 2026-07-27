@@ -125,7 +125,7 @@ export function WorldClock() {
           {localInstant ? localInstant.timeOnly : '--:--:--'}
         </div>
         <div className="text-sm text-muted-foreground">
-          {localInstant ? localInstant.dateOnly : '—'} · {cityLabel(local)}
+          {localInstant ? localInstant.dateOnly : '-'} · {cityLabel(local)}
         </div>
         <div className="mt-2">
           <DriftBadge />

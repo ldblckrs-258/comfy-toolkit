@@ -1,8 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { clockContent } from '@/content/tools/clock'
 import { Tabs } from '@/components/ui/tabs'
 import { requireTool } from '@/lib/tools/registry'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import { usePersistedJson } from '@/lib/use-persisted-json'
 import { useClockAlerts } from '@/lib/use-clock-alerts'
 import { useAlert } from '@/lib/use-alert'
@@ -34,18 +35,7 @@ export const Route = createFileRoute('/tools/clock')({
       ? { tab }
       : {}
   },
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, clockContent),
   component: Page,
 })
 
@@ -69,9 +59,8 @@ function Page() {
   useClockAlerts({ timer, setTimer, startRing: alert.startRing })
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="flex min-h-0 flex-1 flex-col gap-4 p-6">
+    <ToolPageLayout tool={tool} content={clockContent}>
+      <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <Tabs
           value={tab}
           onChange={setTab}
@@ -86,6 +75,6 @@ function Page() {
           ) : null}
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }

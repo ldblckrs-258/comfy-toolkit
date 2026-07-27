@@ -1,8 +1,10 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card } from '@/components/tools/card'
 import { JsonHighlight } from '@/components/tools/json-highlight'
 import { JwtTokenInput } from '@/components/tools/jwt-token-input'
 import { Tabs } from '@/components/ui/tabs'
+import { jwtContent } from '@/content/tools/jwt-decoder'
+import { toolHead } from '@/lib/head'
 import type { JwtParts, JwtSignResult, JwtVerifyResult } from '@/lib/tools/jwt'
 import {
   TIMESTAMP_CLAIMS,
@@ -13,7 +15,6 @@ import {
   verifyJwtSignature,
 } from '@/lib/tools/jwt'
 import { requireTool } from '@/lib/tools/registry'
-import { buildSeo, ogUrl } from '@/lib/seo'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { cn } from '@/lib/utils'
 import { createFileRoute } from '@tanstack/react-router'
@@ -23,18 +24,7 @@ import * as React from 'react'
 const tool = requireTool('jwt-decoder')
 
 export const Route = createFileRoute('/tools/jwt')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, jwtContent),
   component: Page,
 })
 
@@ -51,9 +41,8 @@ function Page() {
   const [mode, setMode] = React.useState<Mode>('decode')
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="min-h-0 flex-1 overflow-auto p-6">
+    <ToolPageLayout tool={tool} content={jwtContent}>
+      <div className="min-h-[calc(100svh-var(--shell-top))] p-6">
         <Tabs
           value={mode}
           onChange={setMode}
@@ -65,7 +54,7 @@ function Page() {
         />
         {mode === 'decode' ? <DecodeView /> : <EncodeView />}
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 
@@ -118,7 +107,7 @@ function DecodeView() {
           <JwtTokenInput
             value={token}
             onChange={setToken}
-            placeholder="Paste a JWT — eyJhbGciOi…"
+            placeholder="Paste a JWT - eyJhbGciOi…"
           />
         </Card>
         <div className="flex flex-col gap-1.5">
@@ -355,7 +344,7 @@ function DecodedCard({
         }
       >
         {data === undefined ? (
-          <p className="font-mono text-[13px] text-muted-foreground">—</p>
+          <p className="font-mono text-[13px] text-muted-foreground">-</p>
         ) : view === 'json' ? (
           <JsonHighlight value={data} />
         ) : isObject ? (

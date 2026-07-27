@@ -1,11 +1,12 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { codeFormatterContent } from '@/content/tools/code-formatter'
 import { Card } from '@/components/tools/card'
 import { ErrorText } from '@/components/tools/tool-panel'
 import { Button } from '@/components/ui/button'
 import type { PrettierLang } from '@/lib/tools/prettier'
 import { PRETTIER_LANGS, formatCode } from '@/lib/tools/prettier'
 import { requireTool } from '@/lib/tools/registry'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import { useDebouncedValue } from '@/lib/use-debounced-value'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { cn } from '@/lib/utils'
@@ -32,18 +33,7 @@ const PRISM_LANG: Record<PrettierLang, string> = {
 }
 
 export const Route = createFileRoute('/tools/code-formatter')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, codeFormatterContent),
   component: Page,
 })
 
@@ -90,9 +80,8 @@ function Page() {
   }
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="flex min-h-0 flex-1 flex-col gap-4 p-6">
+    <ToolPageLayout tool={tool} content={codeFormatterContent}>
+      <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-2">
           <select
             value={lang}
@@ -146,6 +135,6 @@ function Page() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }

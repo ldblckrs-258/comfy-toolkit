@@ -1,10 +1,11 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { urlParserContent } from '@/content/tools/url-parser'
 import { Card } from '@/components/tools/card'
 import { ErrorText } from '@/components/tools/tool-panel'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs } from '@/components/ui/tabs'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import { requireTool } from '@/lib/tools/registry'
 import type { UrlParam, UrlTokenType } from '@/lib/tools/url-parser'
 import {
@@ -31,18 +32,7 @@ type EncodeMode =
   | 'decode-url'
 
 export const Route = createFileRoute('/tools/url-parser')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, urlParserContent),
   component: Page,
 })
 
@@ -50,9 +40,8 @@ function Page() {
   const [mode, setMode] = React.useState<Mode>('parse')
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="min-h-0 flex-1 overflow-auto p-6 flex flex-col">
+    <ToolPageLayout tool={tool} content={urlParserContent}>
+      <div className="min-h-[calc(100svh-var(--shell-top))] p-6 flex flex-col">
         <Tabs
           value={mode}
           onChange={setMode}
@@ -64,7 +53,7 @@ function Page() {
         />
         {mode === 'parse' ? <ParseView /> : <EncodeView />}
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 

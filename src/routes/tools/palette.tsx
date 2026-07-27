@@ -1,4 +1,4 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card } from '@/components/tools/card'
 import type { ApplyColor, SpaceId } from '@/components/tools/color-space'
 import {
@@ -10,7 +10,8 @@ import {
   parseSpaceInput,
 } from '@/components/tools/color-space'
 import { ColorPicker } from '@/components/ui/color-picker'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { paletteContent } from '@/content/tools/palette'
+import { toolHead } from '@/lib/head'
 import { apcaContrast } from '@/lib/tools/apca'
 import type { Hsv, Rgb, Shade } from '@/lib/tools/colors'
 import {
@@ -210,18 +211,7 @@ function formatScore(guideline: Guideline, score: number): string {
 }
 
 export const Route = createFileRoute('/tools/palette')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, paletteContent),
   component: Page,
 })
 
@@ -254,9 +244,8 @@ function Page() {
   const active = FORMATS.find((f) => f.id === format) ?? FORMATS[0]
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="min-h-0 flex-1 overflow-auto p-6">
+    <ToolPageLayout tool={tool} content={paletteContent}>
+      <div className="min-h-[calc(100svh-var(--shell-top))] p-6">
         <div className="flex flex-col gap-6">
           <div className="grid gap-6 lg:grid-cols-[22rem_1fr]">
             <div className="flex flex-col gap-3">
@@ -332,7 +321,7 @@ function Page() {
           <ExportCard format={format} palette={palette} />
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 
@@ -494,7 +483,7 @@ function MatrixCell({
       aria-label={`${label}, ${textHex} on ${bgHex}`}
       className="flex aspect-square items-center justify-center rounded-md border border-border/50 font-mono text-[10px] font-semibold tabular-nums"
       style={{ backgroundColor: bgHex, color: textHex }}
-      title={`${label} — ${textHex} on ${bgHex}`}
+      title={`${label} - ${textHex} on ${bgHex}`}
     >
       {label}
     </span>

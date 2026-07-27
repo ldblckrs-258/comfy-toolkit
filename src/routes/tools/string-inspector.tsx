@@ -1,7 +1,8 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { stringInspectorContent } from '@/content/tools/string-inspector'
 import { Card } from '@/components/tools/card'
 import { Tabs } from '@/components/ui/tabs'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import { requireTool } from '@/lib/tools/registry'
 import type {
   CodePointInfo,
@@ -53,18 +54,7 @@ type OutputForm = 'clean' | NormalizationForm
 const CODE_POINT_LIMIT = 2000
 
 export const Route = createFileRoute('/tools/string-inspector')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, stringInspectorContent),
   component: Page,
 })
 
@@ -105,9 +95,8 @@ function Page() {
   )
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="min-h-0 flex-1 overflow-auto p-6">
+    <ToolPageLayout tool={tool} content={stringInspectorContent}>
+      <div className="min-h-[calc(100svh-var(--shell-top))] p-6">
         <div className="flex flex-col gap-6">
           <Card
             label="Text"
@@ -166,7 +155,7 @@ function Page() {
           )}
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 

@@ -82,7 +82,7 @@ describe('tokenizeUrl', () => {
     '',
   ]
 
-  it('is lossless — joined tokens equal the input', () => {
+  it('is lossless - joined tokens equal the input', () => {
     for (const input of cases) {
       expect(
         tokenizeUrl(input)

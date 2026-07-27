@@ -1,11 +1,19 @@
 export const SITE_NAME = 'ComfyToolkit'
 
 export const SITE_DESCRIPTION =
-  'A fast, offline-friendly console of developer and designer utilities — formatters, encoders, generators, and color tools that run entirely in your browser.'
+  'A fast, offline-friendly console of developer and designer utilities - formatters, encoders, generators, and color tools that run entirely in your browser.'
 
 const RAW_SITE_URL = import.meta.env.VITE_SITE_URL ?? 'http://localhost:3000'
 
 export const SITE_URL = RAW_SITE_URL.replace(/\/$/, '')
+
+export const SITE_UPDATED = '2026-07-27'
+
+export const HOME_TITLE = `${SITE_NAME} - Free Online Developer Tools (No Upload)`
+
+export function toolTitle(name: string): string {
+  return `${name} - Free Online Tool | ${SITE_NAME}`
+}
 
 export function ogUrl(toolId?: string): string {
   return `${SITE_URL}/og/${toolId ?? 'default'}.png`

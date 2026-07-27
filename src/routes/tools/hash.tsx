@@ -1,11 +1,12 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card, CopyIcon } from '@/components/tools/card'
 import { Input } from '@/components/ui/input'
 import { Tabs } from '@/components/ui/tabs'
+import { hashContent } from '@/content/tools/hash'
+import { toolHead } from '@/lib/head'
 import type { HashAlgorithm, HashEncoding } from '@/lib/tools/hash'
 import { HASH_ALGORITHMS, hashAll, matchAlgorithm } from '@/lib/tools/hash'
 import { requireTool } from '@/lib/tools/registry'
-import { buildSeo, ogUrl } from '@/lib/seo'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { cn } from '@/lib/utils'
 import { createFileRoute } from '@tanstack/react-router'
@@ -31,18 +32,7 @@ const EMPTY: Record<HashAlgorithm, string> = Object.freeze({
 })
 
 export const Route = createFileRoute('/tools/hash')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, hashContent),
   component: Page,
 })
 
@@ -126,9 +116,8 @@ function Page() {
   }
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="flex min-h-0 flex-1 flex-col gap-4 p-6">
+    <ToolPageLayout tool={tool} content={hashContent}>
+      <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-3">
           <Tabs
             value={source}
@@ -249,7 +238,7 @@ function Page() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 
@@ -273,7 +262,7 @@ function HashRow({
         {algorithm}
       </span>
       <span className="min-w-0 flex-1 break-all font-mono text-[13px] text-foreground">
-        {value || <span className="text-muted-foreground">—</span>}
+        {value || <span className="text-muted-foreground">-</span>}
       </span>
       {matched ? <Check className="h-4 w-4 shrink-0 text-success" /> : null}
       <CopyIcon value={value} />

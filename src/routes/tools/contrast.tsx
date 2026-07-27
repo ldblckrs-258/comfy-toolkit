@@ -1,8 +1,10 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card } from '@/components/tools/card'
 import { ErrorText } from '@/components/tools/tool-panel'
 import { ColorPicker } from '@/components/ui/color-picker'
 import { Input } from '@/components/ui/input'
+import { contrastContent } from '@/content/tools/contrast'
+import { toolHead } from '@/lib/head'
 import { formatRgb, rgbToHex } from '@/lib/tools/colors'
 import {
   assess,
@@ -13,7 +15,6 @@ import {
 } from '@/lib/tools/contrast'
 import { requireTool } from '@/lib/tools/registry'
 import { usePersistedState } from '@/lib/use-persisted-state'
-import { buildSeo, ogUrl } from '@/lib/seo'
 import { createFileRoute } from '@tanstack/react-router'
 import type { LucideIcon } from 'lucide-react'
 import {
@@ -63,18 +64,7 @@ function gradeOf(badges: ReturnType<typeof assess>): GradeKey {
 }
 
 export const Route = createFileRoute('/tools/contrast')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, contrastContent),
   component: Page,
 })
 
@@ -101,9 +91,8 @@ function Page() {
   }
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="min-h-0 flex-1 overflow-auto p-6">
+    <ToolPageLayout tool={tool} content={contrastContent}>
+      <div className="min-h-[calc(100svh-var(--shell-top))] p-6">
         <div className="flex flex-col gap-6">
           <div className="grid gap-6 lg:grid-cols-2">
             <div className="flex flex-col gap-4">
@@ -144,7 +133,7 @@ function Page() {
           ) : null}
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 
@@ -223,7 +212,7 @@ function Preview({
             Large sample text
           </span>
           <span className="text-sm" style={{ color: fgCss }}>
-            Normal sample text — the quick brown fox jumps over the lazy dog.
+            Normal sample text - the quick brown fox jumps over the lazy dog.
           </span>
         </div>
       </div>

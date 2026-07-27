@@ -1,4 +1,5 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { uuidContent } from '@/content/tools/uuid-generator'
 import { Card } from '@/components/tools/card'
 import { CopyButton } from '@/components/tools/copy-button'
 import { ErrorText } from '@/components/tools/tool-panel'
@@ -6,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs } from '@/components/ui/tabs'
 import { requireTool } from '@/lib/tools/registry'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import type { UuidField, UuidFieldKey } from '@/lib/tools/uuid'
 import {
   decomposeUuidV7,
@@ -33,18 +34,7 @@ const FIELD_COLORS: Record<UuidFieldKey, string> = {
 }
 
 export const Route = createFileRoute('/tools/uuid-generator')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, uuidContent),
   component: Page,
 })
 
@@ -52,9 +42,8 @@ function Page() {
   const [mode, setMode] = React.useState<Mode>('generate')
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="min-h-0 flex-1 overflow-auto p-6">
+    <ToolPageLayout tool={tool} content={uuidContent}>
+      <div className="min-h-[calc(100svh-var(--shell-top))] p-6">
         <Tabs
           value={mode}
           onChange={setMode}
@@ -66,7 +55,7 @@ function Page() {
         />
         {mode === 'generate' ? <GeneratorView /> : <ExtractView />}
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 
@@ -164,7 +153,7 @@ function GeneratorView() {
         <Card
           label={`Generated UUIDs (${list.length})`}
           copyValue={list.join('\n')}
-          bodyClassName="max-h-[calc(100svh-38rem)] min-h-32 gap-1.5 overflow-auto overscroll-contain p-2"
+          bodyClassName="max-h-[calc(100svh-38rem)] min-h-32 gap-1.5 overflow-auto p-2"
         >
           {list.map((id, index) => (
             <div

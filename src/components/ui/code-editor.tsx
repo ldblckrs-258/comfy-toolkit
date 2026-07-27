@@ -66,7 +66,7 @@ export function CodeEditor({
   return (
     <div
       className={cn(
-        'relative overflow-auto overscroll-contain rounded-md border border-border bg-background transition-colors focus-within:bg-card',
+        'relative overflow-auto rounded-md border border-border bg-background transition-colors focus-within:bg-card',
         className,
       )}
       style={{ minHeight: minRows * 21 + 20 }}

@@ -61,7 +61,7 @@ export function RegexHighlight({
   return (
     <div
       className={cn(
-        'relative overflow-auto overscroll-contain',
+        'relative overflow-auto',
         bare
           ? 'bg-transparent'
           : 'rounded-md border border-border bg-background transition-colors focus-within:bg-card',

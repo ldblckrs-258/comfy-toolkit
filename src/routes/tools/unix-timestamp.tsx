@@ -1,11 +1,14 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card, CopyIcon } from '@/components/tools/card'
 import { ErrorText } from '@/components/tools/tool-panel'
 import { Button } from '@/components/ui/button'
 import { Combobox } from '@/components/ui/combobox'
 import { Input } from '@/components/ui/input'
 import { Tabs } from '@/components/ui/tabs'
+import { timestampContent } from '@/content/tools/unix-timestamp'
+import { toolHead } from '@/lib/head'
 import { requireTool } from '@/lib/tools/registry'
+import type { EpochUnit } from '@/lib/tools/timestamp'
 import {
   convertBatch,
   durationBetween,
@@ -17,8 +20,6 @@ import {
   parseEpoch,
   relativeTime,
 } from '@/lib/tools/timestamp'
-import type { EpochUnit } from '@/lib/tools/timestamp'
-import { buildSeo, ogUrl } from '@/lib/seo'
 import { usePersistedState } from '@/lib/use-persisted-state'
 import { cn } from '@/lib/utils'
 import { createFileRoute } from '@tanstack/react-router'
@@ -29,18 +30,7 @@ const tool = requireTool('unix-timestamp')
 type Mode = 'convert' | 'extract' | 'batch' | 'duration' | 'format'
 
 export const Route = createFileRoute('/tools/unix-timestamp')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, timestampContent),
   component: Page,
 })
 
@@ -296,7 +286,7 @@ function BatchTab({ timeZone, nowMs }: { timeZone: string; nowMs: number }) {
   return (
     <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-2">
       <Card
-        label="Input — one per line"
+        label="Input - one per line"
         value={input}
         onChange={setInput}
         placeholder={'1700000000\n2023-11-14 22:13:20'}
@@ -562,9 +552,8 @@ function Page() {
     : 'convert'
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="flex min-h-0 flex-1 flex-col gap-4 p-6">
+    <ToolPageLayout tool={tool} content={timestampContent}>
+      <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-3">
           <Tabs
             value={safeMode}
@@ -586,7 +575,7 @@ function Page() {
           >
             <span className="uppercase tracking-[0.12em]">now</span>
             <span className="text-foreground">
-              {now !== null ? Math.floor(now / 1000) : '—'}
+              {now !== null ? Math.floor(now / 1000) : '-'}
             </span>
           </div>
         </div>
@@ -609,6 +598,6 @@ function Page() {
           ) : null}
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }

@@ -1,11 +1,12 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card } from '@/components/tools/card'
 import { CopyButton } from '@/components/tools/copy-button'
 import { ErrorText } from '@/components/tools/tool-panel'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs } from '@/components/ui/tabs'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { secretGeneratorContent } from '@/content/tools/secret-generator'
+import { toolHead } from '@/lib/head'
 import { requireTool } from '@/lib/tools/registry'
 import type {
   ByteOptions,
@@ -215,18 +216,7 @@ const BYTE_PRESETS: Array<BytePreset> = [
 ]
 
 export const Route = createFileRoute('/tools/secret-generator')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, secretGeneratorContent),
   component: Page,
 })
 
@@ -234,9 +224,8 @@ function Page() {
   const [mode, setMode] = React.useState<Mode>('charset')
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="min-h-0 flex-1 overflow-auto p-6">
+    <ToolPageLayout tool={tool} content={secretGeneratorContent}>
+      <div className="min-h-[calc(100svh-var(--shell-top))] p-6">
         <Tabs
           value={mode}
           onChange={setMode}
@@ -264,7 +253,7 @@ function Page() {
         />
         {mode === 'charset' ? <CharsetView /> : <ByteView />}
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 
@@ -471,7 +460,7 @@ function CharsetView() {
             detail={`${coreLength} random chars from a pool of ${pool.length}`}
             note={
               guaranteeEachClass
-                ? 'Approximate — the “one of each set” rule slightly lowers true entropy.'
+                ? 'Approximate - the “one of each set” rule slightly lowers true entropy.'
                 : undefined
             }
           />
@@ -770,11 +759,11 @@ function ResultList({
     <Card
       label={`Generated (${list.length})`}
       copyValue={list.join('\n')}
-      bodyClassName="max-h-[calc(100svh-30rem)] min-h-32 gap-1.5 overflow-auto overscroll-contain p-2"
+      bodyClassName="max-h-[calc(100svh-30rem)] min-h-32 gap-1.5 overflow-auto p-2"
     >
       {list.length === 0 ? (
         <div className="flex min-h-32 items-center justify-center px-4 text-center text-sm text-muted-foreground">
-          No secrets yet — hit Generate.
+          No secrets yet - hit Generate.
         </div>
       ) : (
         list.map((value, index) => {

@@ -11,7 +11,7 @@ describe('base64', () => {
   })
 
   it('round-trips multibyte UTF-8 without corruption', () => {
-    const text = 'héllo — 世界 🌍'
+    const text = 'héllo - 世界 🌍'
     expect(decodeBase64(encodeBase64(text))).toBe(text)
   })
 })

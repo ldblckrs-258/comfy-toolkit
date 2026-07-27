@@ -1,11 +1,12 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { qrCodeContent } from '@/content/tools/qr-code'
 import { Card } from '@/components/tools/card'
 import { CopyButton } from '@/components/tools/copy-button'
 import { ErrorText } from '@/components/tools/tool-panel'
 import { Button } from '@/components/ui/button'
 import { ColorPicker } from '@/components/ui/color-picker'
 import { Tabs } from '@/components/ui/tabs'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import type { EccLevel } from '@/lib/tools/qr-code'
 import { parseWifiPayload, qrToSvg, wifiToPayload } from '@/lib/tools/qr-code'
 import { requireTool } from '@/lib/tools/registry'
@@ -27,18 +28,7 @@ const ECC_OPTIONS: Array<EccLevel> = ['L', 'M', 'Q', 'H']
 const SIZE_OPTIONS = [256, 512, 1024]
 
 export const Route = createFileRoute('/tools/qr-code')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, qrCodeContent),
   component: Page,
 })
 
@@ -199,20 +189,20 @@ function Page() {
   }
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader
-        tool={tool}
-        actions={
-          <Button
-            variant="subtle"
-            size="sm"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <ScanLine className="h-4 w-4" />
-            Scan
-          </Button>
-        }
-      />
+    <ToolPageLayout
+      tool={tool}
+      content={qrCodeContent}
+      actions={
+        <Button
+          variant="subtle"
+          size="sm"
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <ScanLine className="h-4 w-4" />
+          Scan
+        </Button>
+      }
+    >
       <input
         ref={fileInputRef}
         type="file"
@@ -220,7 +210,7 @@ function Page() {
         className="hidden"
         onChange={scanImage}
       />
-      <div className="flex min-h-0 flex-1 flex-col gap-4 p-6">
+      <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-col gap-2 self-start">
           <Tabs
             value={tab}
@@ -387,6 +377,6 @@ function Page() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }

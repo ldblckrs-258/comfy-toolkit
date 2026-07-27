@@ -1,10 +1,11 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card } from '@/components/tools/card'
 import { CopyButton } from '@/components/tools/copy-button'
 import { ErrorText } from '@/components/tools/tool-panel'
 import { Input } from '@/components/ui/input'
 import { Tabs } from '@/components/ui/tabs'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { cronContent } from '@/content/tools/cron'
+import { toolHead } from '@/lib/head'
 import type { BuilderState, CronDialect, CronSchedule } from '@/lib/tools/cron'
 import {
   buildExpression,
@@ -37,18 +38,7 @@ const tool = requireTool('cron')
 const ACCENT = 'var(--tool-generators)'
 
 export const Route = createFileRoute('/tools/cron')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, cronContent),
   component: Page,
 })
 
@@ -252,9 +242,8 @@ function Page() {
   }, [runsResult, now])
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="grid min-h-0 flex-1 gap-4 overflow-auto p-6 lg:grid-cols-2">
+    <ToolPageLayout tool={tool} content={cronContent}>
+      <div className="grid min-h-[calc(100svh-var(--shell-top))] gap-4 p-6 lg:grid-cols-2">
         <div className="flex flex-col gap-4">
           <Card
             headerLeft={<CardTitle icon={SquareTerminal}>Expression</CardTitle>}
@@ -391,7 +380,7 @@ function Page() {
               ) : reboot ? (
                 <p className="flex items-center gap-2 px-1 py-2 text-sm text-muted-foreground">
                   <Power className="h-4 w-4" style={{ color: ACCENT }} />
-                  Runs on startup — no scheduled times.
+                  Runs on startup - no scheduled times.
                 </p>
               ) : !parse.ok ? (
                 <p className="px-1 py-2 text-sm text-muted-foreground">
@@ -458,7 +447,7 @@ function Page() {
           </Card>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 

@@ -1,4 +1,4 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card } from '@/components/tools/card'
 import { RegexHighlight } from '@/components/tools/regex-highlight'
 import { ErrorText } from '@/components/tools/tool-panel'
@@ -8,7 +8,8 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
 import { Tooltip, TooltipProvider } from '@/components/ui/tooltip'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { regexContent } from '@/content/tools/regex'
+import { toolHead } from '@/lib/head'
 import type { RegexResult } from '@/lib/tools/regex'
 import { MATCH_CAP } from '@/lib/tools/regex'
 import { requireTool } from '@/lib/tools/registry'
@@ -52,18 +53,7 @@ bob@acme.com
 alice@dev.io`
 
 export const Route = createFileRoute('/tools/regex')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, regexContent),
   component: Page,
 })
 
@@ -155,9 +145,8 @@ function Page() {
   const hasReplacement = replacement.length > 0
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="grid min-h-0 flex-1 gap-4 p-6 lg:grid-cols-2">
+    <ToolPageLayout tool={tool} content={regexContent}>
+      <div className="grid min-h-0 h-[calc(100svh-var(--shell-top))] gap-4 p-6 lg:grid-cols-2">
         <div className="flex min-h-0 flex-col gap-3">
           <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border border-border bg-card">
             <div className="flex items-center gap-2 px-3 font-mono text-sm">
@@ -231,7 +220,7 @@ function Page() {
 
           {result?.error ? <ErrorText>{result.error}</ErrorText> : null}
           {slow ? (
-            <ErrorText>Pattern too slow — try simplifying it.</ErrorText>
+            <ErrorText>Pattern too slow - try simplifying it.</ErrorText>
           ) : null}
           {result?.truncated ? (
             <p className="text-xs text-muted-foreground">
@@ -344,6 +333,6 @@ function Page() {
           </Collapsible>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }

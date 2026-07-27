@@ -1,4 +1,5 @@
-import { ToolHeader } from '@/components/layout/tool-header'
+import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import { gradientContent } from '@/content/tools/gradient'
 import { Card } from '@/components/tools/card'
 import type { ApplyColor, SpaceId } from '@/components/tools/color-space'
 import {
@@ -13,7 +14,7 @@ import {
 import { ErrorText } from '@/components/tools/tool-panel'
 import { ColorPicker } from '@/components/ui/color-picker'
 import { Input } from '@/components/ui/input'
-import { buildSeo, ogUrl } from '@/lib/seo'
+import { toolHead } from '@/lib/head'
 import type { Hsv } from '@/lib/tools/colors'
 import {
   clamp,
@@ -212,18 +213,7 @@ function interpolateStop(
 }
 
 export const Route = createFileRoute('/tools/gradient')({
-  head: () => {
-    const seo = buildSeo({
-      title: `${tool.name} — ComfyToolkit`,
-      description: tool.description,
-      path: tool.to,
-      image: ogUrl(tool.id),
-    })
-    return {
-      meta: [{ title: `${tool.name} — ComfyToolkit` }, ...seo.meta],
-      links: seo.links,
-    }
-  },
+  head: () => toolHead(tool, gradientContent),
   component: Page,
 })
 
@@ -301,9 +291,8 @@ function Page() {
   const active = FORMATS.find((f) => f.id === state.format) ?? FORMATS[0]
 
   return (
-    <div className="flex h-full flex-col">
-      <ToolHeader tool={tool} />
-      <div className="min-h-0 flex-1 overflow-auto p-6">
+    <ToolPageLayout tool={tool} content={gradientContent}>
+      <div className="min-h-[calc(100svh-var(--shell-top))] p-6">
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-3">
             <div
@@ -536,7 +525,7 @@ function Page() {
           <ExportCard state={state} />
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   )
 }
 

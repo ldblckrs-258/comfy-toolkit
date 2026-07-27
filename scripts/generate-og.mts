@@ -7,13 +7,13 @@ import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori'
 import { html as toReactNode } from 'satori-html'
 
-import { GROUP_LABELS, TOOLS } from '../src/lib/tools/registry.ts'
 import type { ToolGroup, ToolMeta } from '../src/lib/tools/registry.ts'
+import { GROUP_LABELS, TOOLS } from '../src/lib/tools/registry.ts'
 
 const SITE_ACCENT = '#0d9488'
 
 const SITE_DESCRIPTION =
-  'A fast, offline-friendly console of developer and designer utilities — formatters, encoders, generators, and color tools that run entirely in your browser.'
+  'A fast, offline-friendly console of developer and designer utilities - formatters, encoders, generators, and color tools that run entirely in your browser.'
 
 const GROUP_HEX: Record<ToolGroup, string> = {
   formatters: '#0284c7',
