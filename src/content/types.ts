@@ -17,3 +17,11 @@ export interface ToolContent {
   faq: Array<{ q: string; a: string }>
   related: Array<RelatedLink>
 }
+
+export interface CategoryContent {
+  updated: string
+  title: string
+  metaDescription: string
+  intro: Array<string>
+  sections: Array<ContentSection>
+}

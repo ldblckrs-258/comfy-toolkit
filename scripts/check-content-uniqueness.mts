@@ -4,15 +4,17 @@ import { fileURLToPath } from 'node:url'
 
 import { jaccard, shingles, words } from './content-metrics.mts'
 
-import type { ToolContent } from '../src/content/types.ts'
+import type { CategoryContent, ToolContent } from '../src/content/types.ts'
 
 const TOOL_WORD_FLOOR = 400
+const CATEGORY_WORD_FLOOR = 300
 const SIMILARITY_CEILING = 0.35
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
 const toolContentDir = join(rootDir, 'src', 'content', 'tools')
+const categoryContentDir = join(rootDir, 'src', 'content', 'categories')
 
-function flatten(content: ToolContent): string {
+function flatten(content: ToolContent | CategoryContent): string {
   const parts: Array<string> = [...content.intro]
   for (const section of content.sections) {
     parts.push(section.heading)
@@ -20,35 +22,46 @@ function flatten(content: ToolContent): string {
     if (section.bullets) parts.push(...section.bullets)
     if (section.code) parts.push(section.code.body)
   }
-  for (const item of content.faq) parts.push(item.q, item.a)
-  for (const link of content.related) parts.push(link.anchor)
+  if ('faq' in content) {
+    for (const item of content.faq) parts.push(item.q, item.a)
+    for (const link of content.related) parts.push(link.anchor)
+  }
   return parts.join(' ')
 }
 
 async function main(): Promise<void> {
-  const files = readdirSync(toolContentDir).filter(
-    (f: string) => f.endsWith('.ts') && f !== 'index.ts',
-  )
-  const pages: Array<{ id: string; text: string; count: number }> = []
+  const pages: Array<{
+    id: string
+    text: string
+    count: number
+    floor: number
+  }> = []
 
-  for (const file of files) {
-    const mod = await import(join(toolContentDir, file))
-    const content = Object.values(mod)[0] as ToolContent
-    const text = flatten(content)
-    pages.push({
-      id: file.replace(/\.ts$/, ''),
-      text,
-      count: words(text).length,
-    })
+  for (const [dir, prefix, floor] of [
+    [toolContentDir, 'tool', TOOL_WORD_FLOOR],
+    [categoryContentDir, 'category', CATEGORY_WORD_FLOOR],
+  ] as const) {
+    const files = readdirSync(dir).filter(
+      (f: string) => f.endsWith('.ts') && f !== 'index.ts',
+    )
+    for (const file of files) {
+      const mod = await import(join(dir, file))
+      const content = Object.values(mod)[0] as ToolContent | CategoryContent
+      const text = flatten(content)
+      pages.push({
+        id: `${prefix}/${file.replace(/\.ts$/, '')}`,
+        text,
+        count: words(text).length,
+        floor,
+      })
+    }
   }
 
   const failures: Array<string> = []
 
   for (const page of pages) {
-    if (page.count < TOOL_WORD_FLOOR) {
-      failures.push(
-        `${page.id}: ${page.count} words, floor is ${TOOL_WORD_FLOOR}`,
-      )
+    if (page.count < page.floor) {
+      failures.push(`${page.id}: ${page.count} words, floor is ${page.floor}`)
     }
   }
 

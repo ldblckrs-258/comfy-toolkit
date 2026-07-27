@@ -1,5 +1,12 @@
 {
   "default": "26ac933350fc196a80877c51460a67e6fba34593c24a9efb020aeb8fdac29621",
+  "tools": "85a20ff822eed2a10e91a72669deaef644c5a79aab16cadb57e5e3e9e3dadd5d",
+  "category-formatters": "528ebd9e04a37dc6b3aff4cf7d1f9d075b5b2a63eef4872aa838e82828c98a5b",
+  "category-encoders": "aadd2371b018e3faefcee014d01b860f2fb8312e6adedd1c8d6d9256943550a8",
+  "category-generators": "40dd3af16ff5ace52de25e7757353c0368c6ad20c61c0c3ceb382b4817662a5d",
+  "category-date": "8b7de3e6552a6efee9272a87796b654ca80b04dd95bcc0ee14e243a5a29081fb",
+  "category-text": "1bffcc5eed5494b13d500d1090ad336d80b6c8127c6e0f676a584198bbe0afdb",
+  "category-color": "4f85601e4f774e81649ce178fee4e79de52a95e158206f4b177735fdb99c8cd4",
   "json-formatter": "488db9047ca5d3864d01c637313dfec49073fbdd03dd20ad5d09530623d200ac",
   "code-formatter": "18da90182703d56e5e040f2f288540de9cb93a92f22c66bd6a04fa9113b7584b",
   "data-converter": "4843bec812107ea1243c8f830d5c6162f7c9adc6dfc94776d9edc5ad7709adab",

@@ -1,8 +1,9 @@
 import { Link } from '@tanstack/react-router'
 
-import { getTool } from '@/lib/tools/registry'
+import { GROUP_LABELS, getTool } from '@/lib/tools/registry'
 
 import type { ToolContent } from '@/content/types'
+import type { ToolGroup } from '@/lib/tools/registry'
 import type { LinkProps } from '@tanstack/react-router'
 
 function Section({
@@ -38,7 +39,13 @@ function Section({
   )
 }
 
-export function ToolArticle({ content }: { content: ToolContent }) {
+export function ToolArticle({
+  content,
+  group,
+}: {
+  content: ToolContent
+  group?: ToolGroup
+}) {
   const related = content.related
     .map((link) => ({ link, tool: getTool(link.id) }))
     .filter((entry) => Boolean(entry.tool))
@@ -92,6 +99,17 @@ export function ToolArticle({ content }: { content: ToolContent }) {
                 </Link>
               </li>
             ))}
+            {group ? (
+              <li>
+                <Link
+                  to="/categories/$group"
+                  params={{ group }}
+                  className="text-accent hover:underline"
+                >
+                  Browse all {GROUP_LABELS[group].toLowerCase()}
+                </Link>
+              </li>
+            ) : null}
           </ul>
         </section>
       ) : null}

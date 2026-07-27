@@ -6,6 +6,8 @@ import {
   softwareAppNode,
 } from './structured-data'
 
+import { GROUP_LABELS } from './tools/registry'
+
 import type { ToolContent } from '@/content/types'
 import type { ToolMeta } from './tools/registry'
 
@@ -22,6 +24,7 @@ export function toolHead(tool: ToolMeta, content?: ToolContent) {
     softwareAppNode(tool),
     breadcrumbNode([
       { name: 'Home', path: '/' },
+      { name: GROUP_LABELS[tool.group], path: `/categories/${tool.group}` },
       { name: tool.name, path: tool.to },
     ]),
   ]

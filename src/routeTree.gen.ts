@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ToolsIndexRouteImport } from './routes/tools/index'
+import { Route as CategoriesIndexRouteImport } from './routes/categories/index'
 import { Route as ToolsUuidGeneratorRouteImport } from './routes/tools/uuid-generator'
 import { Route as ToolsUrlParserRouteImport } from './routes/tools/url-parser'
 import { Route as ToolsUnixTimestampRouteImport } from './routes/tools/unix-timestamp'
@@ -34,6 +36,7 @@ import { Route as ToolsColorsRouteImport } from './routes/tools/colors'
 import { Route as ToolsCodeFormatterRouteImport } from './routes/tools/code-formatter'
 import { Route as ToolsClockRouteImport } from './routes/tools/clock'
 import { Route as ToolsBase64RouteImport } from './routes/tools/base64'
+import { Route as CategoriesGroupRouteImport } from './routes/categories/$group'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -48,6 +51,16 @@ const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsIndexRoute = ToolsIndexRouteImport.update({
+  id: '/tools/',
+  path: '/tools/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriesIndexRoute = CategoriesIndexRouteImport.update({
+  id: '/categories/',
+  path: '/categories/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsUuidGeneratorRoute = ToolsUuidGeneratorRouteImport.update({
@@ -160,11 +173,17 @@ const ToolsBase64Route = ToolsBase64RouteImport.update({
   path: '/tools/base64',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategoriesGroupRoute = CategoriesGroupRouteImport.update({
+  id: '/categories/$group',
+  path: '/categories/$group',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/categories/$group': typeof CategoriesGroupRoute
   '/tools/base64': typeof ToolsBase64Route
   '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
@@ -187,11 +206,14 @@ export interface FileRoutesByFullPath {
   '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
   '/tools/url-parser': typeof ToolsUrlParserRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
+  '/categories/': typeof CategoriesIndexRoute
+  '/tools/': typeof ToolsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/categories/$group': typeof CategoriesGroupRoute
   '/tools/base64': typeof ToolsBase64Route
   '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
@@ -214,12 +236,15 @@ export interface FileRoutesByTo {
   '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
   '/tools/url-parser': typeof ToolsUrlParserRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
+  '/categories': typeof CategoriesIndexRoute
+  '/tools': typeof ToolsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/categories/$group': typeof CategoriesGroupRoute
   '/tools/base64': typeof ToolsBase64Route
   '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
@@ -242,6 +267,8 @@ export interface FileRoutesById {
   '/tools/unix-timestamp': typeof ToolsUnixTimestampRoute
   '/tools/url-parser': typeof ToolsUrlParserRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
+  '/categories/': typeof CategoriesIndexRoute
+  '/tools/': typeof ToolsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -249,6 +276,7 @@ export interface FileRouteTypes {
     | '/'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/categories/$group'
     | '/tools/base64'
     | '/tools/clock'
     | '/tools/code-formatter'
@@ -271,11 +299,14 @@ export interface FileRouteTypes {
     | '/tools/unix-timestamp'
     | '/tools/url-parser'
     | '/tools/uuid-generator'
+    | '/categories/'
+    | '/tools/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/categories/$group'
     | '/tools/base64'
     | '/tools/clock'
     | '/tools/code-formatter'
@@ -298,11 +329,14 @@ export interface FileRouteTypes {
     | '/tools/unix-timestamp'
     | '/tools/url-parser'
     | '/tools/uuid-generator'
+    | '/categories'
+    | '/tools'
   id:
     | '__root__'
     | '/'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/categories/$group'
     | '/tools/base64'
     | '/tools/clock'
     | '/tools/code-formatter'
@@ -325,12 +359,15 @@ export interface FileRouteTypes {
     | '/tools/unix-timestamp'
     | '/tools/url-parser'
     | '/tools/uuid-generator'
+    | '/categories/'
+    | '/tools/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  CategoriesGroupRoute: typeof CategoriesGroupRoute
   ToolsBase64Route: typeof ToolsBase64Route
   ToolsClockRoute: typeof ToolsClockRoute
   ToolsCodeFormatterRoute: typeof ToolsCodeFormatterRoute
@@ -353,6 +390,8 @@ export interface RootRouteChildren {
   ToolsUnixTimestampRoute: typeof ToolsUnixTimestampRoute
   ToolsUrlParserRoute: typeof ToolsUrlParserRoute
   ToolsUuidGeneratorRoute: typeof ToolsUuidGeneratorRoute
+  CategoriesIndexRoute: typeof CategoriesIndexRoute
+  ToolsIndexRoute: typeof ToolsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -376,6 +415,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/': {
+      id: '/tools/'
+      path: '/tools'
+      fullPath: '/tools/'
+      preLoaderRoute: typeof ToolsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categories/': {
+      id: '/categories/'
+      path: '/categories'
+      fullPath: '/categories/'
+      preLoaderRoute: typeof CategoriesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/uuid-generator': {
@@ -532,6 +585,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsBase64RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/categories/$group': {
+      id: '/categories/$group'
+      path: '/categories/$group'
+      fullPath: '/categories/$group'
+      preLoaderRoute: typeof CategoriesGroupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -539,6 +599,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  CategoriesGroupRoute: CategoriesGroupRoute,
   ToolsBase64Route: ToolsBase64Route,
   ToolsClockRoute: ToolsClockRoute,
   ToolsCodeFormatterRoute: ToolsCodeFormatterRoute,
@@ -561,6 +622,8 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsUnixTimestampRoute: ToolsUnixTimestampRoute,
   ToolsUrlParserRoute: ToolsUrlParserRoute,
   ToolsUuidGeneratorRoute: ToolsUuidGeneratorRoute,
+  CategoriesIndexRoute: CategoriesIndexRoute,
+  ToolsIndexRoute: ToolsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

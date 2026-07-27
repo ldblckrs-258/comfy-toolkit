@@ -60,6 +60,36 @@ export function softwareAppNode(tool: ToolMeta): SchemaNode {
   }
 }
 
+export function collectionPageNode({
+  name,
+  description,
+  path,
+  tools,
+}: {
+  name: string
+  description: string
+  path: string
+  tools: Array<ToolMeta>
+}): SchemaNode {
+  return {
+    '@type': 'CollectionPage',
+    name,
+    description,
+    url: `${SITE_URL}${path}`,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: tools.length,
+      itemListElement: tools.map((tool, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: tool.name,
+        url: `${SITE_URL}${tool.to}`,
+      })),
+    },
+  }
+}
+
 export function faqNode(faq: Array<{ q: string; a: string }>): SchemaNode {
   return {
     '@type': 'FAQPage',

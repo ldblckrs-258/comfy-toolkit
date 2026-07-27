@@ -8,7 +8,8 @@ import satori from 'satori'
 import { html as toReactNode } from 'satori-html'
 
 import type { ToolGroup, ToolMeta } from '../src/lib/tools/registry.ts'
-import { GROUP_LABELS, TOOLS } from '../src/lib/tools/registry.ts'
+import { GROUP_LABELS, GROUP_ORDER, TOOLS } from '../src/lib/tools/registry.ts'
+import { CATEGORY_CONTENT } from '../src/content/categories/index.ts'
 
 const SITE_ACCENT = '#0d9488'
 
@@ -110,6 +111,24 @@ async function main(): Promise<void> {
         description: SITE_DESCRIPTION,
       }),
     },
+    {
+      file: 'tools',
+      html: cardHtml({
+        accent: SITE_ACCENT,
+        eyebrow: 'ALL TOOLS',
+        title: `${TOOLS.length} developer tools`,
+        description: SITE_DESCRIPTION,
+      }),
+    },
+    ...GROUP_ORDER.map((group: ToolGroup) => ({
+      file: `category-${group}`,
+      html: cardHtml({
+        accent: GROUP_HEX[group],
+        eyebrow: 'CATEGORY',
+        title: CATEGORY_CONTENT[group].title,
+        description: CATEGORY_CONTENT[group].metaDescription,
+      }),
+    })),
     ...TOOLS.map((tool: ToolMeta) => ({
       file: tool.id,
       html: cardHtml({

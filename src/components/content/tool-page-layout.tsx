@@ -21,7 +21,7 @@ export function ToolPageLayout({
     <div className="flex min-h-full flex-col">
       <ToolHeader tool={tool} actions={actions} className="sticky top-0 z-20" />
       {children}
-      {content ? <ToolArticle content={content} /> : null}
+      {content ? <ToolArticle content={content} group={tool.group} /> : null}
     </div>
   )
 }

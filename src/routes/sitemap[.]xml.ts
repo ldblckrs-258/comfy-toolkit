@@ -1,8 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 
+import { CATEGORY_CONTENT } from '@/content/categories'
 import { TOOL_CONTENT } from '@/content/tools'
 import { SITE_UPDATED, SITE_URL } from '@/lib/seo'
-import { TOOLS } from '@/lib/tools/registry'
+import { GROUP_ORDER, TOOLS } from '@/lib/tools/registry'
 
 interface SitemapEntry {
   path: string
@@ -26,6 +27,18 @@ function esc(value: string): string {
 function sitemapEntries(): Array<SitemapEntry> {
   return [
     { path: '/', lastmod: SITE_UPDATED, changefreq: 'weekly', priority: 1 },
+    {
+      path: '/tools',
+      lastmod: SITE_UPDATED,
+      changefreq: 'weekly' as const,
+      priority: 0.9,
+    },
+    ...GROUP_ORDER.map((group) => ({
+      path: `/categories/${group}`,
+      lastmod: CATEGORY_CONTENT[group].updated,
+      changefreq: 'monthly' as const,
+      priority: 0.7,
+    })),
     ...TOOLS.map((tool) => ({
       path: tool.to,
       lastmod: TOOL_CONTENT[tool.id]?.updated ?? SITE_UPDATED,
