@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card } from '@/components/tools/card'
 import { CopyButton } from '@/components/tools/copy-button'
@@ -180,9 +180,17 @@ function seedForMode(
   }
 }
 
-export default function CronPage({ content }: { content?: ToolContent }) {
+export default function CronPage({
+  content,
+  preset,
+  variantArticle,
+}: ToolPageProps) {
   const [expr, setExpr] = usePersistedState('cron:expr', '*/5 * * * *')
-  const [dialectRaw, setDialect] = usePersistedState('cron:dialect', 'unix')
+  const [dialectRaw, setDialect] = usePersistedState(
+    'cron:dialect',
+    'unix',
+    preset?.dialect,
+  )
   const [countRaw, setCount] = usePersistedState('cron:count', '10')
 
   const dialect = dialectRaw as CronDialect
@@ -236,7 +244,11 @@ export default function CronPage({ content }: { content?: ToolContent }) {
   }, [runsResult, now])
 
   return (
-    <ToolPageLayout tool={tool} content={content ?? cronContent}>
+    <ToolPageLayout
+      tool={tool}
+      content={content ?? cronContent}
+      article={variantArticle}
+    >
       <div className="grid min-h-[calc(100svh-var(--shell-top))] gap-4 p-6 lg:grid-cols-2">
         <div className="flex flex-col gap-4">
           <Card

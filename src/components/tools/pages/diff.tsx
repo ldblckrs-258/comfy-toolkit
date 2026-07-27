@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { diffContent } from '@/content/tools/diff'
 import { Card } from '@/components/tools/card'
@@ -416,12 +416,18 @@ function DiffViewport({
   )
 }
 
-export default function DiffPage({ content }: { content?: ToolContent }) {
+export default function DiffPage({
+  content,
+  preset,
+  variantArticle,
+}: ToolPageProps) {
   const [oldText, setOldText] = usePersistedState('diff:old', '')
   const [newText, setNewText] = usePersistedState('diff:new', '')
   const [ignoreWhitespace, setIgnoreWhitespace] = React.useState(false)
   const [ignoreCase, setIgnoreCase] = React.useState(false)
-  const [view, setView] = React.useState<View>('split')
+  const [view, setView] = React.useState<View>(
+    preset?.view === 'unified' ? 'unified' : 'split',
+  )
   const [language, setLanguage] = usePersistedState('diff:lang', 'text')
 
   const hasInput = oldText.length > 0 || newText.length > 0
@@ -446,7 +452,11 @@ export default function DiffPage({ content }: { content?: ToolContent }) {
   )
 
   return (
-    <ToolPageLayout tool={tool} content={content ?? diffContent}>
+    <ToolPageLayout
+      tool={tool}
+      content={content ?? diffContent}
+      article={variantArticle}
+    >
       <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="grid gap-4 lg:grid-cols-2">
           <Card

@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { hmacContent } from '@/content/tools/hmac'
 import { Card } from '@/components/tools/card'
@@ -16,8 +16,14 @@ const tool = requireTool('hmac')
 
 type Mode = 'generate' | 'verify'
 
-export default function HmacPage({ content }: { content?: ToolContent }) {
-  const [mode, setMode] = React.useState<Mode>('generate')
+export default function HmacPage({
+  content,
+  preset,
+  variantArticle,
+}: ToolPageProps) {
+  const [mode, setMode] = React.useState<Mode>(
+    preset?.mode === 'verify' ? 'verify' : 'generate',
+  )
   const [message, setMessage] = usePersistedState('hmac:message', '')
   const [secret, setSecret] = usePersistedState('hmac:secret', '')
   const [expected, setExpected] = usePersistedState('hmac:expected', '')
@@ -56,7 +62,11 @@ export default function HmacPage({ content }: { content?: ToolContent }) {
   }, [mode, message, secret, algorithm, encoding, expected])
 
   return (
-    <ToolPageLayout tool={tool} content={content ?? hmacContent}>
+    <ToolPageLayout
+      tool={tool}
+      content={content ?? hmacContent}
+      article={variantArticle}
+    >
       <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-3">
           <Tabs

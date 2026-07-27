@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { dataConverterContent } from '@/content/tools/data-converter'
 import { Card } from '@/components/tools/card'
@@ -101,12 +101,16 @@ function FormatSelect({
 
 export default function DataConverterPage({
   content,
-}: {
-  content?: ToolContent
-}) {
+  preset,
+  variantArticle,
+}: ToolPageProps) {
   const [input, setInput] = usePersistedState('data-converter:input', '')
-  const [from, setFrom] = usePersistedState('data-converter:from', 'json')
-  const [to, setTo] = usePersistedState('data-converter:to', 'yaml')
+  const [from, setFrom] = usePersistedState(
+    'data-converter:from',
+    'json',
+    preset?.from,
+  )
+  const [to, setTo] = usePersistedState('data-converter:to', 'yaml', preset?.to)
 
   const { output, error } = React.useMemo(() => {
     if (!input.trim())
@@ -131,7 +135,11 @@ export default function DataConverterPage({
   }
 
   return (
-    <ToolPageLayout tool={tool} content={content ?? dataConverterContent}>
+    <ToolPageLayout
+      tool={tool}
+      content={content ?? dataConverterContent}
+      article={variantArticle}
+    >
       <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-2">
           <FormatSelect value={from} onChange={setFrom} />

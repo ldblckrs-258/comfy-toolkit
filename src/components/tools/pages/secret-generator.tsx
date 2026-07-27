@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card } from '@/components/tools/card'
 import { CopyButton } from '@/components/tools/copy-button'
@@ -216,13 +216,16 @@ const BYTE_PRESETS: Array<BytePreset> = [
 
 export default function SecretGeneratorPage({
   content,
-}: {
-  content?: ToolContent
-}) {
+  variantArticle,
+}: ToolPageProps) {
   const [mode, setMode] = React.useState<Mode>('charset')
 
   return (
-    <ToolPageLayout tool={tool} content={content ?? secretGeneratorContent}>
+    <ToolPageLayout
+      tool={tool}
+      content={content ?? secretGeneratorContent}
+      article={variantArticle}
+    >
       <div className="min-h-[calc(100svh-var(--shell-top))] p-6">
         <Tabs
           value={mode}

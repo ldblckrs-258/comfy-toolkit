@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { urlParserContent } from '@/content/tools/url-parser'
 import { Card } from '@/components/tools/card'
@@ -30,11 +30,21 @@ type EncodeMode =
   | 'encode-url'
   | 'decode-url'
 
-export default function UrlParserPage({ content }: { content?: ToolContent }) {
-  const [mode, setMode] = React.useState<Mode>('parse')
+export default function UrlParserPage({
+  content,
+  preset,
+  variantArticle,
+}: ToolPageProps) {
+  const [mode, setMode] = React.useState<Mode>(
+    preset?.mode === 'encode' ? 'encode' : 'parse',
+  )
 
   return (
-    <ToolPageLayout tool={tool} content={content ?? urlParserContent}>
+    <ToolPageLayout
+      tool={tool}
+      content={content ?? urlParserContent}
+      article={variantArticle}
+    >
       <div className="min-h-[calc(100svh-var(--shell-top))] p-6 flex flex-col">
         <Tabs
           value={mode}

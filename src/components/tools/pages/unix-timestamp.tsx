@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card, CopyIcon } from '@/components/tools/card'
 import { ErrorText } from '@/components/tools/tool-panel'
@@ -524,10 +524,14 @@ const MODE_OPTIONS: Array<{ value: Mode; label: string }> = [
 
 export default function UnixTimestampPage({
   content,
-}: {
-  content?: ToolContent
-}) {
-  const [mode, setMode] = usePersistedState('unix-timestamp:mode', 'convert')
+  preset,
+  variantArticle,
+}: ToolPageProps) {
+  const [mode, setMode] = usePersistedState(
+    'unix-timestamp:mode',
+    'convert',
+    preset?.mode,
+  )
   const [tz, setTz] = usePersistedState('unix-timestamp:tz', '')
   const [localTz, setLocalTz] = React.useState<string | null>(null)
   const [now, setNow] = React.useState<number | null>(null)
@@ -550,7 +554,11 @@ export default function UnixTimestampPage({
     : 'convert'
 
   return (
-    <ToolPageLayout tool={tool} content={content ?? timestampContent}>
+    <ToolPageLayout
+      tool={tool}
+      content={content ?? timestampContent}
+      article={variantArticle}
+    >
       <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-3">
           <Tabs

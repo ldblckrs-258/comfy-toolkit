@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { qrCodeContent } from '@/content/tools/qr-code'
 import { Card } from '@/components/tools/card'
@@ -42,8 +42,14 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   })
 }
 
-export default function QrCodePage({ content }: { content?: ToolContent }) {
-  const [tab, setTab] = React.useState<'text' | 'wifi'>('text')
+export default function QrCodePage({
+  content,
+  preset,
+  variantArticle,
+}: ToolPageProps) {
+  const [tab, setTab] = React.useState<'text' | 'wifi'>(
+    preset?.tab === 'wifi' ? 'wifi' : 'text',
+  )
 
   const [text, setText] = usePersistedState('qr-code:text', '')
   const [ssid, setSsid] = usePersistedState('qr-code:ssid', '')
@@ -186,6 +192,7 @@ export default function QrCodePage({ content }: { content?: ToolContent }) {
     <ToolPageLayout
       tool={tool}
       content={content ?? qrCodeContent}
+      article={variantArticle}
       actions={
         <Button
           variant="subtle"

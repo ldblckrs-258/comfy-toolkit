@@ -35,6 +35,13 @@ export const base64Variants: Array<ToolVariant> = [
             'To detect corruption — encoding carries no checksum. Hash the bytes instead.',
           ],
         },
+        {
+          heading: 'Data URIs are the common destination',
+          paragraphs: [
+            'Inlining a small image or font into CSS or HTML means Base64-encoding its bytes and prefixing a media type. It removes a network request, which is why it is tempting for icons and tiny assets.',
+            'The size penalty is the reason not to overdo it: a third larger, uncacheable separately from the document that contains it, and parsed on every page load. Below about a kilobyte it usually wins; above that it usually does not.',
+          ],
+        },
       ],
     },
   },

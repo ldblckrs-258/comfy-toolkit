@@ -8,6 +8,7 @@ import type { CategoryContent, ToolContent } from '../src/content/types.ts'
 
 const TOOL_WORD_FLOOR = 400
 const CATEGORY_WORD_FLOOR = 300
+const VARIANT_WORD_FLOOR = 250
 const SIMILARITY_CEILING = 0.35
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -55,6 +56,17 @@ async function main(): Promise<void> {
         floor,
       })
     }
+  }
+
+  const { VARIANTS } = await import('../src/content/variants/index.ts')
+  for (const variant of VARIANTS) {
+    const text = flatten(variant.content)
+    pages.push({
+      id: `variant/${variant.toolId}-${variant.slug}`,
+      text,
+      count: words(text).length,
+      floor: VARIANT_WORD_FLOOR,
+    })
   }
 
   const failures: Array<string> = []

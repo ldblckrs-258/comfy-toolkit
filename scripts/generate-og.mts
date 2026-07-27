@@ -10,6 +10,7 @@ import { html as toReactNode } from 'satori-html'
 import type { ToolGroup, ToolMeta } from '../src/lib/tools/registry.ts'
 import { GROUP_LABELS, GROUP_ORDER, TOOLS } from '../src/lib/tools/registry.ts'
 import { CATEGORY_CONTENT } from '../src/content/categories/index.ts'
+import { VARIANTS } from '../src/content/variants/index.ts'
 
 const SITE_ACCENT = '#0d9488'
 
@@ -138,6 +139,21 @@ async function main(): Promise<void> {
         description: tool.description,
       }),
     })),
+    ...VARIANTS.flatMap((variant) => {
+      const tool = TOOLS.find((t: ToolMeta) => t.id === variant.toolId)
+      if (!tool) return []
+      return [
+        {
+          file: `${tool.id}-${variant.slug}`,
+          html: cardHtml({
+            accent: GROUP_HEX[tool.group],
+            eyebrow: tool.name.toUpperCase(),
+            title: variant.content.title,
+            description: variant.content.metaDescription,
+          }),
+        },
+      ]
+    }),
   ]
 
   const manifest = readManifest()

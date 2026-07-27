@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { codeFormatterContent } from '@/content/tools/code-formatter'
 import { Card } from '@/components/tools/card'
@@ -33,10 +33,12 @@ const PRISM_LANG: Record<PrettierLang, string> = {
 
 export default function CodeFormatterPage({
   content,
-}: {
-  content?: ToolContent
-}) {
-  const [lang, setLang] = React.useState<PrettierLang>('babel')
+  preset,
+  variantArticle,
+}: ToolPageProps) {
+  const [lang, setLang] = React.useState<PrettierLang>(
+    (preset?.lang as PrettierLang | undefined) ?? 'babel',
+  )
   const [source, setSource] = usePersistedState('code-formatter:source', '')
   const [auto, setAuto] = React.useState(true)
   const [output, setOutput] = React.useState('')
@@ -78,7 +80,11 @@ export default function CodeFormatterPage({
   }
 
   return (
-    <ToolPageLayout tool={tool} content={content ?? codeFormatterContent}>
+    <ToolPageLayout
+      tool={tool}
+      content={content ?? codeFormatterContent}
+      article={variantArticle}
+    >
       <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-2">
           <select

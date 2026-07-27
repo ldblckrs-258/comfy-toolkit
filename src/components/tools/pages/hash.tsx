@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card, CopyIcon } from '@/components/tools/card'
 import { Input } from '@/components/ui/input'
@@ -42,8 +42,14 @@ function formatBytes(bytes: number): string {
   return `${value.toFixed(1)} ${units[unit]}`
 }
 
-export default function HashPage({ content }: { content?: ToolContent }) {
-  const [source, setSource] = React.useState<Source>('text')
+export default function HashPage({
+  content,
+  preset,
+  variantArticle,
+}: ToolPageProps) {
+  const [source, setSource] = React.useState<Source>(
+    preset?.source === 'file' ? 'file' : 'text',
+  )
   const [text, setText] = usePersistedState('hash:text', '')
   const [expected, setExpected] = usePersistedState('hash:expected', '')
   const [encoding, setEncoding] = React.useState<HashEncoding>('hex')
@@ -110,7 +116,11 @@ export default function HashPage({ content }: { content?: ToolContent }) {
   }
 
   return (
-    <ToolPageLayout tool={tool} content={content ?? hashContent}>
+    <ToolPageLayout
+      tool={tool}
+      content={content ?? hashContent}
+      article={variantArticle}
+    >
       <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <div className="flex flex-wrap items-center gap-3">
           <Tabs

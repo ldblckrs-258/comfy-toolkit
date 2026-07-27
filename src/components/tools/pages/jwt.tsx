@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { Card } from '@/components/tools/card'
 import { JsonHighlight } from '@/components/tools/json-highlight'
@@ -31,11 +31,21 @@ const DEFAULT_PAYLOAD =
   '{\n  "sub": "1234567890",\n  "name": "John Doe",\n  "admin": true,\n  "iat": 1516239022\n}'
 const DEFAULT_SECRET = 'a-string-secret-at-least-256-bits-long'
 
-export default function JwtPage({ content }: { content?: ToolContent }) {
-  const [mode, setMode] = React.useState<Mode>('decode')
+export default function JwtPage({
+  content,
+  preset,
+  variantArticle,
+}: ToolPageProps) {
+  const [mode, setMode] = React.useState<Mode>(
+    preset?.mode === 'encode' ? 'encode' : 'decode',
+  )
 
   return (
-    <ToolPageLayout tool={tool} content={content ?? jwtContent}>
+    <ToolPageLayout
+      tool={tool}
+      content={content ?? jwtContent}
+      article={variantArticle}
+    >
       <div className="min-h-[calc(100svh-var(--shell-top))] p-6">
         <Tabs
           value={mode}
