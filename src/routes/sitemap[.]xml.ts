@@ -4,6 +4,7 @@ import { CATEGORY_CONTENT } from '@/content/categories'
 import { GUIDES } from '@/content/guides'
 import { TOOL_CONTENT } from '@/content/tools'
 import { VARIANTS } from '@/content/variants'
+import { GUIDES_ENABLED, VARIANTS_ENABLED } from '@/lib/feature-flags'
 import { SITE_UPDATED, SITE_URL } from '@/lib/seo'
 import { GROUP_ORDER, TOOLS } from '@/lib/tools/registry'
 
@@ -47,19 +48,23 @@ function sitemapEntries(): Array<SitemapEntry> {
       changefreq: 'monthly' as const,
       priority: 0.8,
     })),
-    {
-      path: '/guides',
-      lastmod: SITE_UPDATED,
-      changefreq: 'weekly' as const,
-      priority: 0.8,
-    },
-    ...GUIDES.map((guide) => ({
+    ...(GUIDES_ENABLED
+      ? [
+          {
+            path: '/guides',
+            lastmod: SITE_UPDATED,
+            changefreq: 'weekly' as const,
+            priority: 0.8,
+          },
+        ]
+      : []),
+    ...(GUIDES_ENABLED ? GUIDES : []).map((guide) => ({
       path: `/guides/${guide.slug}`,
       lastmod: guide.updated,
       changefreq: 'monthly' as const,
       priority: 0.7,
     })),
-    ...VARIANTS.map((variant) => ({
+    ...(VARIANTS_ENABLED ? VARIANTS : []).map((variant) => ({
       path: `${TOOLS.find((t) => t.id === variant.toolId)?.to ?? ''}/${variant.slug}`,
       lastmod: variant.content.updated,
       changefreq: 'monthly' as const,

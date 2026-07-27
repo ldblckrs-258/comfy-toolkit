@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 
 import { guidesForTool } from '@/content/guides'
 import { variantsForTool } from '@/content/variants'
+import { GUIDES_ENABLED, VARIANTS_ENABLED } from '@/lib/feature-flags'
 import { GROUP_LABELS, getTool } from '@/lib/tools/registry'
 
 import type { ToolContent } from '@/content/types'
@@ -52,8 +53,8 @@ export function ToolArticle({
   toolId?: string
   toolPath?: string
 }) {
-  const variants = toolId ? variantsForTool(toolId) : []
-  const guides = toolId ? guidesForTool(toolId) : []
+  const variants = toolId && VARIANTS_ENABLED ? variantsForTool(toolId) : []
+  const guides = toolId && GUIDES_ENABLED ? guidesForTool(toolId) : []
   const related = content.related
     .map((link) => ({ link, tool: getTool(link.id) }))
     .filter((entry) => Boolean(entry.tool))

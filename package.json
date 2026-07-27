@@ -19,7 +19,8 @@
     "lint": "eslint",
     "format": "prettier --write . && eslint --fix",
     "check": "prettier --check .",
-    "deploy": "pnpm run build && wrangler deploy"
+    "deploy": "pnpm run build && wrangler deploy",
+    "audit:seo": "node --experimental-strip-types scripts/audit-seo.mts"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.26.0",

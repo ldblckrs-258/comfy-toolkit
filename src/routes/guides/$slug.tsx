@@ -3,6 +3,7 @@ import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 import { ProseSections } from '@/components/content/prose-sections'
 import { GUIDE_CONTENT } from '@/content/guides/content'
 import { getGuide } from '@/content/guides'
+import { GUIDES_ENABLED } from '@/lib/feature-flags'
 import { buildSeo, ogUrl } from '@/lib/seo'
 import { articleNode, breadcrumbNode, schemaGraph } from '@/lib/structured-data'
 import { getTool } from '@/lib/tools/registry'
@@ -10,6 +11,7 @@ import { getTool } from '@/lib/tools/registry'
 import type { LinkProps } from '@tanstack/react-router'
 
 function resolve(slug: string) {
+  if (!GUIDES_ENABLED) throw notFound()
   const meta = getGuide(slug)
   const content = GUIDE_CONTENT[slug]
   if (!meta || !content) throw notFound()

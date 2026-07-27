@@ -4,6 +4,7 @@ import * as React from 'react'
 import { ProseSections } from '@/components/content/prose-sections'
 import { TOOL_PAGES } from '@/components/tools/pages'
 import { getVariant } from '@/content/variants'
+import { VARIANTS_ENABLED } from '@/lib/feature-flags'
 import { buildSeo, ogUrl } from '@/lib/seo'
 import {
   breadcrumbNode,
@@ -13,6 +14,7 @@ import {
 import { GROUP_LABELS, TOOLS } from '@/lib/tools/registry'
 
 function resolve(segment: string, variantSlug: string) {
+  if (!VARIANTS_ENABLED) throw notFound()
   const tool = TOOLS.find((t) => t.to === `/tools/${segment}`)
   if (!tool) throw notFound()
   const variant = getVariant(tool.id, variantSlug)
