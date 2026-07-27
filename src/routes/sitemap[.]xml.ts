@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { CATEGORY_CONTENT } from '@/content/categories'
+import { GUIDES } from '@/content/guides'
 import { TOOL_CONTENT } from '@/content/tools'
 import { VARIANTS } from '@/content/variants'
 import { SITE_UPDATED, SITE_URL } from '@/lib/seo'
@@ -45,6 +46,18 @@ function sitemapEntries(): Array<SitemapEntry> {
       lastmod: TOOL_CONTENT[tool.id]?.updated ?? SITE_UPDATED,
       changefreq: 'monthly' as const,
       priority: 0.8,
+    })),
+    {
+      path: '/guides',
+      lastmod: SITE_UPDATED,
+      changefreq: 'weekly' as const,
+      priority: 0.8,
+    },
+    ...GUIDES.map((guide) => ({
+      path: `/guides/${guide.slug}`,
+      lastmod: guide.updated,
+      changefreq: 'monthly' as const,
+      priority: 0.7,
     })),
     ...VARIANTS.map((variant) => ({
       path: `${TOOLS.find((t) => t.id === variant.toolId)?.to ?? ''}/${variant.slug}`,

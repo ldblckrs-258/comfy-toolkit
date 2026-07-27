@@ -9,6 +9,7 @@ import type { CategoryContent, ToolContent } from '../src/content/types.ts'
 const TOOL_WORD_FLOOR = 400
 const CATEGORY_WORD_FLOOR = 300
 const VARIANT_WORD_FLOOR = 250
+const GUIDE_WORD_FLOOR = 800
 const SIMILARITY_CEILING = 0.35
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -66,6 +67,18 @@ async function main(): Promise<void> {
       text,
       count: words(text).length,
       floor: VARIANT_WORD_FLOOR,
+    })
+  }
+
+  const { GUIDE_CONTENT } = await import('../src/content/guides/content.ts')
+  for (const [slug, content] of Object.entries(GUIDE_CONTENT)) {
+    if (!content) continue
+    const text = flatten(content as ToolContent | CategoryContent)
+    pages.push({
+      id: `guide/${slug}`,
+      text,
+      count: words(text).length,
+      floor: GUIDE_WORD_FLOOR,
     })
   }
 

@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ToolsIndexRouteImport } from './routes/tools/index'
+import { Route as GuidesIndexRouteImport } from './routes/guides/index'
 import { Route as CategoriesIndexRouteImport } from './routes/categories/index'
 import { Route as ToolsUuidGeneratorRouteImport } from './routes/tools/uuid-generator'
 import { Route as ToolsUrlParserRouteImport } from './routes/tools/url-parser'
@@ -36,6 +37,7 @@ import { Route as ToolsColorsRouteImport } from './routes/tools/colors'
 import { Route as ToolsCodeFormatterRouteImport } from './routes/tools/code-formatter'
 import { Route as ToolsClockRouteImport } from './routes/tools/clock'
 import { Route as ToolsBase64RouteImport } from './routes/tools/base64'
+import { Route as GuidesSlugRouteImport } from './routes/guides/$slug'
 import { Route as CategoriesGroupRouteImport } from './routes/categories/$group'
 import { Route as ToolsToolIdVariantRouteImport } from './routes/tools/$toolId/$variant'
 
@@ -57,6 +59,11 @@ const IndexRoute = IndexRouteImport.update({
 const ToolsIndexRoute = ToolsIndexRouteImport.update({
   id: '/tools/',
   path: '/tools/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesIndexRoute = GuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoriesIndexRoute = CategoriesIndexRouteImport.update({
@@ -174,6 +181,11 @@ const ToolsBase64Route = ToolsBase64RouteImport.update({
   path: '/tools/base64',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesSlugRoute = GuidesSlugRouteImport.update({
+  id: '/guides/$slug',
+  path: '/guides/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategoriesGroupRoute = CategoriesGroupRouteImport.update({
   id: '/categories/$group',
   path: '/categories/$group',
@@ -190,6 +202,7 @@ export interface FileRoutesByFullPath {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/categories/$group': typeof CategoriesGroupRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/tools/base64': typeof ToolsBase64Route
   '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
@@ -213,6 +226,7 @@ export interface FileRoutesByFullPath {
   '/tools/url-parser': typeof ToolsUrlParserRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
   '/categories/': typeof CategoriesIndexRoute
+  '/guides/': typeof GuidesIndexRoute
   '/tools/': typeof ToolsIndexRoute
   '/tools/$toolId/$variant': typeof ToolsToolIdVariantRoute
 }
@@ -221,6 +235,7 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/categories/$group': typeof CategoriesGroupRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/tools/base64': typeof ToolsBase64Route
   '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
@@ -244,6 +259,7 @@ export interface FileRoutesByTo {
   '/tools/url-parser': typeof ToolsUrlParserRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
   '/categories': typeof CategoriesIndexRoute
+  '/guides': typeof GuidesIndexRoute
   '/tools': typeof ToolsIndexRoute
   '/tools/$toolId/$variant': typeof ToolsToolIdVariantRoute
 }
@@ -253,6 +269,7 @@ export interface FileRoutesById {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/categories/$group': typeof CategoriesGroupRoute
+  '/guides/$slug': typeof GuidesSlugRoute
   '/tools/base64': typeof ToolsBase64Route
   '/tools/clock': typeof ToolsClockRoute
   '/tools/code-formatter': typeof ToolsCodeFormatterRoute
@@ -276,6 +293,7 @@ export interface FileRoutesById {
   '/tools/url-parser': typeof ToolsUrlParserRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
   '/categories/': typeof CategoriesIndexRoute
+  '/guides/': typeof GuidesIndexRoute
   '/tools/': typeof ToolsIndexRoute
   '/tools/$toolId/$variant': typeof ToolsToolIdVariantRoute
 }
@@ -286,6 +304,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/categories/$group'
+    | '/guides/$slug'
     | '/tools/base64'
     | '/tools/clock'
     | '/tools/code-formatter'
@@ -309,6 +328,7 @@ export interface FileRouteTypes {
     | '/tools/url-parser'
     | '/tools/uuid-generator'
     | '/categories/'
+    | '/guides/'
     | '/tools/'
     | '/tools/$toolId/$variant'
   fileRoutesByTo: FileRoutesByTo
@@ -317,6 +337,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/categories/$group'
+    | '/guides/$slug'
     | '/tools/base64'
     | '/tools/clock'
     | '/tools/code-formatter'
@@ -340,6 +361,7 @@ export interface FileRouteTypes {
     | '/tools/url-parser'
     | '/tools/uuid-generator'
     | '/categories'
+    | '/guides'
     | '/tools'
     | '/tools/$toolId/$variant'
   id:
@@ -348,6 +370,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/categories/$group'
+    | '/guides/$slug'
     | '/tools/base64'
     | '/tools/clock'
     | '/tools/code-formatter'
@@ -371,6 +394,7 @@ export interface FileRouteTypes {
     | '/tools/url-parser'
     | '/tools/uuid-generator'
     | '/categories/'
+    | '/guides/'
     | '/tools/'
     | '/tools/$toolId/$variant'
   fileRoutesById: FileRoutesById
@@ -380,6 +404,7 @@ export interface RootRouteChildren {
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CategoriesGroupRoute: typeof CategoriesGroupRoute
+  GuidesSlugRoute: typeof GuidesSlugRoute
   ToolsBase64Route: typeof ToolsBase64Route
   ToolsClockRoute: typeof ToolsClockRoute
   ToolsCodeFormatterRoute: typeof ToolsCodeFormatterRoute
@@ -403,6 +428,7 @@ export interface RootRouteChildren {
   ToolsUrlParserRoute: typeof ToolsUrlParserRoute
   ToolsUuidGeneratorRoute: typeof ToolsUuidGeneratorRoute
   CategoriesIndexRoute: typeof CategoriesIndexRoute
+  GuidesIndexRoute: typeof GuidesIndexRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
   ToolsToolIdVariantRoute: typeof ToolsToolIdVariantRoute
 }
@@ -435,6 +461,13 @@ declare module '@tanstack/react-router' {
       path: '/tools'
       fullPath: '/tools/'
       preLoaderRoute: typeof ToolsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides/': {
+      id: '/guides/'
+      path: '/guides'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof GuidesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/categories/': {
@@ -598,6 +631,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsBase64RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/$slug': {
+      id: '/guides/$slug'
+      path: '/guides/$slug'
+      fullPath: '/guides/$slug'
+      preLoaderRoute: typeof GuidesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/categories/$group': {
       id: '/categories/$group'
       path: '/categories/$group'
@@ -620,6 +660,7 @@ const rootRouteChildren: RootRouteChildren = {
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   CategoriesGroupRoute: CategoriesGroupRoute,
+  GuidesSlugRoute: GuidesSlugRoute,
   ToolsBase64Route: ToolsBase64Route,
   ToolsClockRoute: ToolsClockRoute,
   ToolsCodeFormatterRoute: ToolsCodeFormatterRoute,
@@ -643,6 +684,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsUrlParserRoute: ToolsUrlParserRoute,
   ToolsUuidGeneratorRoute: ToolsUuidGeneratorRoute,
   CategoriesIndexRoute: CategoriesIndexRoute,
+  GuidesIndexRoute: GuidesIndexRoute,
   ToolsIndexRoute: ToolsIndexRoute,
   ToolsToolIdVariantRoute: ToolsToolIdVariantRoute,
 }

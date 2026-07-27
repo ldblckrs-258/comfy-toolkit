@@ -11,6 +11,7 @@ import type { ToolGroup, ToolMeta } from '../src/lib/tools/registry.ts'
 import { GROUP_LABELS, GROUP_ORDER, TOOLS } from '../src/lib/tools/registry.ts'
 import { CATEGORY_CONTENT } from '../src/content/categories/index.ts'
 import { VARIANTS } from '../src/content/variants/index.ts'
+import { GUIDES } from '../src/content/guides/index.ts'
 
 const SITE_ACCENT = '#0d9488'
 
@@ -137,6 +138,25 @@ async function main(): Promise<void> {
         eyebrow: GROUP_LABELS[tool.group].toUpperCase(),
         title: tool.name,
         description: tool.description,
+      }),
+    })),
+    {
+      file: 'guides',
+      html: cardHtml({
+        accent: SITE_ACCENT,
+        eyebrow: 'GUIDES',
+        title: 'Developer guides',
+        description:
+          'Practical background on identifiers, timestamps, hashing, colour and encoding.',
+      }),
+    },
+    ...GUIDES.map((guide) => ({
+      file: `guide-${guide.slug}`,
+      html: cardHtml({
+        accent: SITE_ACCENT,
+        eyebrow: 'GUIDE',
+        title: guide.title,
+        description: guide.metaDescription,
       }),
     })),
     ...VARIANTS.flatMap((variant) => {

@@ -18,6 +18,11 @@ export interface ToolContent {
   related: Array<RelatedLink>
 }
 
+export interface GuideContent {
+  intro: Array<string>
+  sections: Array<ContentSection>
+}
+
 export interface CategoryContent {
   updated: string
   title: string

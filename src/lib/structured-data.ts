@@ -1,4 +1,10 @@
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, ogUrl } from './seo'
+import {
+  SITE_AUTHOR,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+  ogUrl,
+} from './seo'
 import { TOOLS } from './tools/registry'
 
 import type { ToolMeta } from './tools/registry'
@@ -87,6 +93,35 @@ export function collectionPageNode({
         url: `${SITE_URL}${tool.to}`,
       })),
     },
+  }
+}
+
+export function articleNode({
+  headline,
+  description,
+  path,
+  published,
+  updated,
+  image,
+}: {
+  headline: string
+  description: string
+  path: string
+  published: string
+  updated: string
+  image: string
+}): SchemaNode {
+  return {
+    '@type': 'Article',
+    headline,
+    description,
+    url: `${SITE_URL}${path}`,
+    datePublished: published,
+    dateModified: updated,
+    image,
+    author: { '@type': 'Person', name: SITE_AUTHOR },
+    publisher: { '@type': 'Organization', name: SITE_NAME },
+    isPartOf: { '@id': `${SITE_URL}/#website` },
   }
 }
 

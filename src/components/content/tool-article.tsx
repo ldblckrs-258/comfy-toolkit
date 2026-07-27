@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 
+import { guidesForTool } from '@/content/guides'
 import { variantsForTool } from '@/content/variants'
 import { GROUP_LABELS, getTool } from '@/lib/tools/registry'
 
@@ -52,6 +53,7 @@ export function ToolArticle({
   toolPath?: string
 }) {
   const variants = toolId ? variantsForTool(toolId) : []
+  const guides = toolId ? guidesForTool(toolId) : []
   const related = content.related
     .map((link) => ({ link, tool: getTool(link.id) }))
     .filter((entry) => Boolean(entry.tool))
@@ -84,6 +86,24 @@ export function ToolArticle({
                   className="text-accent hover:underline"
                 >
                   {variant.content.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {guides.length > 0 ? (
+        <section className="mt-10">
+          <h2 className="text-base font-semibold tracking-tight">Read more</h2>
+          <ul className="mt-3 space-y-1.5 text-sm">
+            {guides.map((guide) => (
+              <li key={guide.slug}>
+                <a
+                  href={`/guides/${guide.slug}`}
+                  className="text-accent hover:underline"
+                >
+                  {guide.title}
                 </a>
               </li>
             ))}
