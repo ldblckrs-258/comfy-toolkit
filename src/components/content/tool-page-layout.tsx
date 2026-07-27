@@ -10,18 +10,28 @@ export function ToolPageLayout({
   tool,
   content,
   actions,
+  article,
   children,
 }: {
   tool: ToolMeta
   content?: ToolContent
   actions?: ReactNode
+  article?: ReactNode
   children: ReactNode
 }) {
   return (
     <div className="flex min-h-full flex-col">
       <ToolHeader tool={tool} actions={actions} className="sticky top-0 z-20" />
       {children}
-      {content ? <ToolArticle content={content} group={tool.group} /> : null}
+      {article ??
+        (content ? (
+          <ToolArticle
+            content={content}
+            group={tool.group}
+            toolId={tool.id}
+            toolPath={tool.to}
+          />
+        ) : null)}
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 
+import { variantsForTool } from '@/content/variants'
 import { GROUP_LABELS, getTool } from '@/lib/tools/registry'
 
 import type { ToolContent } from '@/content/types'
@@ -42,10 +43,15 @@ function Section({
 export function ToolArticle({
   content,
   group,
+  toolId,
+  toolPath,
 }: {
   content: ToolContent
   group?: ToolGroup
+  toolId?: string
+  toolPath?: string
 }) {
+  const variants = toolId ? variantsForTool(toolId) : []
   const related = content.related
     .map((link) => ({ link, tool: getTool(link.id) }))
     .filter((entry) => Boolean(entry.tool))
@@ -64,6 +70,26 @@ export function ToolArticle({
       {content.sections.map((section) => (
         <Section key={section.heading} {...section} />
       ))}
+
+      {variants.length > 0 && toolPath ? (
+        <section className="mt-10">
+          <h2 className="text-base font-semibold tracking-tight">
+            Open a specific mode
+          </h2>
+          <ul className="mt-3 space-y-1.5 text-sm">
+            {variants.map((variant) => (
+              <li key={variant.slug}>
+                <a
+                  href={`${toolPath}/${variant.slug}`}
+                  className="text-accent hover:underline"
+                >
+                  {variant.content.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       {content.faq.length > 0 ? (
         <section className="mt-10">

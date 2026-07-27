@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { CATEGORY_CONTENT } from '@/content/categories'
 import { TOOL_CONTENT } from '@/content/tools'
+import { VARIANTS } from '@/content/variants'
 import { SITE_UPDATED, SITE_URL } from '@/lib/seo'
 import { GROUP_ORDER, TOOLS } from '@/lib/tools/registry'
 
@@ -44,6 +45,12 @@ function sitemapEntries(): Array<SitemapEntry> {
       lastmod: TOOL_CONTENT[tool.id]?.updated ?? SITE_UPDATED,
       changefreq: 'monthly' as const,
       priority: 0.8,
+    })),
+    ...VARIANTS.map((variant) => ({
+      path: `${TOOLS.find((t) => t.id === variant.toolId)?.to ?? ''}/${variant.slug}`,
+      lastmod: variant.content.updated,
+      changefreq: 'monthly' as const,
+      priority: 0.6,
     })),
   ]
 }

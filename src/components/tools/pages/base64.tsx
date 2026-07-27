@@ -1,4 +1,4 @@
-import type { ToolContent } from '@/content/types'
+import type { ToolPageProps } from './props'
 import { ToolPageLayout } from '@/components/content/tool-page-layout'
 import { base64Content } from '@/content/tools/base64'
 import { Card } from '@/components/tools/card'
@@ -12,8 +12,14 @@ import * as React from 'react'
 const tool = requireTool('base64')
 type Mode = 'encode' | 'decode'
 
-export default function Base64Page({ content }: { content?: ToolContent }) {
-  const [mode, setMode] = React.useState<Mode>('encode')
+export default function Base64Page({
+  content,
+  preset,
+  variantArticle,
+}: ToolPageProps) {
+  const [mode, setMode] = React.useState<Mode>(
+    preset?.mode === 'decode' ? 'decode' : 'encode',
+  )
   const [input, setInput] = usePersistedState('base64:input', '')
 
   const { output, error } = React.useMemo(() => {
@@ -29,7 +35,11 @@ export default function Base64Page({ content }: { content?: ToolContent }) {
   }, [input, mode])
 
   return (
-    <ToolPageLayout tool={tool} content={content ?? base64Content}>
+    <ToolPageLayout
+      tool={tool}
+      content={content ?? base64Content}
+      article={variantArticle}
+    >
       <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
         <Tabs
           value={mode}
