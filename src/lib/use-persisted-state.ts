@@ -1,24 +1,17 @@
 import * as React from 'react'
 
-export function usePersistedState<T = string>(key: string, initial: T) {
+export function usePersistedState<T = string>(
+  key: string,
+  initial: T,
+  override?: T,
+) {
   const storageKey = `comfy-toolkit:${key}`
-  const [value, setValue] = React.useState<T>(initial)
+  const hasOverride = override !== undefined
+  const [value, setValue] = React.useState<T>(hasOverride ? override : initial)
   const isString = typeof initial === 'string'
 
-  React.useEffect(() => {
-    try {
-      const stored = localStorage.getItem(storageKey)
-      if (stored !== null) {
-        setValue(isString ? (stored as T) : (JSON.parse(stored) as T))
-      }
-    } catch {
-      /* ignore */
-    }
-  }, [storageKey, isString])
-
-  const set = React.useCallback(
+  const write = React.useCallback(
     (next: T) => {
-      setValue(next)
       try {
         localStorage.setItem(
           storageKey,
@@ -29,6 +22,29 @@ export function usePersistedState<T = string>(key: string, initial: T) {
       }
     },
     [storageKey, isString],
+  )
+
+  React.useEffect(() => {
+    if (hasOverride) {
+      write(override)
+      return
+    }
+    try {
+      const stored = localStorage.getItem(storageKey)
+      if (stored !== null) {
+        setValue(isString ? (stored as T) : (JSON.parse(stored) as T))
+      }
+    } catch {
+      /* ignore */
+    }
+  }, [storageKey, isString, hasOverride, override, write])
+
+  const set = React.useCallback(
+    (next: T) => {
+      setValue(next)
+      write(next)
+    },
+    [write],
   )
 
   return [value, set] as const

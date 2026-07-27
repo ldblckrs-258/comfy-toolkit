@@ -1,71 +1,12 @@
-import { ToolPageLayout } from '@/components/content/tool-page-layout'
+import Base64Page from '@/components/tools/pages/base64'
 import { base64Content } from '@/content/tools/base64'
-import { Card } from '@/components/tools/card'
-import { ErrorText } from '@/components/tools/tool-panel'
-import { Tabs } from '@/components/ui/tabs'
-import { decodeBase64, encodeBase64 } from '@/lib/tools/base64'
-import { requireTool } from '@/lib/tools/registry'
 import { toolHead } from '@/lib/head'
-import { usePersistedState } from '@/lib/use-persisted-state'
+import { requireTool } from '@/lib/tools/registry'
 import { createFileRoute } from '@tanstack/react-router'
-import * as React from 'react'
 
 const tool = requireTool('base64')
-type Mode = 'encode' | 'decode'
 
 export const Route = createFileRoute('/tools/base64')({
   head: () => toolHead(tool, base64Content),
-  component: Page,
+  component: Base64Page,
 })
-
-function Page() {
-  const [mode, setMode] = React.useState<Mode>('encode')
-  const [input, setInput] = usePersistedState('base64:input', '')
-
-  const { output, error } = React.useMemo(() => {
-    if (!input) return { output: '', error: undefined as string | undefined }
-    try {
-      return {
-        output: mode === 'encode' ? encodeBase64(input) : decodeBase64(input),
-        error: undefined as string | undefined,
-      }
-    } catch {
-      return { output: '', error: 'Invalid Base64 input.' }
-    }
-  }, [input, mode])
-
-  return (
-    <ToolPageLayout tool={tool} content={base64Content}>
-      <div className="flex min-h-0 h-[calc(100svh-var(--shell-top))] flex-col gap-4 p-6">
-        <Tabs
-          value={mode}
-          onChange={setMode}
-          className="self-start"
-          options={[
-            { value: 'encode', label: 'Encode' },
-            { value: 'decode', label: 'Decode' },
-          ]}
-        />
-        <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-2">
-          <Card
-            label={mode === 'encode' ? 'Plain text' : 'Base64'}
-            className="flex-1"
-            value={input}
-            onChange={setInput}
-            placeholder={mode === 'encode' ? 'Hello, world' : 'SGVsbG8='}
-          />
-          <div className="flex min-h-0 flex-1 flex-col gap-2">
-            <Card
-              label={mode === 'encode' ? 'Base64' : 'Plain text'}
-              className="flex-1"
-              copyValue={output}
-              value={output}
-              readOnly
-            />
-            {error ? <ErrorText>{error}</ErrorText> : null}
-          </div>
-        </div>
-      </div>
-    </ToolPageLayout>
-  )
-}
