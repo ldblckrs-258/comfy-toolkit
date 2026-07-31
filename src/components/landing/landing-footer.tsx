@@ -48,7 +48,7 @@ export function LandingFooter() {
 
           <div>
             <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-              Popular tools
+              Top tools
             </h2>
             <ul className="mt-3 space-y-2">
               {featured.map((tool) => (

@@ -9,6 +9,8 @@ export const SITE_URL = RAW_SITE_URL.replace(/\/$/, '')
 
 export const SITE_UPDATED = '2026-07-27'
 
+export const HOME_UPDATED = '2026-08-01'
+
 export const SITE_AUTHOR = '@ldblckrs-258'
 
 export const HOME_TITLE = `${SITE_NAME} - Free Online Developer Tools (No Upload)`

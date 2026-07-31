@@ -19,11 +19,21 @@ import { trackSpotlight } from '@/components/landing/spotlight'
 import { StatBand } from '@/components/landing/stat-band'
 import { ToolDeckCard } from '@/components/landing/tool-deck-card'
 import { openCommandPalette } from '@/lib/command-palette'
-import { HOME_TITLE, SITE_DESCRIPTION, SITE_NAME, buildSeo } from '@/lib/seo'
+import {
+  HOME_TITLE,
+  HOME_UPDATED,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  buildSeo,
+  ogUrl,
+} from '@/lib/seo'
 import {
   faqNode,
+  organizationNode,
   schemaGraph,
   toolListNode,
+  toolkitAppNode,
+  webPageNode,
   websiteNode,
 } from '@/lib/structured-data'
 import { GROUP_ORDER, TOOLS, toolsByGroup } from '@/lib/tools/registry'
@@ -95,8 +105,21 @@ export const Route = createFileRoute('/')({
         { title: HOME_TITLE },
         ...seo.meta,
         {
+          property: 'og:image:alt',
+          content: `${SITE_NAME} - free online developer tools that run entirely in your browser`,
+        },
+        {
           'script:ld+json': schemaGraph(
+            organizationNode(),
             websiteNode(),
+            webPageNode({
+              name: HOME_TITLE,
+              description: SITE_DESCRIPTION,
+              path: '/',
+              updated: HOME_UPDATED,
+              image: ogUrl(),
+            }),
+            toolkitAppNode(),
             toolListNode(),
             faqNode(FAQ),
           ),
@@ -204,7 +227,7 @@ function Home() {
                   Try it right here
                 </span>
                 <h2 className="mt-2 font-display text-4xl font-normal tracking-normal sm:text-5xl">
-                  Paste something in
+                  Try any tool in your browser
                 </h2>
               </div>
               <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
@@ -223,6 +246,7 @@ function Home() {
 
         <section>
           <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
+            <h2 className="sr-only">Why use browser-based developer tools</h2>
             <ul className="grid gap-4 md:grid-cols-3 md:grid-rows-2">
               <Reveal
                 as="li"
@@ -241,9 +265,9 @@ function Home() {
                 >
                   <ShieldCheck className="h-5 w-5" />
                 </span>
-                <h2 className="mt-4 text-xl font-semibold tracking-tight">
+                <h3 className="mt-4 text-xl font-semibold tracking-tight">
                   {VALUE_PROPS[0].title}
-                </h2>
+                </h3>
                 <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
                   {VALUE_PROPS[0].body}
                 </p>
@@ -272,9 +296,9 @@ function Home() {
                     >
                       <Icon className="h-5 w-5" />
                     </span>
-                    <h2 className="mt-4 text-lg font-semibold tracking-tight">
+                    <h3 className="mt-4 text-lg font-semibold tracking-tight">
                       {prop.title}
-                    </h2>
+                    </h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                       {prop.body}
                     </p>
@@ -373,6 +397,18 @@ function Home() {
                 </Reveal>
               ))}
             </div>
+
+            <Reveal className="mt-6">
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                For the reasoning behind the tools — why UUID v7 indexes better
+                than v4, why two contrast checkers disagree, why a Unix
+                timestamp is ambiguous without its unit — read the{' '}
+                <Link to="/guides" className="text-accent hover:underline">
+                  developer guides
+                </Link>
+                .
+              </p>
+            </Reveal>
 
             <Reveal className="mt-8 flex flex-wrap items-center gap-3">
               <span className="text-sm text-muted-foreground">

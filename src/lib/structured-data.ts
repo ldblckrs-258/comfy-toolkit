@@ -23,6 +23,21 @@ export function schemaGraph(...nodes: Array<SchemaNode>): SchemaNode {
   }
 }
 
+export function organizationNode(): SchemaNode {
+  return {
+    '@type': 'Organization',
+    '@id': `${SITE_URL}/#organization`,
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}/logo512.png`,
+      width: 512,
+      height: 512,
+    },
+  }
+}
+
 export function websiteNode(): SchemaNode {
   return {
     '@type': 'WebSite',
@@ -30,6 +45,55 @@ export function websiteNode(): SchemaNode {
     name: SITE_NAME,
     url: `${SITE_URL}/`,
     description: SITE_DESCRIPTION,
+    inLanguage: 'en',
+    publisher: { '@id': `${SITE_URL}/#organization` },
+  }
+}
+
+export function webPageNode({
+  name,
+  description,
+  path,
+  updated,
+  image,
+}: {
+  name: string
+  description: string
+  path: string
+  updated: string
+  image: string
+}): SchemaNode {
+  return {
+    '@type': 'WebPage',
+    '@id': `${SITE_URL}${path}#webpage`,
+    url: `${SITE_URL}${path}`,
+    name,
+    description,
+    inLanguage: 'en',
+    dateModified: updated,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    primaryImageOfPage: { '@type': 'ImageObject', url: image },
+  }
+}
+
+export function toolkitAppNode(): SchemaNode {
+  return {
+    '@type': 'SoftwareApplication',
+    '@id': `${SITE_URL}/#app`,
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+    description: SITE_DESCRIPTION,
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Any',
+    browserRequirements: 'Requires a modern browser with JavaScript enabled.',
+    featureList: TOOLS.map((tool) => tool.name),
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
   }
 }
 

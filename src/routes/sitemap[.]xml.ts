@@ -5,7 +5,7 @@ import { GUIDES } from '@/content/guides'
 import { TOOL_CONTENT } from '@/content/tools'
 import { VARIANTS } from '@/content/variants'
 import { GUIDES_ENABLED, VARIANTS_ENABLED } from '@/lib/feature-flags'
-import { SITE_UPDATED, SITE_URL } from '@/lib/seo'
+import { HOME_UPDATED, SITE_UPDATED, SITE_URL } from '@/lib/seo'
 import { GROUP_ORDER, TOOLS } from '@/lib/tools/registry'
 
 interface SitemapEntry {
@@ -29,7 +29,7 @@ function esc(value: string): string {
 
 function sitemapEntries(): Array<SitemapEntry> {
   return [
-    { path: '/', lastmod: SITE_UPDATED, changefreq: 'weekly', priority: 1 },
+    { path: '/', lastmod: HOME_UPDATED, changefreq: 'weekly', priority: 1 },
     {
       path: '/tools',
       lastmod: SITE_UPDATED,
