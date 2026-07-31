@@ -11,18 +11,18 @@ export const hashVariants: Array<ToolVariant> = [
       metaDescription:
         'Hash text online and see MD5, SHA-1, SHA-256, SHA-384 and SHA-512 side by side. Output as hex or Base64, computed in your browser.',
       intro: [
-        'Type or paste a string and get every digest at once rather than picking an algorithm first. Seeing them together is what you want when you have a reference digest and do not know which algorithm produced it — match it by length and value.',
+        'Type or paste a string and get every digest at once rather than picking an algorithm first. Seeing them together is what you want when you have a reference digest and do not know which algorithm produced it - match it by length and value.',
         'This page opens with text input selected.',
       ],
       sections: [
         {
           heading: 'Identifying an unknown digest by length',
           bullets: [
-            '32 hex characters — MD5.',
-            '40 — SHA-1.',
-            '64 — SHA-256.',
-            '96 — SHA-384.',
-            '128 — SHA-512.',
+            '32 hex characters - MD5.',
+            '40 - SHA-1.',
+            '64 - SHA-256.',
+            '96 - SHA-384.',
+            '128 - SHA-512.',
           ],
           paragraphs: [
             'Length narrows it to one algorithm in almost every case, which is why showing all five simultaneously answers the question faster than guessing and re-running.',
@@ -41,7 +41,7 @@ export const hashVariants: Array<ToolVariant> = [
         {
           heading: 'Not for passwords',
           paragraphs: [
-            'These algorithms are built to be fast, which is exactly wrong for password storage — speed is what lets an attacker with your database try billions of guesses. Password hashing needs a deliberately slow, salted function such as Argon2, scrypt or bcrypt.',
+            'These algorithms are built to be fast, which is exactly wrong for password storage - speed is what lets an attacker with your database try billions of guesses. Password hashing needs a deliberately slow, salted function such as Argon2, scrypt or bcrypt.',
           ],
         },
         {
@@ -72,20 +72,20 @@ export const hashVariants: Array<ToolVariant> = [
           heading: 'Verifying a download',
           paragraphs: [
             'A project publishes a checksum next to its release. Compute the same digest locally and compare: if they match, the bytes you received are the bytes that were published.',
-            'Paste the published value into the comparison field rather than reading it character by character. Hex is normalised before comparison — whitespace stripped, case folded — so a value copied out of release notes with stray formatting still compares correctly.',
+            'Paste the published value into the comparison field rather than reading it character by character. Hex is normalised before comparison - whitespace stripped, case folded - so a value copied out of release notes with stray formatting still compares correctly.',
           ],
         },
         {
           heading: 'What a matching checksum does and does not prove',
           paragraphs: [
-            'It proves the file was not corrupted in transit or on disk. It does not prove the file is safe, because whoever published the checksum also published the file — an attacker who replaced one would replace the other. Only a signature backed by a key you already trust proves origin.',
+            'It proves the file was not corrupted in transit or on disk. It does not prove the file is safe, because whoever published the checksum also published the file - an attacker who replaced one would replace the other. Only a signature backed by a key you already trust proves origin.',
             'MD5 is adequate here despite being cryptographically broken: catching an accidental truncation is not an adversarial problem. Prefer SHA-256 where the publisher offers it.',
           ],
         },
         {
           heading: 'Text and file paths agree',
           paragraphs: [
-            'Hashing a file and hashing a string with identical bytes produce identical digests — an invariant the test suite pins directly. So you can verify a small text file either way and get the same answer.',
+            'Hashing a file and hashing a string with identical bytes produce identical digests - an invariant the test suite pins directly. So you can verify a small text file either way and get the same answer.',
           ],
         },
         {

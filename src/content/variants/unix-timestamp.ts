@@ -64,10 +64,10 @@ export const timestampVariants: Array<ToolVariant> = [
         {
           heading: 'What carries a timestamp',
           bullets: [
-            'Snowflake — 41 bits of milliseconds since a service-specific epoch, offset from 1970. Used by X and Discord, so a message or account id reveals its creation time.',
-            'MongoDB ObjectId — the leading 4 bytes are seconds since the epoch, so every document knows when it was inserted.',
-            'ULID — a 48-bit millisecond timestamp in Crockford Base32.',
-            'UUID v7 — 48 bits of milliseconds in the leading field.',
+            'Snowflake - 41 bits of milliseconds since a service-specific epoch, offset from 1970. Used by X and Discord, so a message or account id reveals its creation time.',
+            'MongoDB ObjectId - the leading 4 bytes are seconds since the epoch, so every document knows when it was inserted.',
+            'ULID - a 48-bit millisecond timestamp in Crockford Base32.',
+            'UUID v7 - 48 bits of milliseconds in the leading field.',
           ],
         },
         {
@@ -111,7 +111,7 @@ export const timestampVariants: Array<ToolVariant> = [
           heading: 'Reading a sequence rather than a point',
           paragraphs: [
             'Converting in bulk is what makes gaps and clusters visible. A run of events every few seconds followed by a four-minute hole is obvious as a list of times and invisible as a list of ten-digit integers.',
-            'Because the whole set converts under one unit assumption, a value that lands wildly out of line usually means that row is in a different unit — worth knowing before you draw conclusions from it.',
+            'Because the whole set converts under one unit assumption, a value that lands wildly out of line usually means that row is in a different unit - worth knowing before you draw conclusions from it.',
           ],
         },
         {
@@ -154,20 +154,20 @@ export const timestampVariants: Array<ToolVariant> = [
           heading: 'What this answers',
           paragraphs: [
             'How long a job ran between its start and end log lines. How stale a cached record is. How much time elapsed between a request and the error it produced. All questions where the two endpoints are epoch values and the answer needs to be human-readable.',
-            'Both endpoints can be epoch values or dates, and mixing the two is fine — enter whichever form you have.',
+            'Both endpoints can be epoch values or dates, and mixing the two is fine - enter whichever form you have.',
           ],
         },
         {
           heading: 'Elapsed time is not calendar arithmetic',
           paragraphs: [
-            'A duration in seconds is exact. Expressing it in months is not, because months have different lengths, and expressing it in days across a daylight saving boundary is not either — one local day that year is 23 or 25 hours long.',
+            'A duration in seconds is exact. Expressing it in months is not, because months have different lengths, and expressing it in days across a daylight saving boundary is not either - one local day that year is 23 or 25 hours long.',
             'For anything that must be precise, work in the raw difference and convert to larger units only for display.',
           ],
         },
         {
           heading: 'Leap seconds are already ignored',
           paragraphs: [
-            'Unix time defines every day as exactly 86400 seconds, so a leap second repeats a value rather than incrementing. Durations computed from epoch values are short by however many leap seconds fell inside the interval — currently 27 in total since 1972. This matters for scientific timing and for essentially nothing else.',
+            'Unix time defines every day as exactly 86400 seconds, so a leap second repeats a value rather than incrementing. Durations computed from epoch values are short by however many leap seconds fell inside the interval - currently 27 in total since 1972. This matters for scientific timing and for essentially nothing else.',
           ],
         },
         {
@@ -196,10 +196,10 @@ export const timestampVariants: Array<ToolVariant> = [
         {
           heading: 'Which format to use where',
           bullets: [
-            'ISO 8601 — the default for APIs and log lines. Sorts correctly as a plain string, which is why it is worth preferring.',
-            'With a Z suffix — explicitly UTC. Prefer this to an offset like +00:00 when a consumer might parse naively.',
-            'Relative time — good for interfaces, wrong for storage, because it is only meaningful relative to when it was rendered.',
-            'Epoch — compact and unambiguous for machines, unreadable for people, and silent about its unit.',
+            'ISO 8601 - the default for APIs and log lines. Sorts correctly as a plain string, which is why it is worth preferring.',
+            'With a Z suffix - explicitly UTC. Prefer this to an offset like +00:00 when a consumer might parse naively.',
+            'Relative time - good for interfaces, wrong for storage, because it is only meaningful relative to when it was rendered.',
+            'Epoch - compact and unambiguous for machines, unreadable for people, and silent about its unit.',
           ],
         },
         {
@@ -216,7 +216,7 @@ export const timestampVariants: Array<ToolVariant> = [
         {
           heading: 'Store one form, render many',
           paragraphs: [
-            'Keep the instant in a single canonical form — UTC — and format at the edge. Storing a formatted local string is how a record becomes impossible to compare against another one written in a different zone.',
+            'Keep the instant in a single canonical form - UTC - and format at the edge. Storing a formatted local string is how a record becomes impossible to compare against another one written in a different zone.',
           ],
         },
         {

@@ -11,7 +11,7 @@ export const qrCodeVariants: Array<ToolVariant> = [
       metaDescription:
         'Generate a QR code for a link or any text online. Export SVG or PNG, choose colours and error correction, with the payload encoded directly.',
       intro: [
-        'Turn a link or a block of text into a scannable code. The payload is encoded into the image itself, so there is no redirect service in the middle — the code works forever and reports nothing back to anyone.',
+        'Turn a link or a block of text into a scannable code. The payload is encoded into the image itself, so there is no redirect service in the middle - the code works forever and reports nothing back to anyone.',
         'This page opens on the text and URL input.',
       ],
       sections: [
@@ -25,16 +25,16 @@ export const qrCodeVariants: Array<ToolVariant> = [
         {
           heading: 'Error correction against payload size',
           bullets: [
-            'L — about 7% recoverable, densest, fine for clean screens.',
-            'M — about 15%, the sensible default for print.',
-            'Q — about 25%, for surfaces that get handled.',
-            'H — about 30%, and required if a logo covers the centre, since a logo is damage as far as the decoder is concerned.',
+            'L - about 7% recoverable, densest, fine for clean screens.',
+            'M - about 15%, the sensible default for print.',
+            'Q - about 25%, for surfaces that get handled.',
+            'H - about 30%, and required if a logo covers the centre, since a logo is damage as far as the decoder is concerned.',
           ],
         },
         {
           heading: 'Keeping it scannable',
           paragraphs: [
-            'The blank margin around the symbol is part of the specification rather than decoration, and cropping it tight is the most common reason a code fails. Keep modules dark on a light background — most scanners will not read an inverted code — and size it at roughly a tenth of the intended scanning distance.',
+            'The blank margin around the symbol is part of the specification rather than decoration, and cropping it tight is the most common reason a code fails. Keep modules dark on a light background - most scanners will not read an inverted code - and size it at roughly a tenth of the intended scanning distance.',
             'Export SVG for print so it stays sharp at any scale, PNG for screens.',
           ],
         },
@@ -42,7 +42,7 @@ export const qrCodeVariants: Array<ToolVariant> = [
           heading: 'Static codes cannot be changed later',
           paragraphs: [
             'Because the payload is inside the image, a printed code points at that URL permanently. If the destination might move, encode a link you control and redirect from there.',
-            'That is the one genuine advantage commercial dynamic QR services sell — and the cost is that they see every scan and can disable the code.',
+            'That is the one genuine advantage commercial dynamic QR services sell - and the cost is that they see every scan and can disable the code.',
           ],
         },
       ],
@@ -69,13 +69,13 @@ export const qrCodeVariants: Array<ToolVariant> = [
           ],
           code: {
             lang: 'text',
-            body: 'WIFI:T:WPA;S:NetworkName;P:password;H:false;;\n\nT  security type — WPA, WEP or nopass\nS  network name (SSID)\nP  password, omitted for open networks\nH  true when the SSID is hidden',
+            body: 'WIFI:T:WPA;S:NetworkName;P:password;H:false;;\n\nT  security type - WPA, WEP or nopass\nS  network name (SSID)\nP  password, omitted for open networks\nH  true when the SSID is hidden',
           },
         },
         {
           heading: 'The password is in plain sight',
           paragraphs: [
-            'The credentials sit inside the code as readable text. Anyone who photographs the code has the password, and no amount of styling changes that — a printed Wi-Fi code is exactly as sensitive as the password written out longhand.',
+            'The credentials sit inside the code as readable text. Anyone who photographs the code has the password, and no amount of styling changes that - a printed Wi-Fi code is exactly as sensitive as the password written out longhand.',
             'For a venue, that is usually acceptable and is the point. For a network with access to anything internal, put guests on a separate SSID rather than sharing the main one.',
           ],
         },

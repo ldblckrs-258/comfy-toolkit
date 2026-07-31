@@ -9,41 +9,41 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ToolsIndexRouteImport } from './routes/tools/index'
-import { Route as GuidesIndexRouteImport } from './routes/guides/index'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as CategoriesIndexRouteImport } from './routes/categories/index'
-import { Route as ToolsUuidGeneratorRouteImport } from './routes/tools/uuid-generator'
-import { Route as ToolsUrlParserRouteImport } from './routes/tools/url-parser'
-import { Route as ToolsUnixTimestampRouteImport } from './routes/tools/unix-timestamp'
-import { Route as ToolsStringInspectorRouteImport } from './routes/tools/string-inspector'
-import { Route as ToolsSecretGeneratorRouteImport } from './routes/tools/secret-generator'
-import { Route as ToolsRegexRouteImport } from './routes/tools/regex'
-import { Route as ToolsQrCodeRouteImport } from './routes/tools/qr-code'
-import { Route as ToolsPaletteRouteImport } from './routes/tools/palette'
-import { Route as ToolsMarkdownRouteImport } from './routes/tools/markdown'
-import { Route as ToolsJwtRouteImport } from './routes/tools/jwt'
-import { Route as ToolsJsonFormatterRouteImport } from './routes/tools/json-formatter'
-import { Route as ToolsHmacRouteImport } from './routes/tools/hmac'
-import { Route as ToolsHashRouteImport } from './routes/tools/hash'
-import { Route as ToolsGradientRouteImport } from './routes/tools/gradient'
-import { Route as ToolsDiffRouteImport } from './routes/tools/diff'
-import { Route as ToolsDataConverterRouteImport } from './routes/tools/data-converter'
-import { Route as ToolsCronRouteImport } from './routes/tools/cron'
-import { Route as ToolsContrastRouteImport } from './routes/tools/contrast'
-import { Route as ToolsColorsRouteImport } from './routes/tools/colors'
-import { Route as ToolsCodeFormatterRouteImport } from './routes/tools/code-formatter'
-import { Route as ToolsClockRouteImport } from './routes/tools/clock'
-import { Route as ToolsBase64RouteImport } from './routes/tools/base64'
-import { Route as GuidesSlugRouteImport } from './routes/guides/$slug'
 import { Route as CategoriesGroupRouteImport } from './routes/categories/$group'
+import { Route as GuidesIndexRouteImport } from './routes/guides/index'
+import { Route as GuidesSlugRouteImport } from './routes/guides/$slug'
+import { Route as ToolsIndexRouteImport } from './routes/tools/index'
+import { Route as ToolsBase64RouteImport } from './routes/tools/base64'
+import { Route as ToolsClockRouteImport } from './routes/tools/clock'
+import { Route as ToolsCodeFormatterRouteImport } from './routes/tools/code-formatter'
+import { Route as ToolsColorsRouteImport } from './routes/tools/colors'
+import { Route as ToolsContrastRouteImport } from './routes/tools/contrast'
+import { Route as ToolsCronRouteImport } from './routes/tools/cron'
+import { Route as ToolsDataConverterRouteImport } from './routes/tools/data-converter'
+import { Route as ToolsDiffRouteImport } from './routes/tools/diff'
+import { Route as ToolsGradientRouteImport } from './routes/tools/gradient'
+import { Route as ToolsHashRouteImport } from './routes/tools/hash'
+import { Route as ToolsHmacRouteImport } from './routes/tools/hmac'
+import { Route as ToolsJsonFormatterRouteImport } from './routes/tools/json-formatter'
+import { Route as ToolsJwtRouteImport } from './routes/tools/jwt'
+import { Route as ToolsMarkdownRouteImport } from './routes/tools/markdown'
+import { Route as ToolsPaletteRouteImport } from './routes/tools/palette'
+import { Route as ToolsQrCodeRouteImport } from './routes/tools/qr-code'
+import { Route as ToolsRegexRouteImport } from './routes/tools/regex'
+import { Route as ToolsSecretGeneratorRouteImport } from './routes/tools/secret-generator'
+import { Route as ToolsStringInspectorRouteImport } from './routes/tools/string-inspector'
+import { Route as ToolsUnixTimestampRouteImport } from './routes/tools/unix-timestamp'
+import { Route as ToolsUrlParserRouteImport } from './routes/tools/url-parser'
+import { Route as ToolsUuidGeneratorRouteImport } from './routes/tools/uuid-generator'
 import { Route as ToolsToolIdVariantRouteImport } from './routes/tools/$toolId/$variant'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -51,19 +51,9 @@ const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsIndexRoute = ToolsIndexRouteImport.update({
-  id: '/tools/',
-  path: '/tools/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GuidesIndexRoute = GuidesIndexRouteImport.update({
-  id: '/guides/',
-  path: '/guides/',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoriesIndexRoute = CategoriesIndexRouteImport.update({
@@ -71,114 +61,14 @@ const CategoriesIndexRoute = CategoriesIndexRouteImport.update({
   path: '/categories/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ToolsUuidGeneratorRoute = ToolsUuidGeneratorRouteImport.update({
-  id: '/tools/uuid-generator',
-  path: '/tools/uuid-generator',
+const CategoriesGroupRoute = CategoriesGroupRouteImport.update({
+  id: '/categories/$group',
+  path: '/categories/$group',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ToolsUrlParserRoute = ToolsUrlParserRouteImport.update({
-  id: '/tools/url-parser',
-  path: '/tools/url-parser',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsUnixTimestampRoute = ToolsUnixTimestampRouteImport.update({
-  id: '/tools/unix-timestamp',
-  path: '/tools/unix-timestamp',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsStringInspectorRoute = ToolsStringInspectorRouteImport.update({
-  id: '/tools/string-inspector',
-  path: '/tools/string-inspector',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsSecretGeneratorRoute = ToolsSecretGeneratorRouteImport.update({
-  id: '/tools/secret-generator',
-  path: '/tools/secret-generator',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsRegexRoute = ToolsRegexRouteImport.update({
-  id: '/tools/regex',
-  path: '/tools/regex',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsQrCodeRoute = ToolsQrCodeRouteImport.update({
-  id: '/tools/qr-code',
-  path: '/tools/qr-code',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsPaletteRoute = ToolsPaletteRouteImport.update({
-  id: '/tools/palette',
-  path: '/tools/palette',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsMarkdownRoute = ToolsMarkdownRouteImport.update({
-  id: '/tools/markdown',
-  path: '/tools/markdown',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsJwtRoute = ToolsJwtRouteImport.update({
-  id: '/tools/jwt',
-  path: '/tools/jwt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsJsonFormatterRoute = ToolsJsonFormatterRouteImport.update({
-  id: '/tools/json-formatter',
-  path: '/tools/json-formatter',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsHmacRoute = ToolsHmacRouteImport.update({
-  id: '/tools/hmac',
-  path: '/tools/hmac',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsHashRoute = ToolsHashRouteImport.update({
-  id: '/tools/hash',
-  path: '/tools/hash',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsGradientRoute = ToolsGradientRouteImport.update({
-  id: '/tools/gradient',
-  path: '/tools/gradient',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsDiffRoute = ToolsDiffRouteImport.update({
-  id: '/tools/diff',
-  path: '/tools/diff',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsDataConverterRoute = ToolsDataConverterRouteImport.update({
-  id: '/tools/data-converter',
-  path: '/tools/data-converter',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsCronRoute = ToolsCronRouteImport.update({
-  id: '/tools/cron',
-  path: '/tools/cron',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsContrastRoute = ToolsContrastRouteImport.update({
-  id: '/tools/contrast',
-  path: '/tools/contrast',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsColorsRoute = ToolsColorsRouteImport.update({
-  id: '/tools/colors',
-  path: '/tools/colors',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsCodeFormatterRoute = ToolsCodeFormatterRouteImport.update({
-  id: '/tools/code-formatter',
-  path: '/tools/code-formatter',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsClockRoute = ToolsClockRouteImport.update({
-  id: '/tools/clock',
-  path: '/tools/clock',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ToolsBase64Route = ToolsBase64RouteImport.update({
-  id: '/tools/base64',
-  path: '/tools/base64',
+const GuidesIndexRoute = GuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuidesSlugRoute = GuidesSlugRouteImport.update({
@@ -186,9 +76,119 @@ const GuidesSlugRoute = GuidesSlugRouteImport.update({
   path: '/guides/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CategoriesGroupRoute = CategoriesGroupRouteImport.update({
-  id: '/categories/$group',
-  path: '/categories/$group',
+const ToolsIndexRoute = ToolsIndexRouteImport.update({
+  id: '/tools/',
+  path: '/tools/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsBase64Route = ToolsBase64RouteImport.update({
+  id: '/tools/base64',
+  path: '/tools/base64',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsClockRoute = ToolsClockRouteImport.update({
+  id: '/tools/clock',
+  path: '/tools/clock',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCodeFormatterRoute = ToolsCodeFormatterRouteImport.update({
+  id: '/tools/code-formatter',
+  path: '/tools/code-formatter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsColorsRoute = ToolsColorsRouteImport.update({
+  id: '/tools/colors',
+  path: '/tools/colors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsContrastRoute = ToolsContrastRouteImport.update({
+  id: '/tools/contrast',
+  path: '/tools/contrast',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCronRoute = ToolsCronRouteImport.update({
+  id: '/tools/cron',
+  path: '/tools/cron',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsDataConverterRoute = ToolsDataConverterRouteImport.update({
+  id: '/tools/data-converter',
+  path: '/tools/data-converter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsDiffRoute = ToolsDiffRouteImport.update({
+  id: '/tools/diff',
+  path: '/tools/diff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsGradientRoute = ToolsGradientRouteImport.update({
+  id: '/tools/gradient',
+  path: '/tools/gradient',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsHashRoute = ToolsHashRouteImport.update({
+  id: '/tools/hash',
+  path: '/tools/hash',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsHmacRoute = ToolsHmacRouteImport.update({
+  id: '/tools/hmac',
+  path: '/tools/hmac',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsJsonFormatterRoute = ToolsJsonFormatterRouteImport.update({
+  id: '/tools/json-formatter',
+  path: '/tools/json-formatter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsJwtRoute = ToolsJwtRouteImport.update({
+  id: '/tools/jwt',
+  path: '/tools/jwt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsMarkdownRoute = ToolsMarkdownRouteImport.update({
+  id: '/tools/markdown',
+  path: '/tools/markdown',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsPaletteRoute = ToolsPaletteRouteImport.update({
+  id: '/tools/palette',
+  path: '/tools/palette',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsQrCodeRoute = ToolsQrCodeRouteImport.update({
+  id: '/tools/qr-code',
+  path: '/tools/qr-code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRegexRoute = ToolsRegexRouteImport.update({
+  id: '/tools/regex',
+  path: '/tools/regex',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsSecretGeneratorRoute = ToolsSecretGeneratorRouteImport.update({
+  id: '/tools/secret-generator',
+  path: '/tools/secret-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsStringInspectorRoute = ToolsStringInspectorRouteImport.update({
+  id: '/tools/string-inspector',
+  path: '/tools/string-inspector',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsUnixTimestampRoute = ToolsUnixTimestampRouteImport.update({
+  id: '/tools/unix-timestamp',
+  path: '/tools/unix-timestamp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsUrlParserRoute = ToolsUrlParserRouteImport.update({
+  id: '/tools/url-parser',
+  path: '/tools/url-parser',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsUuidGeneratorRoute = ToolsUuidGeneratorRouteImport.update({
+  id: '/tools/uuid-generator',
+  path: '/tools/uuid-generator',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsToolIdVariantRoute = ToolsToolIdVariantRouteImport.update({
@@ -435,11 +435,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -449,25 +449,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/': {
-      id: '/tools/'
-      path: '/tools'
-      fullPath: '/tools/'
-      preLoaderRoute: typeof ToolsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/guides/': {
-      id: '/guides/'
-      path: '/guides'
-      fullPath: '/guides/'
-      preLoaderRoute: typeof GuidesIndexRouteImport
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/categories/': {
@@ -477,158 +463,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoriesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/tools/uuid-generator': {
-      id: '/tools/uuid-generator'
-      path: '/tools/uuid-generator'
-      fullPath: '/tools/uuid-generator'
-      preLoaderRoute: typeof ToolsUuidGeneratorRouteImport
+    '/categories/$group': {
+      id: '/categories/$group'
+      path: '/categories/$group'
+      fullPath: '/categories/$group'
+      preLoaderRoute: typeof CategoriesGroupRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/tools/url-parser': {
-      id: '/tools/url-parser'
-      path: '/tools/url-parser'
-      fullPath: '/tools/url-parser'
-      preLoaderRoute: typeof ToolsUrlParserRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/unix-timestamp': {
-      id: '/tools/unix-timestamp'
-      path: '/tools/unix-timestamp'
-      fullPath: '/tools/unix-timestamp'
-      preLoaderRoute: typeof ToolsUnixTimestampRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/string-inspector': {
-      id: '/tools/string-inspector'
-      path: '/tools/string-inspector'
-      fullPath: '/tools/string-inspector'
-      preLoaderRoute: typeof ToolsStringInspectorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/secret-generator': {
-      id: '/tools/secret-generator'
-      path: '/tools/secret-generator'
-      fullPath: '/tools/secret-generator'
-      preLoaderRoute: typeof ToolsSecretGeneratorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/regex': {
-      id: '/tools/regex'
-      path: '/tools/regex'
-      fullPath: '/tools/regex'
-      preLoaderRoute: typeof ToolsRegexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/qr-code': {
-      id: '/tools/qr-code'
-      path: '/tools/qr-code'
-      fullPath: '/tools/qr-code'
-      preLoaderRoute: typeof ToolsQrCodeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/palette': {
-      id: '/tools/palette'
-      path: '/tools/palette'
-      fullPath: '/tools/palette'
-      preLoaderRoute: typeof ToolsPaletteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/markdown': {
-      id: '/tools/markdown'
-      path: '/tools/markdown'
-      fullPath: '/tools/markdown'
-      preLoaderRoute: typeof ToolsMarkdownRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/jwt': {
-      id: '/tools/jwt'
-      path: '/tools/jwt'
-      fullPath: '/tools/jwt'
-      preLoaderRoute: typeof ToolsJwtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/json-formatter': {
-      id: '/tools/json-formatter'
-      path: '/tools/json-formatter'
-      fullPath: '/tools/json-formatter'
-      preLoaderRoute: typeof ToolsJsonFormatterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/hmac': {
-      id: '/tools/hmac'
-      path: '/tools/hmac'
-      fullPath: '/tools/hmac'
-      preLoaderRoute: typeof ToolsHmacRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/hash': {
-      id: '/tools/hash'
-      path: '/tools/hash'
-      fullPath: '/tools/hash'
-      preLoaderRoute: typeof ToolsHashRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/gradient': {
-      id: '/tools/gradient'
-      path: '/tools/gradient'
-      fullPath: '/tools/gradient'
-      preLoaderRoute: typeof ToolsGradientRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/diff': {
-      id: '/tools/diff'
-      path: '/tools/diff'
-      fullPath: '/tools/diff'
-      preLoaderRoute: typeof ToolsDiffRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/data-converter': {
-      id: '/tools/data-converter'
-      path: '/tools/data-converter'
-      fullPath: '/tools/data-converter'
-      preLoaderRoute: typeof ToolsDataConverterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/cron': {
-      id: '/tools/cron'
-      path: '/tools/cron'
-      fullPath: '/tools/cron'
-      preLoaderRoute: typeof ToolsCronRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/contrast': {
-      id: '/tools/contrast'
-      path: '/tools/contrast'
-      fullPath: '/tools/contrast'
-      preLoaderRoute: typeof ToolsContrastRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/colors': {
-      id: '/tools/colors'
-      path: '/tools/colors'
-      fullPath: '/tools/colors'
-      preLoaderRoute: typeof ToolsColorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/code-formatter': {
-      id: '/tools/code-formatter'
-      path: '/tools/code-formatter'
-      fullPath: '/tools/code-formatter'
-      preLoaderRoute: typeof ToolsCodeFormatterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/clock': {
-      id: '/tools/clock'
-      path: '/tools/clock'
-      fullPath: '/tools/clock'
-      preLoaderRoute: typeof ToolsClockRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tools/base64': {
-      id: '/tools/base64'
-      path: '/tools/base64'
-      fullPath: '/tools/base64'
-      preLoaderRoute: typeof ToolsBase64RouteImport
+    '/guides/': {
+      id: '/guides/'
+      path: '/guides'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof GuidesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guides/$slug': {
@@ -638,11 +484,165 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuidesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/categories/$group': {
-      id: '/categories/$group'
-      path: '/categories/$group'
-      fullPath: '/categories/$group'
-      preLoaderRoute: typeof CategoriesGroupRouteImport
+    '/tools/': {
+      id: '/tools/'
+      path: '/tools'
+      fullPath: '/tools/'
+      preLoaderRoute: typeof ToolsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/base64': {
+      id: '/tools/base64'
+      path: '/tools/base64'
+      fullPath: '/tools/base64'
+      preLoaderRoute: typeof ToolsBase64RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/clock': {
+      id: '/tools/clock'
+      path: '/tools/clock'
+      fullPath: '/tools/clock'
+      preLoaderRoute: typeof ToolsClockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/code-formatter': {
+      id: '/tools/code-formatter'
+      path: '/tools/code-formatter'
+      fullPath: '/tools/code-formatter'
+      preLoaderRoute: typeof ToolsCodeFormatterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/colors': {
+      id: '/tools/colors'
+      path: '/tools/colors'
+      fullPath: '/tools/colors'
+      preLoaderRoute: typeof ToolsColorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/contrast': {
+      id: '/tools/contrast'
+      path: '/tools/contrast'
+      fullPath: '/tools/contrast'
+      preLoaderRoute: typeof ToolsContrastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/cron': {
+      id: '/tools/cron'
+      path: '/tools/cron'
+      fullPath: '/tools/cron'
+      preLoaderRoute: typeof ToolsCronRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/data-converter': {
+      id: '/tools/data-converter'
+      path: '/tools/data-converter'
+      fullPath: '/tools/data-converter'
+      preLoaderRoute: typeof ToolsDataConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/diff': {
+      id: '/tools/diff'
+      path: '/tools/diff'
+      fullPath: '/tools/diff'
+      preLoaderRoute: typeof ToolsDiffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/gradient': {
+      id: '/tools/gradient'
+      path: '/tools/gradient'
+      fullPath: '/tools/gradient'
+      preLoaderRoute: typeof ToolsGradientRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/hash': {
+      id: '/tools/hash'
+      path: '/tools/hash'
+      fullPath: '/tools/hash'
+      preLoaderRoute: typeof ToolsHashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/hmac': {
+      id: '/tools/hmac'
+      path: '/tools/hmac'
+      fullPath: '/tools/hmac'
+      preLoaderRoute: typeof ToolsHmacRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/json-formatter': {
+      id: '/tools/json-formatter'
+      path: '/tools/json-formatter'
+      fullPath: '/tools/json-formatter'
+      preLoaderRoute: typeof ToolsJsonFormatterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/jwt': {
+      id: '/tools/jwt'
+      path: '/tools/jwt'
+      fullPath: '/tools/jwt'
+      preLoaderRoute: typeof ToolsJwtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/markdown': {
+      id: '/tools/markdown'
+      path: '/tools/markdown'
+      fullPath: '/tools/markdown'
+      preLoaderRoute: typeof ToolsMarkdownRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/palette': {
+      id: '/tools/palette'
+      path: '/tools/palette'
+      fullPath: '/tools/palette'
+      preLoaderRoute: typeof ToolsPaletteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/qr-code': {
+      id: '/tools/qr-code'
+      path: '/tools/qr-code'
+      fullPath: '/tools/qr-code'
+      preLoaderRoute: typeof ToolsQrCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/regex': {
+      id: '/tools/regex'
+      path: '/tools/regex'
+      fullPath: '/tools/regex'
+      preLoaderRoute: typeof ToolsRegexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/secret-generator': {
+      id: '/tools/secret-generator'
+      path: '/tools/secret-generator'
+      fullPath: '/tools/secret-generator'
+      preLoaderRoute: typeof ToolsSecretGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/string-inspector': {
+      id: '/tools/string-inspector'
+      path: '/tools/string-inspector'
+      fullPath: '/tools/string-inspector'
+      preLoaderRoute: typeof ToolsStringInspectorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/unix-timestamp': {
+      id: '/tools/unix-timestamp'
+      path: '/tools/unix-timestamp'
+      fullPath: '/tools/unix-timestamp'
+      preLoaderRoute: typeof ToolsUnixTimestampRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/url-parser': {
+      id: '/tools/url-parser'
+      path: '/tools/url-parser'
+      fullPath: '/tools/url-parser'
+      preLoaderRoute: typeof ToolsUrlParserRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/uuid-generator': {
+      id: '/tools/uuid-generator'
+      path: '/tools/uuid-generator'
+      fullPath: '/tools/uuid-generator'
+      preLoaderRoute: typeof ToolsUuidGeneratorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/$toolId/$variant': {

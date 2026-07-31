@@ -14,7 +14,7 @@ export const guide: GuideContent = {
       ],
       code: {
         lang: 'text',
-        body: 'hsl(60 100% 50%)   yellow  — looks blindingly bright\nhsl(240 100% 50%)  blue    — looks nearly black\n\nsame L value, wildly different perceived lightness',
+        body: 'hsl(60 100% 50%)   yellow  - looks blindingly bright\nhsl(240 100% 50%)  blue    - looks nearly black\n\nsame L value, wildly different perceived lightness',
       },
     },
     {
@@ -36,7 +36,7 @@ export const guide: GuideContent = {
       heading: 'Chroma and the gamut problem',
       paragraphs: [
         'The trade-off is that OKLCH can express colours no sRGB display can produce. High chroma at extreme lightness values falls outside the gamut, and the browser clips it to something displayable.',
-        'Clipping is not disastrous — it produces the nearest in-gamut colour — but it does mean two OKLCH values that differ on paper can render identically. Keep chroma modest at the very light and very dark ends, which is what a well-generated scale does anyway.',
+        'Clipping is not disastrous - it produces the nearest in-gamut colour - but it does mean two OKLCH values that differ on paper can render identically. Keep chroma modest at the very light and very dark ends, which is what a well-generated scale does anyway.',
         'Wide-gamut displays can show more of the space, which is a genuine argument for authoring in OKLCH: the same declaration produces a richer colour on hardware that can render it.',
       ],
     },
@@ -44,7 +44,7 @@ export const guide: GuideContent = {
       heading: 'Gradients benefit too',
       paragraphs: [
         'Interpolating between two saturated colours in sRGB routes the intermediate values through a desaturated middle. Blue to yellow passes through grey rather than through the greens you expected, because the numeric midpoint of two RGB triples is not the perceptual midpoint.',
-        'Modern CSS lets you specify the interpolation space directly, and choosing OKLCH keeps the ramp vivid across its whole length. The traditional workaround — adding an explicit middle stop — becomes unnecessary.',
+        'Modern CSS lets you specify the interpolation space directly, and choosing OKLCH keeps the ramp vivid across its whole length. The traditional workaround - adding an explicit middle stop - becomes unnecessary.',
       ],
     },
     {
@@ -60,7 +60,7 @@ export const guide: GuideContent = {
       heading: 'What a perceptual space does not do',
       paragraphs: [
         'It does not guarantee contrast. A perceptually even scale makes contrast predictable, which is a real improvement, but you still have to check the specific text and background pairs you intend to ship.',
-        'The rough guide is that steps about 500 apart on a 50-950 scale clear WCAG AA for body text, and adjacent steps never will. Verify rather than assume — an even scale that puts your body copy at 4.3:1 is even and still fails.',
+        'The rough guide is that steps about 500 apart on a 50-950 scale clear WCAG AA for body text, and adjacent steps never will. Verify rather than assume - an even scale that puts your body copy at 4.3:1 is even and still fails.',
       ],
     },
     {

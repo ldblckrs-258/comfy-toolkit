@@ -13,24 +13,24 @@ export const guide: GuideContent = {
         body: '*/5 9-17 * * 1-5\n │    │   │ │  └ day of week (0-6, Sunday = 0)\n │    │   │ └── month (1-12)\n │    │   └──── day of month (1-31)\n │    └──────── hour (0-23)\n └───────────── minute (0-59)\n\nevery 5 minutes, 9am to 5pm, Monday to Friday',
       },
       paragraphs: [
-        'Names are accepted in the month and day-of-week fields — JAN through DEC, SUN through SAT — and are worth using. An expression reading MON-FRI is self-documenting in a way 1-5 is not.',
+        'Names are accepted in the month and day-of-week fields - JAN through DEC, SUN through SAT - and are worth using. An expression reading MON-FRI is self-documenting in a way 1-5 is not.',
       ],
     },
     {
       heading: 'The operators',
       bullets: [
-        '* — every value in the field.',
-        '*/n — every nth value counting from the start of the range, not from now. */5 in minutes fires at :00, :05, :10 regardless of when you deployed.',
-        'a-b — an inclusive range.',
-        'a,b,c — an explicit list.',
-        '@daily, @hourly, @weekly, @monthly, @yearly — macros expanding to the obvious expressions. @reboot runs once at startup.',
+        '* - every value in the field.',
+        '*/n - every nth value counting from the start of the range, not from now. */5 in minutes fires at :00, :05, :10 regardless of when you deployed.',
+        'a-b - an inclusive range.',
+        'a,b,c - an explicit list.',
+        '@daily, @hourly, @weekly, @monthly, @yearly - macros expanding to the obvious expressions. @reboot runs once at startup.',
       ],
     },
     {
       heading: 'The two day fields are ORed',
       paragraphs: [
         'This is the behaviour that catches almost everyone. When both day-of-month and day-of-week are restricted, cron runs the job if either matches, not both.',
-        'So 0 0 1 * MON does not mean "the first of the month, if it is a Monday". It means "the first of the month, and additionally every Monday" — roughly five times more often than intended.',
+        'So 0 0 1 * MON does not mean "the first of the month, if it is a Monday". It means "the first of the month, and additionally every Monday" - roughly five times more often than intended.',
         'The two fields combine as you would expect only when one of them is a wildcard. There is no syntax in standard cron for the AND case; you have to check the date inside the job itself.',
       ],
     },
@@ -45,7 +45,7 @@ export const guide: GuideContent = {
     {
       heading: 'The dialects disagree',
       paragraphs: [
-        'Standard Unix cron takes five fields and numbers day-of-week from 0 at Sunday. node-cron prepends an optional seconds field, making six, and keeps the Unix numbering. Quartz also takes six or seven fields with seconds first and an optional trailing year — but numbers day-of-week from 1 at Sunday.',
+        'Standard Unix cron takes five fields and numbers day-of-week from 0 at Sunday. node-cron prepends an optional seconds field, making six, and keeps the Unix numbering. Quartz also takes six or seven fields with seconds first and an optional trailing year - but numbers day-of-week from 1 at Sunday.',
         'So the digit 1 in day-of-week means Monday under Unix and Sunday under Quartz. Copying a weekly job between a crontab and a Quartz scheduler shifts it by a day, and nothing errors.',
         'Quartz also resolves the day-field ambiguity explicitly with ?, meaning "no specific value", which is required in whichever day field you are not using. That is why almost every Quartz expression has a ? in one of the two positions.',
       ],

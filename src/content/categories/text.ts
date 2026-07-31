@@ -7,7 +7,7 @@ export const textCategory: CategoryContent = {
     'Free online text tools: regex tester with live match highlighting, diff checker, Unicode and character inspector, and a live Markdown preview.',
   intro: [
     'These tools answer questions about text that you cannot answer by reading it. What exactly changed between two versions. Whether a pattern matches what you think it matches. Why two strings that look identical are not.',
-    'They come into their own when the problem is invisible — and text problems usually are.',
+    'They come into their own when the problem is invisible - and text problems usually are.',
   ],
   sections: [
     {
@@ -20,10 +20,10 @@ export const textCategory: CategoryContent = {
     {
       heading: 'Choosing between them',
       bullets: [
-        'Diff Checker — two versions of something, and you need to know precisely what changed, by line or by character.',
-        'String Inspector — counts that disagree, invisible characters, homoglyphs, or normalisation mismatches.',
-        'Regex Tester — building or debugging a pattern, with live highlighting, capture groups and a replace preview.',
-        'Markdown Preview — writing prose and wanting to see the rendered output as you type.',
+        'Diff Checker - two versions of something, and you need to know precisely what changed, by line or by character.',
+        'String Inspector - counts that disagree, invisible characters, homoglyphs, or normalisation mismatches.',
+        'Regex Tester - building or debugging a pattern, with live highlighting, capture groups and a replace preview.',
+        'Markdown Preview - writing prose and wanting to see the rendered output as you type.',
       ],
     },
     {

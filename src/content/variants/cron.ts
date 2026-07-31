@@ -28,7 +28,7 @@ export const cronVariants: Array<ToolVariant> = [
         {
           heading: 'The two day fields are ORed, not ANDed',
           paragraphs: [
-            'When both day-of-month and day-of-week are restricted, cron runs the job if either matches. So 0 0 1 * MON means the first of the month and also every Monday — not "the first, when it falls on a Monday". They combine as you would expect only when one of the two is a wildcard.',
+            'When both day-of-month and day-of-week are restricted, cron runs the job if either matches. So 0 0 1 * MON means the first of the month and also every Monday - not "the first, when it falls on a Monday". They combine as you would expect only when one of the two is a wildcard.',
             'This surprises people constantly, and it is the reason Quartz introduced a separate no-value marker.',
           ],
         },
@@ -111,7 +111,7 @@ export const cronVariants: Array<ToolVariant> = [
         {
           heading: 'The numbering difference that shifts every weekly job',
           paragraphs: [
-            'In Unix cron, 1 in the day-of-week field is Monday. In Quartz, 1 is Sunday. Copying a weekly expression between a crontab and a Quartz scheduler without adjusting shifts the job by a day, and nothing errors — it simply runs on the wrong day.',
+            'In Unix cron, 1 in the day-of-week field is Monday. In Quartz, 1 is Sunday. Copying a weekly expression between a crontab and a Quartz scheduler without adjusting shifts the job by a day, and nothing errors - it simply runs on the wrong day.',
           ],
           code: {
             lang: 'text',

@@ -20,14 +20,14 @@ export const dateCategory: CategoryContent = {
     {
       heading: 'Choosing between them',
       bullets: [
-        'Unix Timestamp — converting epoch values to dates and back, or extracting a timestamp embedded in an identifier.',
-        'Clock — comparing several timezones at once, timing something with a stopwatch, or counting down with an alert.',
+        'Unix Timestamp - converting epoch values to dates and back, or extracting a timestamp embedded in an identifier.',
+        'Clock - comparing several timezones at once, timing something with a stopwatch, or counting down with an alert.',
       ],
     },
     {
       heading: 'Units are the most common bug',
       paragraphs: [
-        'Nothing in an epoch number states its unit. Seconds are ten digits today, milliseconds thirteen, microseconds sixteen, nanoseconds nineteen — wide enough apart to infer, which is what the converter does. Read the wrong one and you land in 1970 or tens of thousands of years out.',
+        'Nothing in an epoch number states its unit. Seconds are ten digits today, milliseconds thirteen, microseconds sixteen, nanoseconds nineteen - wide enough apart to infer, which is what the converter does. Read the wrong one and you land in 1970 or tens of thousands of years out.',
         'JWT claims use seconds. JavaScript Date uses milliseconds. Mixing them produces a token that expires in the year 50000, which is the single most common JWT bug. Name the column so the unit is unambiguous and the class of bug disappears.',
       ],
     },

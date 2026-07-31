@@ -28,7 +28,7 @@ export const urlParserVariants: Array<ToolVariant> = [
         {
           heading: 'Repeated parameters are preserved',
           paragraphs: [
-            'Nothing in the URL spec defines what ?tag=a&tag=b means, and frameworks disagree — some hand you the first value, some the last, some an array. Duplicates are kept visible and in order here rather than silently collapsed, so you can see exactly what a server will receive.',
+            'Nothing in the URL spec defines what ?tag=a&tag=b means, and frameworks disagree - some hand you the first value, some the last, some an array. Duplicates are kept visible and in order here rather than silently collapsed, so you can see exactly what a server will receive.',
           ],
         },
         {
@@ -64,9 +64,9 @@ export const urlParserVariants: Array<ToolVariant> = [
         {
           heading: 'Component versus whole URL',
           bullets: [
-            'Encode component — escapes the delimiters too, including & = ? / and #. This is what a single parameter value needs.',
-            'Encode URL — leaves delimiters intact because it is meant for a complete URL. Applying it to a value lets an embedded & split your query string into extra parameters.',
-            'Decode component and decode URL — the matching inverses.',
+            'Encode component - escapes the delimiters too, including & = ? / and #. This is what a single parameter value needs.',
+            'Encode URL - leaves delimiters intact because it is meant for a complete URL. Applying it to a value lets an embedded & split your query string into extra parameters.',
+            'Decode component and decode URL - the matching inverses.',
           ],
           paragraphs: [
             'A redirect target is the case that catches everyone: it is a URL, but as a parameter value it must be component-encoded, or its own query string merges into the outer one.',
@@ -81,7 +81,7 @@ export const urlParserVariants: Array<ToolVariant> = [
         {
           heading: 'Double encoding',
           paragraphs: [
-            'Encoding an already-encoded value escapes its percent signs, so %20 becomes %2520. When you see that pattern, something in the chain is encoding twice — usually a framework that already handled it. Decode back to a clean value and encode exactly once.',
+            'Encoding an already-encoded value escapes its percent signs, so %20 becomes %2520. When you see that pattern, something in the chain is encoding twice - usually a framework that already handled it. Decode back to a clean value and encode exactly once.',
           ],
         },
         {

@@ -10,7 +10,7 @@ import {
 } from '@/lib/structured-data'
 import { GROUP_COLORS, TOOLS, toolsByGroupSorted } from '@/lib/tools/registry'
 
-const TITLE = `All Tools — Free Online Developer Utilities | ${SITE_NAME}`
+const TITLE = `All Tools - Free Online Developer Utilities | ${SITE_NAME}`
 const DESCRIPTION = `Every tool in ${SITE_NAME}: formatters, encoders, generators, text utilities, colour tools and date converters. All ${TOOLS.length} run entirely in your browser.`
 
 export const Route = createFileRoute('/tools/')({

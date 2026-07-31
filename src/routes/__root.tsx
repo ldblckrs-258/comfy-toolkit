@@ -70,6 +70,13 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         crossOrigin: 'anonymous',
       },
       {
+        rel: 'preload',
+        as: 'font',
+        type: 'font/woff2',
+        href: '/fonts/instrument-serif-italic-latin.woff2',
+        crossOrigin: 'anonymous',
+      },
+      {
         rel: 'stylesheet',
         href: appCss,
       },

@@ -1,8 +1,8 @@
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 
 import { ProseSections } from '@/components/content/prose-sections'
-import { GUIDE_CONTENT } from '@/content/guides/content'
 import { getGuide } from '@/content/guides'
+import { GUIDE_CONTENT } from '@/content/guides/content'
 import { GUIDES_ENABLED } from '@/lib/feature-flags'
 import { buildSeo, ogUrl } from '@/lib/seo'
 import { articleNode, breadcrumbNode, schemaGraph } from '@/lib/structured-data'
@@ -110,7 +110,7 @@ function GuidePage() {
                 </Link>
                 <span className="text-muted-foreground">
                   {' '}
-                  — {tool!.description}
+                  - {tool!.description}
                 </span>
               </li>
             ))}

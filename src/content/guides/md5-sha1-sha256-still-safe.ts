@@ -17,17 +17,17 @@ export const guide: GuideContent = {
     {
       heading: 'Why the distinction matters in practice',
       paragraphs: [
-        'A collision attack requires the attacker to control both inputs. That is devastating for a signature scheme — craft a benign document and a malicious one with the same digest, get the benign one signed, and the signature transfers.',
+        'A collision attack requires the attacker to control both inputs. That is devastating for a signature scheme - craft a benign document and a malicious one with the same digest, get the benign one signed, and the signature transfers.',
         'It is irrelevant when you are checking whether a file downloaded intact. Cosmic rays and flaky network cards do not craft collisions. If nobody is choosing the inputs adversarially, collision resistance is not the property you were relying on.',
       ],
     },
     {
       heading: 'Where each one still belongs',
       bullets: [
-        'MD5 — verifying a download did not truncate, detecting a corrupted disk read, cache keys over data you control, deduplicating your own files. Never for signatures, never over untrusted input, never for anything security-bearing.',
-        'SHA-1 — legacy protocols and git object addressing. Do not choose it for anything new; git itself has a migration to SHA-256 underway for precisely this reason.',
-        'SHA-256 — the sensible default for everything. No practical attacks, and hardware acceleration on modern CPUs makes it fast.',
-        'SHA-384 and SHA-512 — the same family with longer digests. Often faster than SHA-256 on 64-bit hardware, and SHA-384 additionally resists length-extension.',
+        'MD5 - verifying a download did not truncate, detecting a corrupted disk read, cache keys over data you control, deduplicating your own files. Never for signatures, never over untrusted input, never for anything security-bearing.',
+        'SHA-1 - legacy protocols and git object addressing. Do not choose it for anything new; git itself has a migration to SHA-256 underway for precisely this reason.',
+        'SHA-256 - the sensible default for everything. No practical attacks, and hardware acceleration on modern CPUs makes it fast.',
+        'SHA-384 and SHA-512 - the same family with longer digests. Often faster than SHA-256 on 64-bit hardware, and SHA-384 additionally resists length-extension.',
       ],
     },
     {
@@ -42,7 +42,7 @@ export const guide: GuideContent = {
       heading: 'None of these are password hashes',
       paragraphs: [
         'Every algorithm here is designed to be fast, which is exactly the wrong property for storing passwords. Speed is what lets an attacker holding your database try billions of candidates per second on commodity hardware.',
-        'Password storage needs a function that is deliberately slow and memory-hard: Argon2id where available, otherwise scrypt or bcrypt. Salting is necessary but not sufficient — a salted SHA-256 is still far too fast.',
+        'Password storage needs a function that is deliberately slow and memory-hard: Argon2id where available, otherwise scrypt or bcrypt. Salting is necessary but not sufficient - a salted SHA-256 is still far too fast.',
         'This is the single most consequential misuse of these functions, and it is still common in code written today.',
       ],
     },
@@ -60,7 +60,7 @@ export const guide: GuideContent = {
       heading: 'Verifying a download properly',
       paragraphs: [
         'Compute the digest locally and compare it against the published one. If they match, the bytes you received are the bytes that were published.',
-        'What that does not prove is that the file is safe, because whoever published the checksum also published the file. An attacker who replaced one would replace the other. Only a signature made with a key you already trust — a GPG signature, a signed release artifact — establishes origin rather than integrity.',
+        'What that does not prove is that the file is safe, because whoever published the checksum also published the file. An attacker who replaced one would replace the other. Only a signature made with a key you already trust - a GPG signature, a signed release artifact - establishes origin rather than integrity.',
         'Checksums answer "did this arrive intact". Signatures answer "did this come from who I think". They are different questions and a checksum is routinely mistaken for an answer to the second.',
       ],
     },

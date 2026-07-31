@@ -39,7 +39,7 @@ export const guide: GuideContent = {
       paragraphs: [
         'An accented character can be stored as one composed code point or as a base letter followed by a combining mark. Both render identically. Neither is wrong. They compare unequal.',
         'This is how a user whose name contains an accent finds that their own name fails a lookup, or how a filename copied between macOS and Linux stops matching. macOS historically normalised filenames toward the decomposed form while most other systems use the composed one.',
-        'Unicode defines four normalisation forms. NFC composes and is what you want for storage and comparison — it is the form the web platform assumes. NFD decomposes. NFKC and NFKD additionally fold compatibility characters, turning a ligature into its component letters and fullwidth forms into ASCII, which is useful for search indexing and destructive for anything you will display back.',
+        'Unicode defines four normalisation forms. NFC composes and is what you want for storage and comparison - it is the form the web platform assumes. NFD decomposes. NFKC and NFKD additionally fold compatibility characters, turning a ligature into its component letters and fullwidth forms into ASCII, which is useful for search indexing and destructive for anything you will display back.',
       ],
     },
     {
@@ -55,7 +55,7 @@ export const guide: GuideContent = {
       heading: 'Defending against them',
       paragraphs: [
         'Normalise user input to NFC at the boundary, once, before storage and before comparison. This removes an entire class of mismatch and costs almost nothing.',
-        'Reject or strip zero-width and bidirectional control characters in fields where they have no legitimate purpose — usernames, identifiers, package names, filenames. There is no valid reason for a zero-width joiner in a database column name.',
+        'Reject or strip zero-width and bidirectional control characters in fields where they have no legitimate purpose - usernames, identifiers, package names, filenames. There is no valid reason for a zero-width joiner in a database column name.',
         'Where a field must accept arbitrary international text, do not strip; detect and flag instead. Stripping breaks languages that need those characters, and joiners are essential for many scripts and for emoji sequences.',
         'For source code, enable the compiler warnings that exist and rely on your code host rendering these characters visibly. Do not rely on reviewers noticing something designed to be unnoticeable.',
       ],

@@ -23,16 +23,16 @@ export const base64Variants: Array<ToolVariant> = [
           ],
           code: {
             lang: 'text',
-            body: 'Hello         → SGVsbG8=\nhéllo — 世界 🌍  → aMOpbGxvIOKAlCDkuJbnlYwg8J+MjQ==',
+            body: 'Hello         → SGVsbG8=\nhéllo - 世界 🌍  → aMOpbGxvIOKAlCDkuJbnlYwg8J+MjQ==',
           },
         },
         {
           heading: 'When encoding is the wrong tool',
           bullets: [
-            'To hide something — it is trivially reversible with no key. Encrypt instead.',
-            'To shrink something — it grows the payload by a third.',
-            'To put a value in a URL — the standard alphabet contains + and /, which mean something in a query string. Percent-encoding or base64url is what you want.',
-            'To detect corruption — encoding carries no checksum. Hash the bytes instead.',
+            'To hide something - it is trivially reversible with no key. Encrypt instead.',
+            'To shrink something - it grows the payload by a third.',
+            'To put a value in a URL - the standard alphabet contains + and /, which mean something in a query string. Percent-encoding or base64url is what you want.',
+            'To detect corruption - encoding carries no checksum. Hash the bytes instead.',
           ],
         },
         {
@@ -63,14 +63,14 @@ export const base64Variants: Array<ToolVariant> = [
           heading: 'Recognising Base64 in the wild',
           paragraphs: [
             'Base64 strings are drawn from A-Z, a-z, 0-9, + and /, and their length is a multiple of four once padding is counted. A string ending in one or two equals signs is a strong signal.',
-            'If it contains - or _ instead of + and /, it is base64url — the URL-safe variant used by JWTs and often written without padding. It decodes to the same bytes.',
+            'If it contains - or _ instead of + and /, it is base64url - the URL-safe variant used by JWTs and often written without padding. It decodes to the same bytes.',
           ],
         },
         {
           heading: 'Why a decode fails',
           bullets: [
-            'Wrong length — characters were lost in transit, or a line was truncated on copy.',
-            'Whitespace and newlines — Base64 in emails and PEM files is line-wrapped, and the breaks must be stripped before decoding.',
+            'Wrong length - characters were lost in transit, or a line was truncated on copy.',
+            'Whitespace and newlines - Base64 in emails and PEM files is line-wrapped, and the breaks must be stripped before decoding.',
             'It is base64url with padding stripped, and the decoder expects standard Base64.',
             'It decoded fine, but the bytes were never text. Compressed data and images produce garbage when read as UTF-8, and that is expected rather than an error.',
           ],

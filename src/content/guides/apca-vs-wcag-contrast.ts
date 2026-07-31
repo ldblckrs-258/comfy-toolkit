@@ -9,7 +9,7 @@ export const guide: GuideContent = {
     {
       heading: 'What WCAG 2.1 computes',
       paragraphs: [
-        'Take the relative luminance of each colour — a weighted sum of its linearised red, green and blue channels, running from 0 for black to 1 for white. Add 0.05 to each, divide the larger by the smaller. The result runs from 1:1 for identical colours to 21:1 for black on white.',
+        'Take the relative luminance of each colour - a weighted sum of its linearised red, green and blue channels, running from 0 for black to 1 for white. Add 0.05 to each, divide the larger by the smaller. The result runs from 1:1 for identical colours to 21:1 for black on white.',
         'The 0.05 offset models ambient light reflecting off the screen, which is why the scale tops out at 21 rather than infinity.',
         'The formula is symmetric. Swap foreground and background and the number does not change.',
       ],
@@ -21,10 +21,10 @@ export const guide: GuideContent = {
     {
       heading: 'The thresholds you are measured against',
       bullets: [
-        '4.5:1 — AA for normal text. The one nearly every audit checks.',
-        '3:1 — AA for large text, defined as 18pt, or 14pt bold. Those are points, roughly 24px and 18.7px.',
-        '3:1 — also the requirement for user interface components and meaningful graphics: input borders, focus rings, icon buttons.',
-        '7:1 — AAA for normal text, 4.5:1 for large.',
+        '4.5:1 - AA for normal text. The one nearly every audit checks.',
+        '3:1 - AA for large text, defined as 18pt, or 14pt bold. Those are points, roughly 24px and 18.7px.',
+        '3:1 - also the requirement for user interface components and meaningful graphics: input borders, focus rings, icon buttons.',
+        '7:1 - AAA for normal text, 4.5:1 for large.',
       ],
       paragraphs: [
         'The near-misses are what catch teams out. Mid grey on white sits at 4.48:1, which looks entirely fine and fails by two hundredths. Placeholder text fails constantly for the same reason, and placeholders are real text covered by the same rule.',
@@ -33,7 +33,7 @@ export const guide: GuideContent = {
     {
       heading: 'Where the symmetry breaks down',
       paragraphs: [
-        'Human vision does not treat light-on-dark and dark-on-light equivalently. Light text on a dark background tends to bloom — the glyphs appear to spread slightly, thinning apparent stroke weight and reducing legibility at the same measured ratio.',
+        'Human vision does not treat light-on-dark and dark-on-light equivalently. Light text on a dark background tends to bloom - the glyphs appear to spread slightly, thinning apparent stroke weight and reducing legibility at the same measured ratio.',
         'WCAG 2.1 cannot express this, because its formula is symmetric by construction. So a dark-mode palette can pass every threshold and still read poorly, and designers who trust the number end up shipping something uncomfortable.',
         'The formula also ignores font size and weight beyond the coarse large-text cutoff, though thin 12px text and bold 24px text at the same ratio are not remotely equally readable.',
       ],
@@ -49,11 +49,11 @@ export const guide: GuideContent = {
     {
       heading: 'Reading Lc values',
       bullets: [
-        'Lc 90 and above — suitable for body text at any reasonable size.',
-        'Lc 75 — a reasonable floor for normal body text.',
-        'Lc 60 — acceptable for larger or heavier text, headlines and the like.',
-        'Lc 45 — about the limit for large headings and non-text elements.',
-        'Lc 30 and below — treat as decorative; do not rely on it being perceived.',
+        'Lc 90 and above - suitable for body text at any reasonable size.',
+        'Lc 75 - a reasonable floor for normal body text.',
+        'Lc 60 - acceptable for larger or heavier text, headlines and the like.',
+        'Lc 45 - about the limit for large headings and non-text elements.',
+        'Lc 30 and below - treat as decorative; do not rely on it being perceived.',
       ],
       paragraphs: [
         'APCA is explicitly font-aware in a way WCAG is not: its published guidance ties the required Lc to size and weight together, rather than to a single large-text cutoff.',

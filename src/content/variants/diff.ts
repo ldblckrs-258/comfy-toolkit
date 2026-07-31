@@ -85,7 +85,7 @@ export const diffVariants: Array<ToolVariant> = [
           heading: 'Context lines and patch format',
           paragraphs: [
             'Unified output with surrounding context is the shape of a patch file, which is why it can be pasted into a review or an issue and read by anyone familiar with git.',
-            'It is not a valid patch without file headers and hunk ranges, so do not expect the output to apply with git apply — it is for humans reading a change, not for tooling.',
+            'It is not a valid patch without file headers and hunk ranges, so do not expect the output to apply with git apply - it is for humans reading a change, not for tooling.',
           ],
         },
       ],

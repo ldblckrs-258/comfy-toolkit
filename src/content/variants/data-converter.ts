@@ -60,7 +60,7 @@ export const dataConverterVariants: Array<ToolVariant> = [
       {
         heading: 'Indentation rules',
         paragraphs: [
-          'Tabs are forbidden as YAML indentation — an editor that inserts one produces a file that will not parse, and the error rarely points at the tab. Output here uses spaces consistently.',
+          'Tabs are forbidden as YAML indentation - an editor that inserts one produces a file that will not parse, and the error rarely points at the tab. Output here uses spaces consistently.',
         ],
       },
       {
@@ -92,10 +92,10 @@ export const dataConverterVariants: Array<ToolVariant> = [
       {
         heading: 'What does not survive',
         bullets: [
-          'Comments — JSON has nowhere to put them, so they are dropped permanently.',
-          'Anchors and aliases — resolved and expanded, so shared structure becomes duplicated literal data.',
-          'Multiple documents in one file — JSON has no equivalent of the --- separator.',
-          'Non-string keys — legal in YAML, not in JSON.',
+          'Comments - JSON has nowhere to put them, so they are dropped permanently.',
+          'Anchors and aliases - resolved and expanded, so shared structure becomes duplicated literal data.',
+          'Multiple documents in one file - JSON has no equivalent of the --- separator.',
+          'Non-string keys - legal in YAML, not in JSON.',
         ],
       },
       {
@@ -141,7 +141,7 @@ export const dataConverterVariants: Array<ToolVariant> = [
       {
         heading: 'Nesting becomes tables',
         paragraphs: [
-          'Nested JSON objects become bracketed table headers rather than indentation, so a deeply nested structure reads as a flat list of sections. This is clearer at two or three levels and less so beyond that — TOML is happiest with shallow config rather than deeply nested data.',
+          'Nested JSON objects become bracketed table headers rather than indentation, so a deeply nested structure reads as a flat list of sections. This is clearer at two or three levels and less so beyond that - TOML is happiest with shallow config rather than deeply nested data.',
         ],
         code: {
           lang: 'text',
@@ -177,13 +177,13 @@ export const dataConverterVariants: Array<ToolVariant> = [
       {
         heading: 'Tables become nesting',
         paragraphs: [
-          'A [tool.ruff] header becomes a nested object under tool, then ruff. Seeing that expansion is often the point of converting — a long TOML file with many bracketed sections hides its actual shape, and the JSON makes the hierarchy obvious.',
+          'A [tool.ruff] header becomes a nested object under tool, then ruff. Seeing that expansion is often the point of converting - a long TOML file with many bracketed sections hides its actual shape, and the JSON makes the hierarchy obvious.',
         ],
       },
       {
         heading: 'Dates lose their type',
         paragraphs: [
-          'TOML dates and times are first-class values. JSON has no date type, so they become strings. If a consumer expects to parse them back, the format matters — check that the string form round-trips into whatever library reads it.',
+          'TOML dates and times are first-class values. JSON has no date type, so they become strings. If a consumer expects to parse them back, the format matters - check that the string form round-trips into whatever library reads it.',
         ],
       },
       {
@@ -195,7 +195,7 @@ export const dataConverterVariants: Array<ToolVariant> = [
       {
         heading: 'Inline tables and mixed arrays',
         paragraphs: [
-          'TOML inline tables written in braces convert to ordinary nested objects, so the distinction between inline and section syntax disappears entirely — it was only ever a formatting choice in the source.',
+          'TOML inline tables written in braces convert to ordinary nested objects, so the distinction between inline and section syntax disappears entirely - it was only ever a formatting choice in the source.',
           'TOML also permits heterogeneous arrays in recent versions, which JSON accepts happily, so nothing is lost in that direction either.',
         ],
       },
@@ -265,7 +265,7 @@ export const dataConverterVariants: Array<ToolVariant> = [
       {
         heading: 'CSV is barely a format',
         paragraphs: [
-          'There is no single specification, which is why exports disagree with each other. Delimiters vary by locale — semicolons are standard wherever the comma is the decimal separator. Line endings differ. Whether the first row is a header is a convention rather than a rule.',
+          'There is no single specification, which is why exports disagree with each other. Delimiters vary by locale - semicolons are standard wherever the comma is the decimal separator. Line endings differ. Whether the first row is a header is a convention rather than a rule.',
           'Quoted fields containing commas and newlines are parsed correctly here, which is the part naive splitting on commas gets wrong.',
         ],
       },
@@ -284,7 +284,7 @@ export const dataConverterVariants: Array<ToolVariant> = [
       {
         heading: 'Duplicate and empty headers',
         paragraphs: [
-          'A spreadsheet export frequently has blank trailing columns or two columns sharing a name. Both produce awkward JSON — a key that is the empty string, or one column silently overwriting another.',
+          'A spreadsheet export frequently has blank trailing columns or two columns sharing a name. Both produce awkward JSON - a key that is the empty string, or one column silently overwriting another.',
           'Cleaning the header row before converting is the single highest-value thing you can do to a CSV, and it takes seconds.',
         ],
       },

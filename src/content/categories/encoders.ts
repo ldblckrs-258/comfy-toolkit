@@ -20,17 +20,17 @@ export const encodersCategory: CategoryContent = {
     {
       heading: 'Choosing between them',
       bullets: [
-        'Base64 — you need binary or Unicode text to survive a transport that only handles ASCII.',
-        'URL Parser / Encoder — the destination is a URL or query string, where percent-encoding applies and Base64 does not.',
-        'Hash Generator — you want to know whether two things are identical without keeping a copy of either.',
-        'HMAC — you want to know that a message came from someone holding the shared secret, not merely that it is unchanged.',
-        'JWT — you have a token and need to read its claims or check its signature.',
+        'Base64 - you need binary or Unicode text to survive a transport that only handles ASCII.',
+        'URL Parser / Encoder - the destination is a URL or query string, where percent-encoding applies and Base64 does not.',
+        'Hash Generator - you want to know whether two things are identical without keeping a copy of either.',
+        'HMAC - you want to know that a message came from someone holding the shared secret, not merely that it is unchanged.',
+        'JWT - you have a token and need to read its claims or check its signature.',
       ],
     },
     {
       heading: 'The distinction that matters',
       paragraphs: [
-        'Base64 is not encryption, and a Base64-encoded password is a plaintext password with extra steps. Decoding a JWT is not verifying it, and a decoded-but-unverified claim must never drive an authorisation decision. A plain hash proves integrity but not origin — only a keyed construction like HMAC does that.',
+        'Base64 is not encryption, and a Base64-encoded password is a plaintext password with extra steps. Decoding a JWT is not verifying it, and a decoded-but-unverified claim must never drive an authorisation decision. A plain hash proves integrity but not origin - only a keyed construction like HMAC does that.',
         'Getting these three distinctions right eliminates most of the vulnerabilities that involve this group of tools.',
       ],
     },

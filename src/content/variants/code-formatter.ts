@@ -55,7 +55,7 @@ const SPECS: Array<Spec> = [
     metaDescription:
       'Format TypeScript online with Prettier. Handles type annotations, generics and decorators that the JavaScript parser rejects.',
     intro: [
-      'Run Prettier over TypeScript with the TypeScript parser selected, which is required — feeding annotated code to the Babel parser fails on the first type annotation.',
+      'Run Prettier over TypeScript with the TypeScript parser selected, which is required - feeding annotated code to the Babel parser fails on the first type annotation.',
       'This page opens with that parser already chosen.',
     ],
     sections: [
@@ -68,7 +68,7 @@ const SPECS: Array<Spec> = [
       {
         heading: 'Long generic signatures',
         paragraphs: [
-          'Type-heavy code hits the print width quickly, and Prettier breaks generic parameter lists one per line once they no longer fit. That is often the point at which a signature is telling you the type is doing too much — the formatting is a symptom rather than the problem.',
+          'Type-heavy code hits the print width quickly, and Prettier breaks generic parameter lists one per line once they no longer fit. That is often the point at which a signature is telling you the type is doing too much - the formatting is a symptom rather than the problem.',
         ],
       },
       {
@@ -101,7 +101,7 @@ const SPECS: Array<Spec> = [
       {
         heading: 'What changes',
         paragraphs: [
-          'One declaration per line, consistent spacing around colons and braces, and normalised indentation for nested rules. Prettier does not reorder declarations or merge duplicate selectors — the cascade depends on order, so changing it would change behaviour.',
+          'One declaration per line, consistent spacing around colons and braces, and normalised indentation for nested rules. Prettier does not reorder declarations or merge duplicate selectors - the cascade depends on order, so changing it would change behaviour.',
         ],
       },
       {
@@ -113,7 +113,7 @@ const SPECS: Array<Spec> = [
       {
         heading: 'Custom properties and modern syntax',
         paragraphs: [
-          'Custom property values are largely left alone, because their content is not necessarily CSS — a variable can hold a fragment that only makes sense once substituted, and reformatting it could change meaning.',
+          'Custom property values are largely left alone, because their content is not necessarily CSS - a variable can hold a fragment that only makes sense once substituted, and reformatting it could change meaning.',
           'Nesting, container queries and layer rules are all understood and indented like any other block, so a modern stylesheet formats correctly without extra configuration.',
         ],
       },
@@ -290,7 +290,7 @@ const SPECS: Array<Spec> = [
         heading: 'Code blocks inside Markdown',
         paragraphs: [
           'Fenced blocks with a language tag are formatted with that language parser, so a JavaScript sample inside your README is tidied along with the prose. A block with no language tag is left exactly as written.',
-          'That behaviour is occasionally unwanted — a deliberately misformatted example demonstrating a lint rule will be quietly corrected. Removing the language tag, or adding an ignore comment, protects it.',
+          'That behaviour is occasionally unwanted - a deliberately misformatted example demonstrating a lint rule will be quietly corrected. Removing the language tag, or adding an ignore comment, protects it.',
         ],
       },
       {

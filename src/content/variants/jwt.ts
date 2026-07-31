@@ -19,14 +19,14 @@ export const jwtVariants: Array<ToolVariant> = [
           heading: 'Reading the output',
           paragraphs: [
             'The header names the signing algorithm in alg. The payload carries the claims: sub for the subject, iss for the issuer, aud for the intended audience, and the time claims exp, iat and nbf.',
-            'Time claims are rendered as dates alongside their raw values, because they are Unix seconds and a number like 1516239022 tells you nothing at a glance. If a value resolves to a date tens of thousands of years out, the issuer built it from milliseconds — the most common JWT bug there is.',
+            'Time claims are rendered as dates alongside their raw values, because they are Unix seconds and a number like 1516239022 tells you nothing at a glance. If a value resolves to a date tens of thousands of years out, the issuer built it from milliseconds - the most common JWT bug there is.',
           ],
         },
         {
           heading: 'Decoding proves nothing about trust',
           paragraphs: [
             'A decoder will read a token forged in a text editor thirty seconds ago just as happily as a real one. The claims become trustworthy only once the signature is verified against a key, which is a separate operation.',
-            'Use the decoder to see what a token says while debugging. Never let a decoded-but-unverified claim decide whether a request is authorised — pin the expected algorithm server-side and reject anything else, including alg: none.',
+            'Use the decoder to see what a token says while debugging. Never let a decoded-but-unverified claim decide whether a request is authorised - pin the expected algorithm server-side and reject anything else, including alg: none.',
           ],
         },
         {
@@ -34,7 +34,7 @@ export const jwtVariants: Array<ToolVariant> = [
           bullets: [
             'It does not have exactly three dot-separated parts, usually because it was truncated on copy.',
             'A Bearer prefix or surrounding quotes came along with it.',
-            'It is a JWE rather than a JWS — five segments, and genuinely encrypted.',
+            'It is a JWE rather than a JWS - five segments, and genuinely encrypted.',
             'It is an opaque session identifier that merely looks like a token, with no structure to read.',
           ],
         },
@@ -58,10 +58,10 @@ export const jwtVariants: Array<ToolVariant> = [
         {
           heading: 'Claims worth setting deliberately',
           bullets: [
-            'exp — expiry, in Unix seconds. Without it the token is valid forever, which is almost never what you want.',
-            'iat — issued-at, also seconds. Lets a verifier reason about token age independently of expiry.',
-            'sub — who the token is about, usually a stable user identifier rather than an email.',
-            'iss and aud — who minted it and who is meant to accept it. A verifier that ignores aud will accept a token issued for a different service.',
+            'exp - expiry, in Unix seconds. Without it the token is valid forever, which is almost never what you want.',
+            'iat - issued-at, also seconds. Lets a verifier reason about token age independently of expiry.',
+            'sub - who the token is about, usually a stable user identifier rather than an email.',
+            'iss and aud - who minted it and who is meant to accept it. A verifier that ignores aud will accept a token issued for a different service.',
           ],
         },
         {

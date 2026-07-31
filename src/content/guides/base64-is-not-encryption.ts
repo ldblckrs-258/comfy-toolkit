@@ -9,7 +9,7 @@ export const guide: GuideContent = {
     {
       heading: 'What it does',
       paragraphs: [
-        'Base64 reads the input three bytes at a time — 24 bits — and re-slices those bits into four 6-bit groups. Each group indexes a 64-character alphabet defined in RFC 4648: A-Z, a-z, 0-9, then + and /.',
+        'Base64 reads the input three bytes at a time - 24 bits - and re-slices those bits into four 6-bit groups. Each group indexes a 64-character alphabet defined in RFC 4648: A-Z, a-z, 0-9, then + and /.',
         'Because every three bytes become four characters, output is about 33% larger than input. When the input length is not a multiple of three, the final group is padded with = so the output length stays a multiple of four. That is why so many encoded strings end in one or two equals signs.',
       ],
       code: {
@@ -36,7 +36,7 @@ export const guide: GuideContent = {
       heading: 'Unicode is where naive implementations break',
       paragraphs: [
         'Base64 encodes bytes, not characters, so text has to be converted to bytes first. The browser built-in btoa() throws on any code point above U+00FF, which means it fails the moment someone pastes an accented letter or an emoji.',
-        'The correct approach runs the string through TextEncoder to get UTF-8 bytes, encodes those, and reverses with TextDecoder. Done properly, a string like "héllo — 世界 🌍" round-trips byte for byte including the astral-plane emoji.',
+        'The correct approach runs the string through TextEncoder to get UTF-8 bytes, encodes those, and reverses with TextDecoder. Done properly, a string like "héllo - 世界 🌍" round-trips byte for byte including the astral-plane emoji.',
         'A tool that corrupts your emoji is calling btoa() directly on the string. That is the entire diagnosis.',
       ],
     },
@@ -44,7 +44,7 @@ export const guide: GuideContent = {
       heading: 'base64url, and when you need it',
       paragraphs: [
         'The standard alphabet contains + and /, both of which carry meaning inside a URL. The same RFC defines a URL-safe variant that swaps them for - and _, and usually drops padding.',
-        'JWTs use base64url for exactly this reason — a token has to survive being placed in a header, a query string or a cookie. If you are putting encoded data in a URL, you want the variant; if you are decoding something containing - and _ where you expected + and /, you have found one.',
+        'JWTs use base64url for exactly this reason - a token has to survive being placed in a header, a query string or a cookie. If you are putting encoded data in a URL, you want the variant; if you are decoding something containing - and _ where you expected + and /, you have found one.',
         'Both encode identical bytes, so converting between them is a character substitution rather than a re-encode.',
       ],
     },
@@ -54,7 +54,7 @@ export const guide: GuideContent = {
         'Email attachments, which is what MIME was built around and the original motivating case.',
         'Binary fields inside JSON or XML, neither of which can carry raw bytes.',
         'Data URIs for small inline assets.',
-        'HTTP headers, including Basic authentication — which encodes credentials for transport, not for secrecy, and is safe only over TLS.',
+        'HTTP headers, including Basic authentication - which encodes credentials for transport, not for secrecy, and is safe only over TLS.',
         'PEM-encoded keys and certificates, which are Base64 with line wrapping and header lines.',
       ],
     },
@@ -63,7 +63,7 @@ export const guide: GuideContent = {
       paragraphs: [
         'Base64 strings draw from a restricted alphabet and have a length that is a multiple of four once padding is counted. Trailing equals signs are a strong signal.',
         'Decodes fail for a small set of reasons: characters lost in transit so the length is wrong; line wrapping from an email or PEM file that was not stripped; a base64url value fed to a standard decoder; or a successful decode of bytes that were never text, which produces garbage and is expected rather than an error.',
-        'And whatever comes out is untrusted input. A decoded string can still contain zero-width characters, control codes or markup — the round trip validates nothing.',
+        'And whatever comes out is untrusted input. A decoded string can still contain zero-width characters, control codes or markup - the round trip validates nothing.',
       ],
     },
     {

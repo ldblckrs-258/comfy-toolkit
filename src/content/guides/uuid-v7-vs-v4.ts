@@ -38,9 +38,9 @@ export const guide: GuideContent = {
     {
       heading: 'What v7 gives away',
       paragraphs: [
-        'The timestamp is recoverable by anyone holding the identifier. That is usually harmless and sometimes useful — you can read a record creation time without querying, which is genuinely handy during an incident.',
+        'The timestamp is recoverable by anyone holding the identifier. That is usually harmless and sometimes useful - you can read a record creation time without querying, which is genuinely handy during an incident.',
         'It becomes a problem when the identifiers are public. Exposed v7 keys tell anyone the exact creation time of every record, let them order two records by comparing ids, and allow volume estimation by sampling identifiers over time. For a competitor watching your signups, that is real intelligence.',
-        'The fix is not to abandon v7. Keep it as the internal primary key for the index locality, and expose a separate random identifier — a v4, or a short opaque token — on public surfaces. You pay one extra indexed column for the separation.',
+        'The fix is not to abandon v7. Keep it as the internal primary key for the index locality, and expose a separate random identifier - a v4, or a short opaque token - on public surfaces. You pay one extra indexed column for the separation.',
       ],
     },
     {
@@ -53,16 +53,16 @@ export const guide: GuideContent = {
     {
       heading: 'Comparing against the alternatives',
       bullets: [
-        'ULID — solves the same problem with a 48-bit timestamp and Crockford Base32 encoding. Functionally equivalent; v7 has the advantage of being a real UUID that every database, ORM and validator already understands.',
-        'Snowflake — smaller at 64 bits and sortable, but requires coordinated worker ids to stay unique, which reintroduces the coordination v7 avoids.',
-        'Auto-increment bigint — still the smallest and fastest option, and still correct when you have a single writer, do not need client-side generation, and do not mind exposing a guessable sequence.',
-        'v4 — when unpredictability matters more than write throughput.',
+        'ULID - solves the same problem with a 48-bit timestamp and Crockford Base32 encoding. Functionally equivalent; v7 has the advantage of being a real UUID that every database, ORM and validator already understands.',
+        'Snowflake - smaller at 64 bits and sortable, but requires coordinated worker ids to stay unique, which reintroduces the coordination v7 avoids.',
+        'Auto-increment bigint - still the smallest and fastest option, and still correct when you have a single writer, do not need client-side generation, and do not mind exposing a guessable sequence.',
+        'v4 - when unpredictability matters more than write throughput.',
       ],
     },
     {
       heading: 'Adopting it',
       paragraphs: [
-        'PostgreSQL added a native uuidv7() function in version 18. Before that, generate in the application layer — every major language now has a v7 implementation — or use an extension.',
+        'PostgreSQL added a native uuidv7() function in version 18. Before that, generate in the application layer - every major language now has a v7 implementation - or use an extension.',
         'Migration does not require changing column types, since the storage format is identical. New rows simply start getting v7 values while existing v4 rows stay valid. The index will not gain locality for the old rows, but it will stop losing it for new ones, and a reindex afterwards cleans up the fragmentation the old keys left behind.',
         'Verify before assuming a win. The benefit is proportional to how far your table exceeds cache, and on a table that fits in memory the difference is close to nothing.',
       ],

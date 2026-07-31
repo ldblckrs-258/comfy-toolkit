@@ -20,17 +20,17 @@ export const generatorsCategory: CategoryContent = {
     {
       heading: 'Choosing between them',
       bullets: [
-        'UUID v7 Generator — database keys and event identifiers, where time ordering improves index locality.',
-        'Secret / Key Generator — API keys, signing secrets, passwords and tokens.',
-        'Cron Expression — recurring schedules, in Unix, node-cron or Quartz dialects.',
-        'QR Code Generator — links, text and Wi-Fi credentials, exported as SVG or PNG.',
+        'UUID v7 Generator - database keys and event identifiers, where time ordering improves index locality.',
+        'Secret / Key Generator - API keys, signing secrets, passwords and tokens.',
+        'Cron Expression - recurring schedules, in Unix, node-cron or Quartz dialects.',
+        'QR Code Generator - links, text and Wi-Fi credentials, exported as SVG or PNG.',
       ],
     },
     {
       heading: 'Randomness is the whole game',
       paragraphs: [
         'A secret is only as strong as the entropy behind it, and a weak one is indistinguishable from a strong one by eye. Math.random is a fast pseudo-random generator whose internal state can be reconstructed from its output; using it for a key is a real vulnerability rather than a theoretical one.',
-        'The practical floor is 128 bits for anything long-lived and 256 for keys that protect other keys. Encoding does not change entropy — a 32-byte value is 256 bits whether you write it as hex, Base64 or raw bytes. For a secret a human must type, a machine-chosen passphrase of six words beats a short scramble of punctuation.',
+        'The practical floor is 128 bits for anything long-lived and 256 for keys that protect other keys. Encoding does not change entropy - a 32-byte value is 256 bits whether you write it as hex, Base64 or raw bytes. For a secret a human must type, a machine-chosen passphrase of six words beats a short scramble of punctuation.',
       ],
     },
     {

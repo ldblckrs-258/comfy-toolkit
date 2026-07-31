@@ -10,7 +10,7 @@ export const guide: GuideContent = {
       heading: 'JSON',
       paragraphs: [
         'Unambiguous, universally supported, and unpleasant to hand-edit. Types are explicit, there is exactly one way to write any value, and every language parses it identically.',
-        'The costs are the absence of comments — there is no syntax for them, which is disqualifying for human-maintained config — and punctuation-heavy nesting that gets hard to read past two or three levels.',
+        'The costs are the absence of comments - there is no syntax for them, which is disqualifying for human-maintained config - and punctuation-heavy nesting that gets hard to read past two or three levels.',
         'There is also a quiet data-loss risk: JSON does not specify numeric precision, and nearly every parser reads numbers into a 64-bit float. Integers beyond 2^53 silently lose their low digits, which is why APIs dealing in large identifiers return them as strings.',
       ],
       code: {
@@ -39,7 +39,7 @@ export const guide: GuideContent = {
       heading: 'CSV',
       paragraphs: [
         'Tabular data going into or out of a spreadsheet, and nothing else. It has exactly one level of structure, so nested data has to be flattened or serialised into a cell.',
-        'There is no single specification, which is why exports disagree. Delimiters vary by locale — semicolons are standard wherever the comma is the decimal separator. Line endings differ. Whether the first row is a header is a convention rather than a rule.',
+        'There is no single specification, which is why exports disagree. Delimiters vary by locale - semicolons are standard wherever the comma is the decimal separator. Line endings differ. Whether the first row is a header is a convention rather than a rule.',
         'Quoting is where it breaks: any field containing a comma, a quote or a newline must be quoted with embedded quotes doubled, and getting that wrong produces a spreadsheet where one row has spilled across three.',
       ],
     },

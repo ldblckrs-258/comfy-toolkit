@@ -4,9 +4,9 @@ import { GUIDES } from '@/content/guides'
 import { SITE_NAME, buildSeo, ogUrl } from '@/lib/seo'
 import { breadcrumbNode, schemaGraph, websiteNode } from '@/lib/structured-data'
 
-const TITLE = `Guides — Developer Reference Articles | ${SITE_NAME}`
+const TITLE = `Guides - Developer Reference Articles | ${SITE_NAME}`
 const DESCRIPTION =
-  'Practical guides on identifiers, timestamps, hashing, colour and text encoding — the background behind the tools, written for people debugging real problems.'
+  'Practical guides on identifiers, timestamps, hashing, colour and text encoding - the background behind the tools, written for people debugging real problems.'
 
 export const Route = createFileRoute('/guides/')({
   head: () => {
@@ -50,7 +50,7 @@ function GuidesIndex() {
         <h1 className="mt-2 text-3xl font-bold tracking-tight">Guides</h1>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           The tools answer a question quickly. These explain the thing behind
-          the question — why random primary keys slow down inserts, why two
+          the question - why random primary keys slow down inserts, why two
           contrast checkers disagree, why a string that looks identical to
           another one compares unequal.
         </p>

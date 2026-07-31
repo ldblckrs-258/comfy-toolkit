@@ -1,6 +1,7 @@
 import { useHydrateSidebarPrefs } from '@/lib/sidebar-prefs'
-import { Link, useRouter } from '@tanstack/react-router'
+import { Link, useRouter, useRouterState } from '@tanstack/react-router'
 import * as React from 'react'
+import { LandingNav } from '../landing/landing-nav'
 import { CommandPalette } from './command-palette'
 import { MobileSidebar } from './mobile-sidebar'
 import { Sidebar } from './sidebar'
@@ -10,13 +11,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   const scrollRef = React.useRef<HTMLDivElement>(null)
   const router = useRouter()
+  const isLanding = useRouterState({
+    select: (state) => state.location.pathname === '/',
+  })
 
   React.useEffect(() => {
     return router.subscribe('onRendered', ({ pathChanged, toLocation }) => {
       if (!pathChanged || toLocation.hash) return
       scrollRef.current?.scrollTo({ top: 0 })
+      window.scrollTo({ top: 0 })
     })
   }, [router])
+
+  if (isLanding) {
+    return (
+      <div className="min-h-dvh bg-background text-foreground">
+        <LandingNav />
+        <main>{children}</main>
+        <CommandPalette />
+      </div>
+    )
+  }
 
   return (
     <div className="grid h-screen grid-cols-1 grid-rows-[minmax(0,1fr)] overflow-hidden bg-background text-foreground md:grid-cols-[15rem_1fr]">

@@ -18,23 +18,23 @@ export const hmacVariants: Array<ToolVariant> = [
         {
           heading: 'Signing a webhook payload',
           paragraphs: [
-            'The common use is emitting a signature a receiver will check. Sign the exact bytes of the request body, not a re-serialised version of the parsed object — key order and whitespace change the signature, and a receiver recomputing over different bytes will always disagree.',
+            'The common use is emitting a signature a receiver will check. Sign the exact bytes of the request body, not a re-serialised version of the parsed object - key order and whitespace change the signature, and a receiver recomputing over different bytes will always disagree.',
             'Many providers sign a composed string rather than the body alone, typically a timestamp and a version prefix joined with the payload. If you are reproducing a provider signature, that composition is usually the piece that differs.',
           ],
         },
         {
           heading: 'Choosing hash and encoding',
           bullets: [
-            'SHA-256 — the default nearly everyone uses for webhook signatures.',
-            'SHA-384 and SHA-512 — longer tags, often faster on 64-bit hardware; pick them only if a spec asks.',
-            'Hex — the usual header encoding, case-insensitive and copy-paste safe.',
-            'Base64 — about a third shorter, common where header size matters.',
+            'SHA-256 - the default nearly everyone uses for webhook signatures.',
+            'SHA-384 and SHA-512 - longer tags, often faster on 64-bit hardware; pick them only if a spec asks.',
+            'Hex - the usual header encoding, case-insensitive and copy-paste safe.',
+            'Base64 - about a third shorter, common where header size matters.',
           ],
         },
         {
           heading: 'The key is not a password',
           paragraphs: [
-            'HMAC does not stretch its key. A memorable passphrase is a guessable signature, so use random bytes — 32 is a sensible floor for SHA-256. Keys longer than the hash block size are hashed down first, so extreme length buys nothing.',
+            'HMAC does not stretch its key. A memorable passphrase is a guessable signature, so use random bytes - 32 is a sensible floor for SHA-256. Keys longer than the hash block size are hashed down first, so extreme length buys nothing.',
           ],
         },
         {
@@ -72,7 +72,7 @@ export const hmacVariants: Array<ToolVariant> = [
           heading: 'Reading a failure',
           paragraphs: [
             'A mismatch narrows the problem to one of three things: the message bytes differ from what was signed, the secret is wrong, or the algorithm does not match. Checking against a known-good pair first tells you whether your secret is right before you start suspecting the payload.',
-            'The most frequent real cause is the body being reparsed and re-serialised somewhere in the middle — a proxy, a framework body parser, a logging layer — so the bytes you verify are not the bytes that were signed.',
+            'The most frequent real cause is the body being reparsed and re-serialised somewhere in the middle - a proxy, a framework body parser, a logging layer - so the bytes you verify are not the bytes that were signed.',
           ],
         },
         {
