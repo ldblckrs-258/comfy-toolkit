@@ -57,9 +57,8 @@ export function LandingNav() {
       <div
         ref={islandRef}
         className={cn(
-          'island w-full max-w-fit overflow-hidden',
+          'island w-full max-w-fit overflow-hidden rounded-[1.75rem]',
           compact ? 'island-compact' : 'island-wide',
-          open ? 'rounded-[1.75rem]' : 'rounded-full',
         )}
       >
         <div

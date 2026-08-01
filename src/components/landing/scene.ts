@@ -322,8 +322,27 @@ export function createHeroScene(
     narrow = clientWidth < 768
     camera.position.z = narrow ? 20 : 15
     glyphPoints.position.x = narrow ? 0 : 4.2
-    glyphPoints.position.y = narrow ? -6.6 : 0.3
-    glyphPoints.scale.setScalar(narrow ? 0.62 : 1)
+
+    if (narrow) {
+      const rect = container.getBoundingClientRect()
+      const copy = container.parentElement?.querySelector('[data-hero-copy]')
+      const bandTop = copy
+        ? copy.getBoundingClientRect().bottom - rect.top
+        : clientHeight * 0.62
+      const bandHeight = Math.max(0, clientHeight - bandTop)
+      const halfHeight =
+        Math.tan((camera.fov * Math.PI) / 360) * camera.position.z
+      const worldPerPixel = (halfHeight * 2) / clientHeight
+      const fit = Math.max(0, bandHeight - 40) * worldPerPixel
+
+      glyphPoints.position.y =
+        (clientHeight / 2 - (bandTop + bandHeight / 2)) * worldPerPixel
+      glyphPoints.scale.setScalar(Math.min(0.62, fit / GLYPH_SPREAD))
+    } else {
+      glyphPoints.position.y = 0.3
+      glyphPoints.scale.setScalar(1)
+    }
+
     glyphPoints.rotation.y = Math.atan2(
       -glyphPoints.position.x,
       camera.position.z,

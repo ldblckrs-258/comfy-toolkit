@@ -1,11 +1,11 @@
-import { Highlight } from 'prism-react-renderer'
-import type { PrismTheme } from 'prism-react-renderer'
 import { cn } from '@/lib/utils'
+import type { PrismTheme } from 'prism-react-renderer'
+import { Highlight } from 'prism-react-renderer'
 
 const FONT = 'font-mono text-[13px] leading-relaxed'
 const GUTTER = cn(
   FONT,
-  'w-10 shrink-0 select-none self-stretch pr-2 text-right text-[12px] text-muted-foreground/50',
+  'w-10 shrink-0 select-none self-stretch pr-2 text-right text-[12px] text-muted-foreground/50 pt-0.5',
 )
 const CONTENT = cn(
   FONT,

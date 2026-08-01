@@ -26,7 +26,7 @@ interface Demo {
 }
 
 const PANE =
-  'playground-pane h-44 rounded-none border-0 bg-transparent focus-within:bg-transparent md:h-52'
+  'playground-pane h-54 rounded-none border-0 bg-transparent focus-within:bg-transparent md:h-56'
 
 function fail(error: unknown) {
   return {

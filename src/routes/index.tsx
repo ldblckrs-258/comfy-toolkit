@@ -79,7 +79,7 @@ const VALUE_PROPS = [
   {
     icon: Keyboard,
     title: 'Keyboard first',
-    body: 'One palette reaches every tool. Search by name, tag or keyword, hit enter, paste, done — without touching the mouse.',
+    body: 'One palette reaches every tool. Search by name, tag or keyword, hit enter, paste, done - without touching the mouse.',
     colorVar: 'var(--tool-encoders)',
   },
 ]
@@ -139,12 +139,12 @@ const popular = POPULAR_IDS.map((id) =>
 function Home() {
   return (
     <>
-      <section className="relative isolate flex min-h-[48rem] items-center overflow-hidden pt-16 md:min-h-[46rem]">
+      <section className="relative isolate flex min-h-[48rem] items-start overflow-hidden pt-20 md:min-h-[46rem] md:items-center md:pt-16">
         <div className="hero-veil absolute inset-0 -z-10" />
         <HeroCanvas />
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 py-20 sm:px-8">
-          <div className="max-w-2xl">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 py-8 sm:px-8 md:py-20">
+          <div data-hero-copy className="max-w-2xl">
             <span className="hero-in inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground backdrop-blur">
               <Sparkles className="h-3 w-3 text-accent" />
               {TOOLS.length} tools · 100% client-side
@@ -157,17 +157,24 @@ function Home() {
               Dev tools,
               <br />
               made{' '}
-              <span className="hero-accent text-gradient-accent italic">
+              <span className="hero-accent text-gradient-accent italic font-semibold! pr-1 tracking-wider pl-0.5">
                 comfy
               </span>
-              .
+              <span
+                style={{
+                  marginLeft: '-8px',
+                  color: 'color-mix(in oklab, var(--accent) 65%, white)',
+                }}
+              >
+                .
+              </span>
             </h1>
 
             <p
               className="hero-in mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
               style={{ animationDelay: '160ms' }}
             >
-              Format, encode, sign, convert and inspect — {TOOLS.length}{' '}
+              Format, encode, sign, convert and inspect - {TOOLS.length}{' '}
               utilities that run entirely in your browser. Nothing you paste is
               uploaded, so a live token or a production payload stays on your
               machine.
@@ -226,7 +233,7 @@ function Home() {
                 <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                   Try it right here
                 </span>
-                <h2 className="mt-2 font-display text-4xl font-normal tracking-normal sm:text-5xl">
+                <h2 className="mt-2 font-display text-4xl font-normal tracking-normal sm:text-5xl text-accent">
                   Try any tool in your browser
                 </h2>
               </div>
@@ -318,7 +325,7 @@ function Home() {
                 <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                   Most reached for
                 </span>
-                <h2 className="mt-2 font-display text-4xl font-normal tracking-normal sm:text-5xl">
+                <h2 className="mt-2 font-display text-4xl font-normal tracking-normal sm:text-5xl text-accent">
                   Popular tools
                 </h2>
               </div>
@@ -347,7 +354,7 @@ function Home() {
               <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                 Six groups
               </span>
-              <h2 className="mt-2 font-display text-4xl font-normal tracking-normal sm:text-5xl">
+              <h2 className="mt-2 font-display text-4xl font-normal tracking-normal sm:text-5xl text-accent">
                 Browse by category
               </h2>
               <p className="mt-3 max-w-prose text-sm leading-relaxed text-muted-foreground">
@@ -375,7 +382,7 @@ function Home() {
               <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                 Questions
               </span>
-              <h2 className="mt-2 font-display text-4xl font-normal tracking-normal sm:text-5xl">
+              <h2 className="mt-2 font-display text-4xl font-normal tracking-normal sm:text-5xl text-accent">
                 Before you paste anything
               </h2>
             </Reveal>
@@ -400,9 +407,9 @@ function Home() {
 
             <Reveal className="mt-6">
               <p className="text-sm leading-relaxed text-muted-foreground">
-                For the reasoning behind the tools — why UUID v7 indexes better
+                For the reasoning behind the tools - why UUID v7 indexes better
                 than v4, why two contrast checkers disagree, why a Unix
-                timestamp is ambiguous without its unit — read the{' '}
+                timestamp is ambiguous without its unit - read the{' '}
                 <Link to="/guides" className="text-accent hover:underline">
                   developer guides
                 </Link>
